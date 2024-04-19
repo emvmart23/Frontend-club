@@ -1,5 +1,6 @@
 import { LoginForm } from "@/page/auth/components/forms/LoginForm";
 import AuthLayout from "../layout/AuthLayout";
+import User from "@/page/user/page/Users"
 
 const createAuthRoute = (element: React.ReactNode) => (
     <AuthLayout>{element}</AuthLayout>
@@ -12,7 +13,7 @@ const authRouter = [
     },
     {
         path: "/register",
-        element: createAuthRoute(<div>ds</div>),
+        element: createAuthRoute(<User/>),
     }
 ]
 

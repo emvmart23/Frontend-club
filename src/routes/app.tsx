@@ -1,20 +1,18 @@
+import Users from "@/page/user/page/Users"
+
 const appRouter = [
     {
       path: "/",
       element: (
-        <></>
+        <Users/>
         //<ProtectedRoute>
           //<AppLayout />
         //</ProtectedRoute>
       ),
     children: [
         {
-          path: "/",
-          element: <div>Dashboard</div>,
-        },
-        {
-            path: "/",
-            element: <div></div>,
+            path: "/users",
+            element: <></>,
         },
     ]
     }

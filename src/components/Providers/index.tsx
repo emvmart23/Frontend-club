@@ -1,3 +1,7 @@
+import { store } from "@/store/store"
+
+import { QueryClient, QueryClientProvider } from "react-query"
+import { Provider } from "react-redux"
 import { BrowserRouter } from "react-router-dom"
 
 interface Props {
@@ -5,9 +9,14 @@ interface Props {
 }
 
 export default function Providers({children}:Props) {
+    const queryClient = new QueryClient()
     return(
         <BrowserRouter>
-            {children}
+         <Provider store={store}>
+            <QueryClientProvider client={queryClient}>
+                {children}
+            </QueryClientProvider>
+         </Provider>
         </BrowserRouter>
     )
 }
