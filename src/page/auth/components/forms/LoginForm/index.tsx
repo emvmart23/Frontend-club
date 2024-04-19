@@ -39,10 +39,9 @@ export function LoginForm() {
     try {
       const response = await axios.post(import.meta.env.VITE_API_URL + "/auth/login",values);
         if(response.data) {
-          console.log(response.data.data)
           dispatch(login(response.data.data));
           toast({
-            title: "gaaaaaaaa",
+            title: "logeado"
           });
         }
         navigate("/");

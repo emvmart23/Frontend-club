@@ -46,9 +46,9 @@ import {
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
-                    <EyeOffIcon className="h-5 w-5 text-muted-foreground" />
-                  ) : (
                     <EyeIcon className="h-5 w-5 text-muted-foreground" />
+                  ) : (
+                    <EyeOffIcon className="h-5 w-5 text-muted-foreground" />
                   )}
                 </button>
               </div>

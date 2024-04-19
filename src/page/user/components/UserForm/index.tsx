@@ -70,7 +70,7 @@ export default function UserForm({ setIsPending, setIsOpen }: Props) {
                 <FormItem>
                   <FormLabel>Nombre</FormLabel>
                   <FormControl>
-                    <Input placeholder="" {...field} />
+                    <Input placeholder="Nombre" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -83,7 +83,7 @@ export default function UserForm({ setIsPending, setIsOpen }: Props) {
                 <FormItem>
                   <FormLabel>Nombre de usuario</FormLabel>
                   <FormControl>
-                    <Input placeholder="" {...field} />
+                    <Input placeholder="Nombre de usuario" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -109,11 +109,10 @@ export default function UserForm({ setIsPending, setIsOpen }: Props) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="1">Super</SelectItem>
-                      <SelectItem value="2">Admin</SelectItem>
-                      <SelectItem value="3">Cajero</SelectItem>
-                      <SelectItem value="4">Mozo</SelectItem>
-                      <SelectItem value="5">Barman</SelectItem>
+                      <SelectItem value="1">Admin</SelectItem>
+                      <SelectItem value="2">Cajero</SelectItem>
+                      <SelectItem value="3">Mozo</SelectItem>
+                      <SelectItem value="4">Barman</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -121,7 +120,7 @@ export default function UserForm({ setIsPending, setIsOpen }: Props) {
             )}
             />
           <InputPassword form={form} name={"password_confirmation"} />
-          <InputPassword form={form} name={"password"} />
+          <InputPassword form={form} name={"password"} placeholder="Confirmar contraseña" />
         </form>
       </Form>
   );

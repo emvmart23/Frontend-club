@@ -78,7 +78,7 @@ export default function UserDataTable({data, isLoading} : Props) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown className="ml-2 h-4 w-4" />
+              Columnas <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -168,7 +168,7 @@ export default function UserDataTable({data, isLoading} : Props) {
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            Atras
           </Button>
           <Button
             variant="outline"
@@ -176,7 +176,7 @@ export default function UserDataTable({data, isLoading} : Props) {
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            Siguiente
           </Button>
         </div>
       </div>

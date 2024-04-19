@@ -1,18 +1,16 @@
+import AppLayout from "@/layout/AppLayout";
 import Users from "@/page/user/page/Users"
 
 const appRouter = [
     {
       path: "/",
       element: (
-        <Users/>
-        //<ProtectedRoute>
-          //<AppLayout />
-        //</ProtectedRoute>
+          <AppLayout />
       ),
     children: [
         {
-            path: "/users",
-            element: <></>,
+            path: "/",
+            element: <Users/>,
         },
     ]
     }
