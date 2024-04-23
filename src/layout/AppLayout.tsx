@@ -1,34 +1,37 @@
-import { Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import { Toaster } from "../components/ui/Toaster";
 import { TailwindIndicator } from "../components";
+import Sidebar from "@/components/Navbar/Sidebar";
+import UserDropDown from "@/components/UserDropDown";
+import { useAuth } from "@/hooks/useAuth";
+
 
 export default function AppLayout() {
-    return (
+  const {user} = useAuth()
+  return (
     <div className="w-full h-screen flex flex-col ">
-      <div
-        className=" w-[120rem] h-[100rem] rounded-full bg-primary/30 
-        fixed blur-3xl left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-[125rem] "
-      />
-      <div className="bg-transparent h-[4.5rem] relative border-b-2 z-50 min-w-[590px]">
-        <div className="h-full flex items-center justify-end p-6 gap-16 ">
-          <div
-            className=""
-          >
-          </div>
+      <div className="bg-transparent h-[4.5rem] relative border-b-2 z-50">
+      <div className="flex justify-end items-center h-full px-20">
+        <div className="flex justify-center items-center gap-4">
+          <span className='font-semibold'>Bienvenido {user?.name}</span>
+          <UserDropDown />
         </div>
+      </div>
         <div
-          className="duration-200 h-screen fixed top-0 border-r"
+          className=" w-[15rem] duration-200 h-screen fixed top-0 border-r z-50 hidden md:block"
         >
-          <div className="mx-auto pt-4 pl-6">
-
+          <div className="mx-auto w-full h-[5rem] pt-4 pl-6">
+            <NavLink to="/">
+                Logo Club
+            </NavLink>
           </div>
           <div className="grow">
-            Sidebar
+            <Sidebar/>
           </div>
         </div>
       </div>
       <div
-        className="transition-all duration-200 relative ml-10 xl:ml-0 px-20 xl:px-52 2xl:px-48 pt-6 min-w-[550px]"
+        className="transition-all duration-200 mx-auto w-[80%] md:w-[70%] md:ml-[15rem] md:pl-24 max-w-320 pt-10"
       >
         <Outlet />
       </div>

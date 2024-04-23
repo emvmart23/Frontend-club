@@ -41,7 +41,7 @@ export default function UserForm({ setIsPending, setIsOpen }: Props) {
     setIsPending(true)
     try {
       const { status } = await api.post("/auth/register", values)
-      console.log(values)
+      //no sale
        if(status >= 400) {
         toast({
             description: "Cuenta creada correctamente",

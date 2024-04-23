@@ -27,15 +27,19 @@ import { createSlice } from "@reduxjs/toolkit";
     reducers: {
       login: (state, action) => {
         state.isAuthenticated = true;
-        state.user = action.payload.user;
+        state.user = action.payload.data;
         
         if (action.payload.remember) {
           setLocalStorage("isAuthenticated", "true");
-          setLocalStorage("user", JSON.stringify(action.payload.user));
+          setLocalStorage("user", JSON.stringify(action.payload.data));
+        }
+
+        if (!action.payload.remember) {
+          setLocalStorage("isAuthenticated", "true");
+          setLocalStorage("user", JSON.stringify(action.payload.data));
         }
         
-        setCookie("accessToken", action.payload.access, 1);
-        setCookie("refreshToken", action.payload.refresh, 1);
+        setCookie("token", action.payload.token, 1);
       },
       logout: (state) => {
         state.isAuthenticated = false;

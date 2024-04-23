@@ -65,7 +65,7 @@ export default function UserDataTable({data, isLoading} : Props) {
   })
 
   return (
-    <div className="w-[80%] mx-auto">
+    <div className="w-full md:w-[80%] mx-auto">
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter name..."
@@ -81,7 +81,7 @@ export default function UserDataTable({data, isLoading} : Props) {
               Columnas <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align="end" >
             {table
               .getAllColumns()
               .filter((column) => column.getCanHide())

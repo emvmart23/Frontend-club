@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const requiredErrorMsg = "Este campo no puede estar vacío";
 
-export const ProfileSchema = z.object({
+export const MainSchema = z.object({
     name: z
     .string()
     .min(1, {
@@ -15,9 +15,9 @@ export const ProfileSchema = z.object({
     .min(1, { message: "Se requiere un correo electronico" })
 });
 
-export const ExtraSchema = z.object({
+export const PasswordSchema = z.object({
   password: z.string().min(1, { message: requiredErrorMsg }),
   password_confirmation: z.string().min(1, { message: requiredErrorMsg })
 });
 
-export const UserSchema = z.intersection(ExtraSchema, ProfileSchema);
+export const UserSchema = z.intersection(PasswordSchema, MainSchema);

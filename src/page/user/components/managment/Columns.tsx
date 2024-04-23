@@ -2,6 +2,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { Button } from "@/components/ui/Button";
 import { ArrowUpDown } from "lucide-react";
+import { useState } from "react";
+import { Sheet, SheetTrigger } from "@/components/ui/Sheet";
+import UserDetails from "../UserDetail";
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -74,6 +77,23 @@ export const columns: ColumnDef<User>[] = [
         const roles = ['','super', 'admin','cajero', 'mozo', 'barman']
         const role_number = row.getValue("role_id") as number
         return <div>{roles[role_number]}</div>
+    },
+  },
+  {
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const user = row.original;
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const [open, setIsOpen] = useState(false)
+      return (
+        <Sheet open={open} onOpenChange={setIsOpen}>
+          <SheetTrigger asChild>
+            <Button variant="outline">Ver</Button>
+          </SheetTrigger>
+          <UserDetails user={user} open={open} setIsOpen={setIsOpen}  />
+        </Sheet>
+      );
     },
   },
 ];

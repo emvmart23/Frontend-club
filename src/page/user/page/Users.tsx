@@ -10,9 +10,9 @@ const getUsers = async () => {
 
 export default function Users() {
     const { data, isLoading } = useQuery("users", getUsers)
-
+    
   return (
-    <section className="flex flex-col gap-8 px-20 py-12">
+    <section className="flex flex-col gap-8 w-full">
       <h3 className="text-3xl">Usuarios</h3>
       <div className="flex gap-4">
         <UserActions />
