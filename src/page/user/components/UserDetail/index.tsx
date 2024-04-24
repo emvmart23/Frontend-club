@@ -13,7 +13,6 @@ interface Props {
 export default function UserDetails({ user, setIsOpen }: Props) {
     const [isPending, setIsPending] = useState(false);
 
-    
   return (
     <SheetContent
     className="w-[400px] sm:min-w-[500px]"

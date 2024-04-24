@@ -10,11 +10,6 @@ function AuthLayout({ children }: Props) {
     <div className="relative w-screen h-screen bg-muted">
       {children}
       <TailwindIndicator />
-      <div
-        className="w-screen h-screen mix-blend-multiply"
-      >
-        // 
-      </div>
       <Toaster />
     </div>
   );

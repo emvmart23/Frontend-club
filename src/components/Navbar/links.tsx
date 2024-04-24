@@ -3,6 +3,11 @@ import { Boxes, ShoppingBasket, User } from "lucide-react";
 export const links = [
     {
         icon: <User />,
+        title: "Dashboard",
+        path: "/"
+    },
+    {
+        icon: <User />,
         title: "Usuarios",
         path: "/usuarios",
     },

@@ -29,7 +29,7 @@ export function LoginForm() {
     resolver: zodResolver(LoginSchema),
     defaultValues: {
       user: "",
-      password: ""
+      password: "",
     },
   });
 
@@ -37,22 +37,27 @@ export function LoginForm() {
     setIsPending(true);
 
     try {
-      const response = await axios.post(import.meta.env.VITE_API_URL + "/auth/login",values);
-      console.log(response.data)
-        if(response.data) {
-          dispatch(login(response.data));
-          toast({
-            title: "logeado"
-          });
-        }
-        navigate("/");
+      const response = await axios.post(
+        import.meta.env.VITE_API_URL + "/auth/login",
+        values
+      );
+      console.log(response.data);
+      if (response.data) {
+        dispatch(login(response.data));
+        toast({
+          title: "logeado",
+        });
+      }
+      navigate("/");
     } catch (error: any) {
       if (error.response && error.response.status === 401) {
+        // amarillo
         toast({
           title: "Credenciales incorrectas",
           variant: "destructive",
         });
       } else {
+        // amarillo 
         toast({
           title: "Ocurrió un error",
           variant: "destructive",
@@ -65,7 +70,10 @@ export function LoginForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-[40%] p-10 mx-auto pt-20">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 w-[40%] p-10 mx-auto pt-20"
+      >
         <FormField
           control={form.control}
           name="user"

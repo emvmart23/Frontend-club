@@ -42,7 +42,8 @@ export default function UserForm({ setIsPending, setIsOpen }: Props) {
     try {
       const { status } = await api.post("/auth/register", values)
       //no sale
-       if(status >= 400) {
+       if(status == 200) {
+        // color verde
         toast({
             description: "Cuenta creada correctamente",
           })
@@ -50,6 +51,7 @@ export default function UserForm({ setIsPending, setIsOpen }: Props) {
        queryClient.invalidateQueries("users");
        setIsOpen(false)
     } catch (error) {
+      //amarillo or naranja
       toast({
         description: "Error al crear cuenta",
         variant: "destructive",
