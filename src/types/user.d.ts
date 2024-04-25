@@ -3,4 +3,5 @@ interface User {
   user:string;
   name:string;
   role_id:number;
+  is_active:boolean;
 }

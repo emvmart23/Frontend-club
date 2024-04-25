@@ -29,7 +29,7 @@ interface Props {
   setIsOpen: (value: boolean) => void;
 }
 
-export default function ProductEditForm({ product }: Props) {
+export default function ProductEditForm({ product, setIsOpen }: Props) {
   const queryClient = useQueryClient();
   const form = useForm<z.infer<typeof ProductSchema>>({
     resolver: zodResolver(ProductSchema),
@@ -40,17 +40,18 @@ export default function ProductEditForm({ product }: Props) {
       has_alcohol: Boolean(product?.has_alcohol)
     },
   });
-  console.log(product.category_id)
+
   const onSubmit = async (values: z.infer<typeof ProductSchema>) => {
     try {
-      const { status } = await api.post(`/products/update/${product?.id}`, values);
-      //no sale
+      const { status } = await api.patch(`/products/update/${product?.id}`, values);
       if (status == 200) {
         toast({
           description: "Cuenta editada correctamente",
+          variant: "success",
         });
       }
       queryClient.invalidateQueries("products");
+      setIsOpen(false)
     } catch (error) {
       toast({
         description: "Error al editar cuenta",

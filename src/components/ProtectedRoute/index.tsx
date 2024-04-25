@@ -14,8 +14,7 @@ const ProtectedRoute = ({ children }: Props) => {
     if (!isAuthenticated) {
       navigate("/login");
     }
-  }, [isAuthenticated, history]);
-  console.log(isAuthenticated)
+  }, [isAuthenticated]);
   return isAuthenticated ? children : null;
 };
 

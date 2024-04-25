@@ -12,15 +12,11 @@ import { createSlice } from "@reduxjs/toolkit";
     isAuthenticated:
       (getLocalStorage("isAuthenticated") ||
         getSessionStorage("AisAuthenticated")) === "true" &&
-      getCookie("accesstoken")
+      getCookie("token")
         ? true
         : false,
-    user:
-      JSON.parse(getLocalStorage("user") as string) ||
-      JSON.parse(getSessionStorage("user") as string) ||
-      null,
-  };
-  
+    user: JSON.parse(getLocalStorage("user") as string) || JSON.parse(getSessionStorage("user") as string) || null
+  }
   export const authSlice = createSlice({
     name: "auth",
     initialState,

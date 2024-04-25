@@ -9,7 +9,7 @@ import { useAuth } from "@/hooks/useAuth";
 export default function AppLayout() {
   const {user} = useAuth()
   return (
-    <div className="w-full h-screen flex flex-col ">
+    <div className="w-full h-screen flex flex-col">
       <div className="bg-transparent h-[4.5rem] relative border-b-2 z-50">
       <div className="flex justify-end items-center h-full px-20">
         <div className="flex justify-center items-center gap-4">
@@ -18,7 +18,7 @@ export default function AppLayout() {
         </div>
       </div>
         <div
-          className=" w-[15rem] duration-200 h-screen fixed top-0 border-r z-50 hidden md:block"
+          className=" w-[14rem] duration-200 h-screen fixed top-0 border-r z-50 hidden md:block"
         >
           <div className="mx-auto w-full h-[5rem] pt-4 pl-6">
             <NavLink to="/">

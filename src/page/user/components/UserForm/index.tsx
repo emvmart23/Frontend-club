@@ -46,6 +46,7 @@ export default function UserForm({ setIsPending, setIsOpen }: Props) {
         // color verde
         toast({
             description: "Cuenta creada correctamente",
+            variant: "success"
           })
        }
        queryClient.invalidateQueries("users");

@@ -35,29 +35,27 @@ export function LoginForm() {
 
   async function onSubmit(values: z.infer<typeof LoginSchema>) {
     setIsPending(true);
-
     try {
       const response = await axios.post(
         import.meta.env.VITE_API_URL + "/auth/login",
         values
       );
-      console.log(response.data);
-      if (response.data) {
+      
+      if (response.data.token) {
         dispatch(login(response.data));
         toast({
           title: "logeado",
+          variant: "success"
         });
       }
       navigate("/");
-    } catch (error: any) {
+    } catch (error:any) {
       if (error.response && error.response.status === 401) {
-        // amarillo
         toast({
           title: "Credenciales incorrectas",
-          variant: "destructive",
+          variant: "warning",
         });
       } else {
-        // amarillo 
         toast({
           title: "Ocurrió un error",
           variant: "destructive",

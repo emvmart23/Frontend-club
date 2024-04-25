@@ -9,26 +9,27 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/Dialog";
-import { Loader2 } from "lucide-react";
 import { useState } from "react";
-import ProductForm from "../ProductForm";
+import CategoryForm from "../CategoryForm";
+import { Loader2 } from "lucide-react";
 
-export default function ProductActions() {
-  const [isPending, setIsPending] = useState(false);
+export default function CategoryActions() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isPending, setIsPending] = useState(false);
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Crear Producto</Button>
+        <Button>Crear Categoria</Button>
       </DialogTrigger>
       <DialogContent className="gap-8">
         <DialogHeader>
-          <DialogTitle>Nuevo Producto</DialogTitle>
+          <DialogTitle>Nueva Categoria</DialogTitle>
           <DialogDescription>
-            En este formulario puedes crear un nuevo Producto
+            En este formulario puedes crear una nueva categoria
           </DialogDescription>
         </DialogHeader>
-        <ProductForm setIsPending={setIsPending} setIsOpen={setIsOpen} />
+        <CategoryForm setIsPending={setIsPending} setIsOpen={setIsOpen} />
         <DialogFooter className="flex sm:justify-between gap-4">
           <DialogClose asChild>
             <Button className="w-full" variant="outline">
@@ -39,7 +40,7 @@ export default function ProductActions() {
             className="w-full"
             disabled={isPending}
             type="submit"
-            form="add-product-form"
+            form="add-category-form"
           >
             {isPending && (
               <Loader2
@@ -48,7 +49,6 @@ export default function ProductActions() {
               />
             )}
             Agregar
-            <span className="sr-only">Agregar nuevo producto</span>
           </Button>
         </DialogFooter>
       </DialogContent>

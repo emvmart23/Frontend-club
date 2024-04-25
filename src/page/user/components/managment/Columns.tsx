@@ -80,6 +80,24 @@ export const columns: ColumnDef<User>[] = [
     },
   },
   {
+    accessorKey: "is_active",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+            Estado
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+        const isActive = row.getValue("is_active") === true ? "bg-gray-500" : "bg-red-500" 
+        return <div className={`${isActive} rounded-full w-5 h-5`}></div>
+    },
+  },
+  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {

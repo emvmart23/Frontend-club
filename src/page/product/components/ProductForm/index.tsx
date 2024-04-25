@@ -44,10 +44,10 @@ export default function ProductForm({ setIsOpen, setIsPending }: Props) {
     setIsPending(true);
     try {
       const { status } = await api.post("/products/create", values);
-      //no sale
-      if (status >= 400) {
+      if (status == 200) {
         toast({
           description: "Producto creado correctamente",
+          variant: "success"
         });
       }
       queryClient.invalidateQueries("products");

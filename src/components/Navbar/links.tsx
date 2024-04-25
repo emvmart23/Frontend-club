@@ -25,5 +25,10 @@ export const links = [
         icon: <Boxes />,
         title: "Reportes",
         path: "/reportes"
+    },
+    {
+        icon: <Boxes />,
+        title: "Categorias",
+        path: "/categorias"
     }
 ]

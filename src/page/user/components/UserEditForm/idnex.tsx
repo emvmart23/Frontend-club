@@ -40,6 +40,7 @@ export default function UserEditForm({setIsOpen, setIsPending, user}: Props) {
            if(status == 200) {
             toast({
                 description: "Cuenta editada correctamente",
+                variant: "success"
               })
            }
            queryClient.invalidateQueries("users");
