@@ -23,12 +23,17 @@ export const links = [
     },
     {
         icon: <Boxes />,
-        title: "Reportes",
-        path: "/reportes"
+        title: "Categorias",
+        path: "/categorias"
     },
     {
         icon: <Boxes />,
-        title: "Categorias",
-        path: "/categorias"
+        title: "Roles",
+        path: "/roles"
+    },
+    {
+        icon: <Boxes />,
+        title: "Unidad",
+        path: "/unidades"
     }
 ]

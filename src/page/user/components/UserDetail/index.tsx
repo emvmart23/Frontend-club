@@ -24,15 +24,8 @@ export default function UserDetails({ user, setIsOpen }: Props) {
         
         <UserEditForm user={user}  setIsPending={setIsPending} setIsOpen={setIsOpen} />
         <SheetFooter>
-        <Button
-            type="submit"
-            form="update-user-form" 
-            disabled={isPending}
-          >
-            <Pencil className="mr-2 h-4 w-4" />
-            Aplicar
-          </Button>
           <Button
+            className="mt-10"
             type="submit"
             form="update-user-form" 
             disabled={isPending}

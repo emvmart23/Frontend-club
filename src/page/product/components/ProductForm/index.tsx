@@ -34,6 +34,7 @@ export default function ProductForm({ setIsOpen, setIsPending }: Props) {
     resolver: zodResolver(ProductSchema),
     defaultValues: {
       name: "",
+      price: "",
       category_id: 1,
       unit_id: 1,
       has_alcohol: false,
@@ -47,7 +48,7 @@ export default function ProductForm({ setIsOpen, setIsPending }: Props) {
       if (status == 200) {
         toast({
           description: "Producto creado correctamente",
-          variant: "success"
+          variant: "success",
         });
       }
       queryClient.invalidateQueries("products");
@@ -85,37 +86,50 @@ export default function ProductForm({ setIsOpen, setIsPending }: Props) {
           />
           <FormField
             control={form.control}
-            name="category_id"
+            name="price"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Categoria</FormLabel>
-                <Select
-                  onValueChange={(value) => field.onChange(Number(value))}
-                  defaultValue="1"
-                >
-                  <FormControl>
-                    <SelectTrigger
-                      className={`${
-                        !field.value && "text-muted-foreground"
-                      } hover:text-accent-foreground`}
-                    >
-                      <SelectValue placeholder="Seleccione una categoria" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="1">Cerveza</SelectItem>
-                    <SelectItem value="2">Whisky</SelectItem>
-                    <SelectItem value="3">Vodka</SelectItem>
-                    <SelectItem value="4">Ron</SelectItem>
-                    <SelectItem value="4">Pisco</SelectItem>
-                    <SelectItem value="4">Otros</SelectItem>
-                  </SelectContent>
-                </Select>
+                <FormLabel>Precio</FormLabel>
+                <FormControl>
+                  <Input placeholder="Precio" {...field} />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
+        <FormField
+          control={form.control}
+          name="category_id"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Categoria</FormLabel>
+              <Select
+                onValueChange={(value) => field.onChange(Number(value))}
+                defaultValue="1"
+              >
+                <FormControl>
+                  <SelectTrigger
+                    className={`${
+                      !field.value && "text-muted-foreground"
+                    } hover:text-accent-foreground`}
+                  >
+                    <SelectValue placeholder="Seleccione una categoria" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="1">Cerveza</SelectItem>
+                  <SelectItem value="2">Whisky</SelectItem>
+                  <SelectItem value="3">Vodka</SelectItem>
+                  <SelectItem value="4">Ron</SelectItem>
+                  <SelectItem value="4">Pisco</SelectItem>
+                  <SelectItem value="4">Otros</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="unit_id"

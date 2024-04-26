@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 import { Input } from "@/components/ui/Input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -35,6 +36,7 @@ export default function ProductEditForm({ product, setIsOpen }: Props) {
     resolver: zodResolver(ProductSchema),
     defaultValues: {
       name: product?.name,
+      price: (product?.price).toString(),
       category_id: product?.category_id,
       unit_id: product?.unit_id,
       has_alcohol: Boolean(product?.has_alcohol)
@@ -85,6 +87,20 @@ export default function ProductEditForm({ product, setIsOpen }: Props) {
           />
           <FormField
             control={form.control}
+            name="price"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Precio</FormLabel>
+                <FormControl>
+                  <Input placeholder="Nombre" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <FormField
+            control={form.control}
             name="category_id"
             render={({ field }) => (
               <FormItem className="w-full">
@@ -115,7 +131,6 @@ export default function ProductEditForm({ product, setIsOpen }: Props) {
               </FormItem>
             )}
           />
-        </div>
         <FormField
           control={form.control}
           name="unit_id"

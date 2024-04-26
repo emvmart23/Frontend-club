@@ -1,3 +1,4 @@
+import { Checkbox } from "@/components/ui/Checkbox";
 import {
     Form,
     FormControl,
@@ -29,7 +30,10 @@ export default function UserEditForm({setIsOpen, setIsPending, user}: Props) {
         defaultValues: {
           name: user?.name,
           user: user?.user,
+          salary:user?.salary,
+          profit_margin:user?.profit_margin,
           role_id: user?.role_id,
+          is_active: user?.is_active,
         },
     });
     
@@ -85,6 +89,34 @@ export default function UserEditForm({setIsOpen, setIsPending, user}: Props) {
           )}
         />
       </div>
+      <div className="flex justify-between gap-4">
+        <FormField
+          control={form.control}
+          name="salary"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Salario</FormLabel>
+              <FormControl>
+                <Input placeholder="Nombre" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="profit_margin"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Porcentaje</FormLabel>
+              <FormControl>
+                <Input placeholder="Nombre de Porcentaje" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
       <FormField
           control={form.control}
           name="role_id"
@@ -113,6 +145,23 @@ export default function UserEditForm({setIsOpen, setIsPending, user}: Props) {
               <FormMessage />
             </FormItem>
         )}
+        />
+        <FormField
+          control={form.control}
+          name="is_active"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>Activo</FormLabel>
+              </div>
+            </FormItem>
+          )}
         />
     </form>
   </Form>

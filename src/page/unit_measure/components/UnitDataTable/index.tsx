@@ -31,11 +31,11 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { columns } from "../managment/columns";
 
 interface Props {
-  data: Product[];
+  data: UnitMeasure[];
   isLoading: boolean;
 }
 
-export default function ProductDataTable({ data, isLoading }: Props) {
+export default function UnitDataTable({ data, isLoading }: Props) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -63,13 +63,13 @@ export default function ProductDataTable({ data, isLoading }: Props) {
     },
   });
   return (
-    <div className="w-full md:w-[90%] mx-auto">
+    <div className="w-full md:w-[80%] mx-auto">
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter name..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          value={(table.getColumn("abbreviation")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+            table.getColumn("abbreviation")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

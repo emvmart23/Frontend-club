@@ -2,9 +2,10 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { Button } from "@/components/ui/Button";
 import { ArrowUpDown } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Sheet, SheetTrigger } from "@/components/ui/Sheet";
 import UserDetails from "../UserDetail";
+import api from "@/service";
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -61,6 +62,36 @@ export const columns: ColumnDef<User>[] = [
     cell: ({ row }) => <div>{row.getValue("name")}</div>,
   },
   {
+    accessorKey: "salary",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Salario
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div>{row.getValue("salary")}</div>,
+  },
+  {
+    accessorKey:"profit_margin",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Porcentaje
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div>{row.getValue("profit_margin")}</div>,
+  },
+  {
     accessorKey: "role_id",
     header: ({ column }) => {
       return (
@@ -74,9 +105,22 @@ export const columns: ColumnDef<User>[] = [
       );
     },
     cell: ({ row }) => {
-        const roles = ['','super', 'admin','cajero', 'mozo', 'barman']
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [data, setData] = useState(null)
+
+        const getRoles = async () => {
+          const { data } = await api.get('/roles')
+          setData(data.role)
+        }
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        useEffect(() => {
+          getRoles()
+        }, [])
+        
+        const roles = data?.map((i) => i.role_name)
+        console.log(roles)
         const role_number = row.getValue("role_id") as number
-        return <div>{roles[role_number]}</div>
+        return <div>{data ? roles[role_number] : []}</div>
     },
   },
   {
@@ -93,7 +137,7 @@ export const columns: ColumnDef<User>[] = [
       );
     },
     cell: ({ row }) => {
-        const isActive = row.getValue("is_active") === true ? "bg-gray-500" : "bg-red-500" 
+        const isActive = Boolean(row.getValue("is_active")) === true ? "bg-green-500" : "bg-red-500" 
         return <div className={`${isActive} rounded-full w-5 h-5`}></div>
     },
   },

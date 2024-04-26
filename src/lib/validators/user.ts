@@ -10,9 +10,10 @@ export const MainSchema = z.object({
     })
     .trim(),
     user: z.string().min(1, { message: requiredErrorMsg }).trim(),
-    role_id: z
-    .number()
-    .min(1, { message: "Se requiere un correo electronico" })
+    salary: z.string().min(1, { message: requiredErrorMsg }).trim(),
+    profit_margin: z.string().min(1, { message: requiredErrorMsg }).trim(),
+    role_id: z.number().min(1, { message: "Se requiere un correo electronico" }),
+    is_active: z.boolean()
 });
 
 export const PasswordSchema = z.object({

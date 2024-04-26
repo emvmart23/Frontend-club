@@ -1,7 +1,14 @@
-interface Product { 
-    id: number;
-    name: string;
-    category_id: number;
-    unit_id: number;
-    has_alcohol: boolean;
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  category_id: number;
+  unit_id: number;
+  has_alcohol: boolean;
+}
+
+interface UnitMeasure {
+  unit_id: number;
+  abbreviation: string;
+  description: string;
 }
