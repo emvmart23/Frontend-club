@@ -5,7 +5,9 @@ import { ArrowUpDown } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Sheet, SheetTrigger } from "@/components/ui/Sheet";
 import UserDetails from "../UserDetail";
-import api from "@/service";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "@/store/store";
+import { getRoles } from "@/store/slices/role/thunk";
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -105,22 +107,19 @@ export const columns: ColumnDef<User>[] = [
       );
     },
     cell: ({ row }) => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [data, setData] = useState(null)
-
-        const getRoles = async () => {
-          const { data } = await api.get('/roles')
-          setData(data.role)
-        }
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        useEffect(() => {
-          getRoles()
-        }, [])
-        
-        const roles = data?.map((i) => i.role_name)
-        console.log(roles)
-        const role_number = row.getValue("role_id") as number
-        return <div>{data ? roles[role_number] : []}</div>
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const dispatch = useAppDispatch()
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const roles = useSelector((state: RootState) => state.roles.role);
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useEffect(() =>{
+        dispatch(getRoles())
+      },[])
+      const data = roles.map((role) => role.role_name)
+      data.splice(0,0,"")
+      
+      const role_number = row.getValue("role_id") as number
+      return <div>{data[role_number]}</div>
     },
   },
   {

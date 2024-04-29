@@ -1,9 +1,4 @@
-import { Input } from "@/components/ui/Input";
-import { UserSchema } from "@/lib/validators/user";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
+import { Checkbox } from "@/components/ui/Checkbox";
 import {
   Form,
   FormControl,
@@ -12,10 +7,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/Form";
-
-import { toast } from "@/hooks/useToast";
-import { InputPassword } from "@/components/InputPassword";
-import api from "@/service";
+import { Input } from "@/components/ui/Input";
 import {
   Select,
   SelectContent,
@@ -23,60 +15,62 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/Select";
+import { toast } from "@/hooks/useToast";
+import { MainSchema } from "@/lib/validators/user";
+import api from "@/service";
+import { RootState } from "@/store/store";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import { z } from "zod";
 
 interface Props {
   setIsPending: (value: boolean) => void;
   setIsOpen: (value: boolean) => void;
+  user: User;
 }
 
-export default function UserForm({ setIsPending, setIsOpen }: Props) {
+export default function UserEditForm({ setIsOpen, setIsPending, user }: Props) {
   const roles = useSelector((state: RootState) => state.roles.role);
   const queryClient = useQueryClient();
-  const form = useForm<z.infer<typeof UserSchema>>({
-    resolver: zodResolver(UserSchema),
+  const form = useForm<z.infer<typeof MainSchema>>({
+    resolver: zodResolver(MainSchema),
     defaultValues: {
-      name: "",
-      user: "",
-      salary: "",
-      profit_margin: 0,
-      password: "",
-      password_confirmation: "",
-      role_id: 0,
+      name: user?.name,
+      user: user?.user,
+      salary: user?.salary,
+      profit_margin: user?.profit_margin,
+      role_id: user?.role_id,
+      is_active: user?.is_active,
     },
   });
-console.log(form.getValues());
-  const onSubmit = async (values: z.infer<typeof UserSchema>) => {
+
+  const onSubmit = async (values: z.infer<typeof MainSchema>) => {
     setIsPending(true);
     try {
-      const { status } = await api.post("/auth/register", values);
-      //no sale
+      const { status } = await api.patch(`/users/update/${user?.id}`, values);
       if (status == 200) {
-        // color verde
         toast({
-          description: "Cuenta creada correctamente",
+          description: "Cuenta editada correctamente",
           variant: "success",
         });
       }
       queryClient.invalidateQueries("users");
       setIsOpen(false);
     } catch (error) {
-      //amarillo or naranja
       toast({
-        description: "Error al crear cuenta",
+        description: "Error al editar cuenta",
         variant: "destructive",
       });
     } finally {
       setIsPending(false);
     }
   };
-
   return (
     <Form {...form}>
       <form
-        id="add-user-form"
+        id="update-user-form"
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-5 w-[99%] p-[0.3rem]"
       >
@@ -116,7 +110,7 @@ console.log(form.getValues());
               <FormItem>
                 <FormLabel>Salario</FormLabel>
                 <FormControl>
-                  <Input placeholder="Salario" {...field} />
+                  <Input placeholder="Nombre" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -127,9 +121,9 @@ console.log(form.getValues());
             name="profit_margin"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Porcentaje de ganancia</FormLabel>
+                <FormLabel>Porcentaje</FormLabel>
                 <FormControl>
-                  <Input placeholder="Porcentaje" {...field} />
+                  <Input placeholder="Nombre de Porcentaje" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -144,7 +138,7 @@ console.log(form.getValues());
               <FormLabel>Tipo de rol</FormLabel>
               <Select
                 onValueChange={(value) => field.onChange(Number(value))}
-                defaultValue="1"
+                defaultValue={user?.role_id.toString()}
               >
                 <FormControl>
                   <SelectTrigger
@@ -157,9 +151,7 @@ console.log(form.getValues());
                 </FormControl>
                 <SelectContent>
                   {roles.map((role) => (
-                    <SelectItem key={role.role_id} value={role.role_id.toString()}>
-                      {role.role_name}
-                    </SelectItem>
+                    <SelectItem value={role.role_id.toString()}>{role.role_name}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -167,11 +159,22 @@ console.log(form.getValues());
             </FormItem>
           )}
         />
-        <InputPassword form={form} name={"password_confirmation"} />
-        <InputPassword
-          form={form}
-          name={"password"}
-          placeholder="Confirmar contraseña"
+        <FormField
+          control={form.control}
+          name="is_active"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>Activo</FormLabel>
+              </div>
+            </FormItem>
+          )}
         />
       </form>
     </Form>

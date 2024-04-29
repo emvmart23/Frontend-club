@@ -22,6 +22,8 @@ import {
 import { useQueryClient } from "react-query";
 import { ProductSchema } from "@/lib/validators/product";
 import { Checkbox } from "@/components/ui/Checkbox";
+import { RootState } from "@/store/store";
+import { useSelector } from "react-redux";
 
 interface Props {
   setIsPending: (value: boolean) => void;
@@ -29,6 +31,8 @@ interface Props {
 }
 
 export default function ProductForm({ setIsOpen, setIsPending }: Props) {
+  const category = useSelector((state: RootState) => state.categories.category);
+  const units = useSelector((state: RootState) => state.units.unit);
   const queryClient = useQueryClient();
   const form = useForm<z.infer<typeof ProductSchema>>({
     resolver: zodResolver(ProductSchema),
@@ -118,12 +122,11 @@ export default function ProductForm({ setIsOpen, setIsPending }: Props) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="1">Cerveza</SelectItem>
-                  <SelectItem value="2">Whisky</SelectItem>
-                  <SelectItem value="3">Vodka</SelectItem>
-                  <SelectItem value="4">Ron</SelectItem>
-                  <SelectItem value="4">Pisco</SelectItem>
-                  <SelectItem value="4">Otros</SelectItem>
+                  {category.map((category) => (
+                    <SelectItem value={category.category_id.toString()}>
+                      {category.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -150,10 +153,9 @@ export default function ProductForm({ setIsOpen, setIsPending }: Props) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="1">Unidad</SelectItem>
-                  <SelectItem value="2">Botella</SelectItem>
-                  <SelectItem value="3">Copa</SelectItem>
-                  <SelectItem value="4">Vaso</SelectItem>
+                  {units.map((unit) => (
+                    <SelectItem value={(unit.unit_id).toString()}>{unit.abbreviation}</SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               <FormMessage />

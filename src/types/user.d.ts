@@ -3,7 +3,7 @@ interface User {
   user:string;
   name:string;
   salary:string;
-  profit_margin:string;
+  profit_margin:number;
   role_id:number;
   is_active:boolean;
 }

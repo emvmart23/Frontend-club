@@ -1,6 +1,6 @@
 import { SheetContent, SheetFooter, SheetTitle } from '@/components/ui/Sheet'
 import { useState } from 'react'
-import UserEditForm from '../UserEditForm/idnex'
+import UserEditForm from '../UserEditForm'
 import { Button } from '@/components/ui/Button'
 import { Pencil } from 'lucide-react'
 
