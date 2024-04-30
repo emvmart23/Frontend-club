@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import { getCategories } from "@/store/slices/category/thunk";
 import { RootState, useAppDispatch } from "@/store/store";
 import { useSelector } from "react-redux";
-import { getUnits } from "@/store/slices/unit/thunk";
 
 export const columns: ColumnDef<Product>[] = [
   {
@@ -108,12 +107,6 @@ export const columns: ColumnDef<Product>[] = [
       );
     },
     cell: ({ row }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const dispatch = useAppDispatch()
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      useEffect(() => {
-        dispatch(getUnits());
-      }, [])
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const unit = useSelector((state:RootState) => state.units.unit)
       const units = unit.map((unit) => unit.abbreviation)

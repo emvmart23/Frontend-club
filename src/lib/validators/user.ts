@@ -11,9 +11,9 @@ export const MainSchema = z.object({
     .trim(),
     user: z.string().min(1, { message: requiredErrorMsg }).trim(),
     salary: z.string().min(1, { message: requiredErrorMsg }).trim(),
-    profit_margin: z.number().min(1, { message: requiredErrorMsg }),
+    profit_margin: z.coerce.number().min(1, { message: requiredErrorMsg }),
     role_id: z.number().min(1, { message: requiredErrorMsg }),
-    is_active: z.boolean()
+    is_active: z.boolean().default(true)
 });
 
 export const PasswordSchema = z.object({

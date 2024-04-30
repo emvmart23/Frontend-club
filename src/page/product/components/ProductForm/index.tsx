@@ -33,6 +33,7 @@ interface Props {
 export default function ProductForm({ setIsOpen, setIsPending }: Props) {
   const category = useSelector((state: RootState) => state.categories.category);
   const units = useSelector((state: RootState) => state.units.unit);
+  console.log('data', units)
   const queryClient = useQueryClient();
   const form = useForm<z.infer<typeof ProductSchema>>({
     resolver: zodResolver(ProductSchema),
