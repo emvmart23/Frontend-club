@@ -4,13 +4,15 @@ import { authSlice } from './slices/auth';
 import { roleSlice } from './slices/role';
 import { categorySlice } from './slices/category';
 import { unitSlice } from './slices/unit';
+import { userSlice } from './slices/user';
 
 export const store = configureStore({
     reducer: {
         auth: authSlice.reducer,
         roles: roleSlice.reducer,
         categories: categorySlice.reducer,
-        units: unitSlice.reducer
+        units: unitSlice.reducer,
+        users: userSlice.reducer,
     }
 })
 

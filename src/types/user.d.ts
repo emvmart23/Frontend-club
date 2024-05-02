@@ -12,3 +12,8 @@ interface Role {
   role_id:number;
   role_name:string;
 }
+
+interface Attendace {
+  id:number;
+  name:string;
+}

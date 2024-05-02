@@ -58,10 +58,7 @@ export const authSlice = createSlice({
       removeLocalStorage("isAuthenticated");
       removeLocalStorage("user");
     },
-    setUser: (state, action) => {
-      state.user = action.payload;
-    },
   },
 });
 
-export const { login, logout, setUser } = authSlice.actions;
+export const { login, logout } = authSlice.actions;

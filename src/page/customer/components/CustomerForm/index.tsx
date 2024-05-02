@@ -57,7 +57,7 @@ import {
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-5 w-[99%] p-[0.3rem]"
         >
-          <div className="flex justify-between gap-4">
+          <div className="flex flex-col justify-between gap-4">
             <FormField
               control={form.control}
               name="name"
@@ -66,6 +66,19 @@ import {
                   <FormLabel>Nombre</FormLabel>
                   <FormControl>
                     <Input placeholder="Nombre" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="dni"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Dni</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Dni" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
