@@ -1,99 +1,118 @@
-import { Input } from "@/components/ui/Input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/Form";
 import { toast } from "@/hooks/useToast";
 import { useQueryClient } from "react-query";
-import { AttendaceSchema } from "@/lib/validators/attendance";
-import { Checkbox } from "@/components/ui/Checkbox";
 import api from "@/service";
-import { useSelector } from "react-redux";
+import { format } from "date-fns";
+import { useForm } from "react-hook-form";
+import { Input } from "@/components/ui/Input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/Table";
 import { RootState, useAppDispatch } from "@/store/store";
+import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getUsers } from "@/store/slices/user/thunk";
+import { Button } from "@/components/ui/Button";
 
 export default function AttendanceForm() {
-  const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
   const users = useSelector((state: RootState) => state.users.user);
 
   useEffect(() => {
     dispatch(getUsers());
   }, []);
-  console.log(users);
-  const name = users.map((dat) => dat.name)
-  const form = useForm<z.infer<typeof AttendaceSchema>>({
-    resolver: zodResolver(AttendaceSchema),
+
+  const { register, handleSubmit } = useForm({
     defaultValues: {
       user_id: undefined,
       present: false,
-      late: false,
-      absent: false,
-      date: new Date(),
+      date: format(new Date(), "yyyy-MM-dd' 'HH:mm:ss"),
+      date_box: format(new Date(), "yyyy-MM-dd"),
     },
   });
-
-  const onSubmit = async (values: z.infer<typeof AttendaceSchema>) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onSubmit = async (data: any) => {
+    console.log(data)
     try {
-      const { status } = await api.post("/attendance/create", values);
+      const { status } = await api.post("/attendances/create", data);
       if (status == 200) {
         toast({
           description: "Asistencia guardada",
           variant: "success",
         });
       }
-      queryClient.invalidateQueries("users");
     } catch (error) {
       toast({
-        description: "Error al crear cuenta",
+        description: "Error al registrar",
         variant: "destructive",
       });
     } finally {
-      console.log("finsh");
+      console.log("finish");
     }
   };
 
   return (
-    <Form {...form}>
-      <form
-        id="add-attendance-form"
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-5 w-[99%] p-[0.3rem]"
-      >
-        {users?.map((user) => (
-          <div key={user.id} className="flex justify-between gap-4">
-            <FormField
-              control={form.control}
-              name="user_id"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input placeholder={name[user.id]} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="flex items-center space-x-2">
-              <Checkbox id="terms2" />
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox id="terms2" />
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox id="terms2" />
-            </div>
-          </div>
-        ))}
-      </form>
-    </Form>
+    <form
+      id="add-attendance-form"
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-5 w-[98%] p-10 border borde-foreground rounded-md shadow-2xl relative"
+    >
+      <div className="flex justify-between">
+        <div className="flex justify-center items-center gap-4">
+          <label className="font-semibold">Fecha</label>
+          <Input disabled {...register("date")} />
+        </div>
+        <div className="flex justify-center items-center gap-4">
+          <label className="font-semibold">Fecha caja</label>
+          <Input disabled {...register("date_box")} className="w-32" />
+        </div>
+      </div>
+      <Table className="w-full">
+        <TableHeader>
+          <TableRow>
+            <TableHead>Usuario</TableHead>
+            <TableHead>Nombre</TableHead>
+            <TableHead>Asistencia</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {users.map((user) => (
+            <TableRow key={user.id}>
+              <TableCell>
+                <Input
+                 disabled
+                  {...register('user_id')}
+                  defaultValue={user.name}
+                />
+              </TableCell>
+              <TableCell>
+                <Input
+                 disabled
+                  {...register('user_id')}
+                  defaultValue={user.user}
+                />
+              </TableCell>
+              <TableCell>
+                <div className="w-8 h-8 p-1 mx-auto">
+                  <Input
+                    className="w-full h-full"
+                    type="checkbox"
+                    {...register("present")}
+                    defaultChecked={user.present}
+                  />
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      <Button className="right-0 absolute" type="submit">
+          guardar
+      </Button>
+    </form>
   );
 }
