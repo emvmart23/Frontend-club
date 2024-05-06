@@ -15,5 +15,8 @@ interface Role {
 
 interface Attendace {
   id:number;
-  name:string;
+  user_id:number;
+  date:string;
+  present:boolean;
+  name:string; 
 }
