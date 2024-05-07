@@ -1,6 +1,7 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
 import AppLayout from "@/layout/AppLayout";
 import Attendance from "@/page/attendance/page/Attendance";
+import Boxes from "@/page/box/page/Boxes";
 import Categories from "@/page/category/page/Categories";
 import Customers from "@/page/customer/page/Customers";
 import Dashboard from "@/page/home/Dashboard";
@@ -49,6 +50,10 @@ const appRouter = [
       {
         path: '/asistencia',
         element: <Attendance/>
+      },
+      {
+        path: '/caja',
+        element: <Boxes/>
       }
     ],
   },

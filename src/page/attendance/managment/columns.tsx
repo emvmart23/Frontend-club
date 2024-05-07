@@ -2,6 +2,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { Button } from "@/components/ui/Button";
 import { ArrowUpDown } from "lucide-react";
+import { getUsersWithOutRedux } from "@/store/slices/user/thunk";
+import { useEffect, useState } from "react";
 
 export const columns: ColumnDef<Attendace>[] = [
   {
@@ -40,7 +42,24 @@ export const columns: ColumnDef<Attendace>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("user_id")}</div>,
+    cell: ({ row }) => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const [users, setUsers] = useState<User[]>([]);
+
+      const fetchUsers = async () => {
+        const allUsers = await getUsersWithOutRedux();
+        setUsers(allUsers);
+      };
+      const formatUsers = users.map(i => i.user)
+      formatUsers.splice(0, 0, "");
+      const user_id = row.getValue("user_id") as number;
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useEffect(() => {
+        fetchUsers();
+      },[]);
+
+      return <div>{formatUsers[user_id]}</div>;
+    },
   },
   {
     accessorKey: "date",
@@ -55,7 +74,9 @@ export const columns: ColumnDef<Attendace>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("date")}</div>,
+    cell: ({ row }) => {
+      return <div>{row.getValue("date")}</div>;
+    },
   },
   {
     accessorKey: "present",
@@ -71,8 +92,11 @@ export const columns: ColumnDef<Attendace>[] = [
       );
     },
     cell: ({ row }) => {
-        const isActive = Boolean(row.getValue("present")) === true ? "bg-green-500" : "bg-red-500" 
-        return <div className={`${isActive} rounded-full w-5 h-5`}></div>
+      const isActive =
+        Boolean(row.getValue("present")) === true
+          ? "bg-green-500"
+          : "bg-red-500";
+      return <div className={`${isActive} rounded-full w-5 h-5`} />;
     },
   },
 ];

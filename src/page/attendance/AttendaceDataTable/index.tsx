@@ -10,7 +10,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { CalendarIcon, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import {
   DropdownMenu,
@@ -28,10 +28,8 @@ import {
 } from "@/components/ui/Table";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { columns } from "../managment/columns";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/Popover";
-import { cn } from "@/lib/utils/tools";
-import { Calendar } from "@/components/ui/Calendar";
 import { format } from "date-fns";
+import { Input } from "@/components/ui/Input";
 
 interface Props {
   data: Attendace[];
@@ -39,15 +37,14 @@ interface Props {
 }
 
 export default function AttendanceDataTable({ data, isLoading }: Props) {
-  const [date, setDate] = React.useState<Date>()
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
+    [{ id: 'date', value: format(new Date(), "yyyy-MM-dd")}]
   );
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-
+ 
   const table = useReactTable({
     data,
     columns,
@@ -66,31 +63,19 @@ export default function AttendanceDataTable({ data, isLoading }: Props) {
       rowSelection,
     },
   });
+
   return (
     <div className="w-full md:w-[90%] mx-auto">
       <div className="flex items-center py-4">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant={"outline"}
-              className={cn(
-                "w-[280px] justify-start text-left font-normal",
-                !date && "text-muted-foreground"
-              )}
-            >
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              {date ? format(date, "PPP") : <span>Elegir fecha</span>}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
-            <Calendar
-              mode="single"
-              selected={date}
-              onSelect={setDate}
-              initialFocus
-            />
-          </PopoverContent>
-        </Popover>
+        <Input
+          type="date"
+          placeholder="Filtrar fecha..."
+          value={(table.getColumn("date")?.getFilterValue() as string) ?? ""}
+          onChange={(event) => {
+            table.getColumn("date")?.setFilterValue(event.target.value);
+          }}
+          className="max-w-[10rem]"
+        />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">

@@ -18,5 +18,5 @@ interface Attendace {
   user_id:number;
   date:string;
   present:boolean;
-  name:string; 
+  currentDate:string;
 }
