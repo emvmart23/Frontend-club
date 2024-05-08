@@ -23,8 +23,8 @@ export default function AttendanceForm() {
   const [textShadow, setTextShadow] = useState<User[]>([]);
   const [allAttendances, setAllAttendances] = useState<Attendace[]>([]);
   
+  
   const isPresent =  allAttendances.filter(attendance => attendance.date === currentDate).map(i => !!i.present);
-  console.log(isPresent) // [ true , true, true ]
   const fetchUsers = async () => {
     const allUsers = await getUsersWithOutRedux();
     setTextShadow(allUsers.map((user: User) => user.name));
@@ -32,12 +32,12 @@ export default function AttendanceForm() {
     setAllAttendances(data.attendances);
     setUsers(
       allUsers.map((u: Attendace) => {
-        console.log( u.id ) 
+        const dateBox = allAttendances.map(i => i.box_id)
         return {
           user_id: u.id,
-          present: isPresent[u.id],
+          present: false,
           date: format(new Date(), "yyyy-MM-dd' 'HH:mm:ss"),
-          date_box: currentDate,
+          box_id: dateBox[u.id]
         };
       })
     );
@@ -97,7 +97,7 @@ export default function AttendanceForm() {
     <form
       id="add-attendance-form"
       onSubmit={onSubmit}
-      className="space-y-5 flex-col flex   w-full p-8 border borde-foreground rounded-md shadow-2xl"
+      className="space-y-5 flex-col flex w-full p-8 border border-foreground rounded-md shadow-2xl"
     >
       <div className="flex justify-between">
         <div className="flex justify-center items-center gap-4">
@@ -106,7 +106,7 @@ export default function AttendanceForm() {
         </div>
         <div className="flex justify-center items-center gap-4">
           <label className="font-semibold">Fecha caja</label>
-          <Input className="w-32" />
+          <Input className="w-32" placeholder="fecha default caja"/>
         </div>
       </div>
       <Table className="w-full">

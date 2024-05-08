@@ -10,6 +10,7 @@ const getAttendance = async () => {
 
 export default function Attendance() {
   const { data, isLoading } = useQuery("Attendance", getAttendance);
+  console.log(data.attendances)
   return (
     <section className="flex flex-col gap-8 w-full">
       <h3 className="text-3xl">Asistencias</h3>

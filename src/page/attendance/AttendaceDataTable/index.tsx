@@ -30,6 +30,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { columns } from "../managment/columns";
 import { format } from "date-fns";
 import { Input } from "@/components/ui/Input";
+import { Label } from "@/components/ui/Label";
 
 interface Props {
   data: Attendace[];
@@ -38,13 +39,13 @@ interface Props {
 
 export default function AttendanceDataTable({ data, isLoading }: Props) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [{ id: 'date', value: format(new Date(), "yyyy-MM-dd")}]
-  );
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([
+    { id: "date", value: format(new Date(), "yyyy-MM-dd") },
+  ]);
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
- 
+
   const table = useReactTable({
     data,
     columns,
@@ -67,15 +68,22 @@ export default function AttendanceDataTable({ data, isLoading }: Props) {
   return (
     <div className="w-full md:w-[90%] mx-auto">
       <div className="flex items-center py-4">
-        <Input
-          type="date"
-          placeholder="Filtrar fecha..."
-          value={(table.getColumn("date")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => {
-            table.getColumn("date")?.setFilterValue(event.target.value);
-          }}
-          className="max-w-[10rem]"
-        />
+        <div className="flex justify-between w-[53%]">
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+            <Label>Fecha de caja</Label>
+            <Input
+              type="date"
+              value={
+                (table.getColumn("date_box")?.getFilterValue() as string) ?? ""
+              }
+              onChange={(event) => {
+                table.getColumn("date")?.setFilterValue(event.target.value);
+              }}
+              className="max-w-[10rem]"
+            />
+            
+          </div>
+        </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">

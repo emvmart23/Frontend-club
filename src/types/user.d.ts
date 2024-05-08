@@ -17,6 +17,15 @@ interface Attendace {
   id:number;
   user_id:number;
   date:string;
+  box_id:number;
   present:boolean;
-  currentDate:string;
+}
+
+interface Box {
+  id:number;
+  opening:string;
+  closing:string;
+  initial_balance:string;
+  final_balance:string;
+  state:boolean;
 }

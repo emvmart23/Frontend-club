@@ -79,6 +79,23 @@ export const columns: ColumnDef<Attendace>[] = [
     },
   },
   {
+    accessorKey: "date_box",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Fecha de Caja
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      return <div>{row.getValue("date_box")}</div>;
+    },
+  },
+  {
     accessorKey: "present",
     header: ({ column }) => {
       return (
