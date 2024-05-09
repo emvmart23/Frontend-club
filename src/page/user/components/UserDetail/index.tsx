@@ -21,7 +21,6 @@ export default function UserDetails({ user, setIsOpen }: Props) {
             Informacion del usuario
         </SheetTitle>
         
-        
         <UserEditForm user={user}  setIsPending={setIsPending} setIsOpen={setIsOpen} />
         <SheetFooter>
           <Button

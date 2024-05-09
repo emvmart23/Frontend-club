@@ -24,7 +24,7 @@ export default function AttendanceForm() {
   const [allAttendances, setAllAttendances] = useState<Attendace[]>([]);
   
   
-  const isPresent =  allAttendances.filter(attendance => attendance.date === currentDate).map(i => !!i.present);
+  // const isPresent =  allAttendances.filter(attendance => attendance.date === currentDate).map(i => !!i.present);
   const fetchUsers = async () => {
     const allUsers = await getUsersWithOutRedux();
     setTextShadow(allUsers.map((user: User) => user.name));
@@ -32,19 +32,17 @@ export default function AttendanceForm() {
     setAllAttendances(data.attendances);
     setUsers(
       allUsers.map((u: Attendace) => {
-        const dateBox = allAttendances.map(i => i.box_id)
         return {
           user_id: u.id,
           present: false,
-          date: format(new Date(), "yyyy-MM-dd' 'HH:mm:ss"),
-          box_id: dateBox[u.id]
+          date: currentDate,
         };
       })
     );
   };
 
   const isDateExist = allAttendances.some(
-    (attendance) => attendance.date === currentDate
+    (attendance) => attendance.box_date === currentDate
   );
 
   const handleCheckOnChange = (index: number) => {
@@ -76,6 +74,7 @@ export default function AttendanceForm() {
       }
     } else {
       try {
+        console.log(users)
         const { status } = await api.post("/attendances/create", users);
         if (status == 201) {
           toast({
@@ -137,7 +136,7 @@ export default function AttendanceForm() {
                       type="checkbox"
                       onChange={() => handleCheckOnChange(index)}
                       value={user.present ? "on" : "off"}
-                      checked={isPresent[index]}
+                      //checked={isPresent[index]}
                     />
                   </div>
                 </TableCell>

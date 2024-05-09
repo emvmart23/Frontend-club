@@ -2,10 +2,11 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { Button } from "@/components/ui/Button";
 import { ArrowUpDown } from "lucide-react";
-import { getUsersWithOutRedux } from "@/store/slices/user/thunk";
-import { useEffect, useState } from "react";
+import { Sheet, SheetTrigger } from "@/components/ui/Sheet";
+import { useState } from "react";
+import BoxDetails from "../BoxDetails";
 
-export const columns: ColumnDef<Attendace>[] = [
+export const columns: ColumnDef<Box>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -30,90 +31,99 @@ export const columns: ColumnDef<Attendace>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "user_id",
+    accessorKey: "opening",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Usuario
+          Apertura
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div>{row.getValue("opening")}</div>,
+  },
+  {
+    accessorKey: "closing",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Cierre
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div>{row.getValue("closing")}</div>,
+  },
+  {
+    accessorKey: "initial_balance",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+            Saldo Inicial
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div>{row.getValue("initial_balance")}</div>,
+  },
+  {
+    accessorKey:"final_balance",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+            Saldo Final
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div>{row.getValue("final_balance")}</div>,
+  },
+  {
+    accessorKey: "state",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+            Estado
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
+        const isActive = Boolean(row.getValue("state")) === true ? "bg-green-500" : "bg-red-500" 
+        return <div className={`${isActive} rounded-full w-5 h-5`}></div>
+    },
+  },
+  {
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const box = row.original;
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      const [users, setUsers] = useState<User[]>([]);
+      const [open, setIsOpen] = useState(false)
+      return (
+        <Sheet open={open} onOpenChange={setIsOpen}>
+          <SheetTrigger asChild>
+            <Button variant="outline">Ver</Button>
+          </SheetTrigger>
+          <BoxDetails box={box} open={open} setIsOpen={setIsOpen}  />
+        </Sheet>
+      );
+    },
+  },
 
-      const fetchUsers = async () => {
-        const allUsers = await getUsersWithOutRedux();
-        setUsers(allUsers);
-      };
-      const formatUsers = users.map(i => i.user)
-      formatUsers.splice(0, 0, "");
-      const user_id = row.getValue("user_id") as number;
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      useEffect(() => {
-        fetchUsers();
-      },[]);
-
-      return <div>{formatUsers[user_id]}</div>;
-    },
-  },
-  {
-    accessorKey: "date",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Fecha
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      return <div>{row.getValue("date")}</div>;
-    },
-  },
-  {
-    accessorKey: "box_date",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Fecha de Caja
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      return <div>{row.getValue("box_date")}</div>;
-    },
-  },
-  {
-    accessorKey: "present",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Asistio
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      const isActive =
-        Boolean(row.getValue("present")) === true
-          ? "bg-green-500"
-          : "bg-red-500";
-      return <div className={`${isActive} rounded-full w-5 h-5`} />;
-    },
-  },
 ];

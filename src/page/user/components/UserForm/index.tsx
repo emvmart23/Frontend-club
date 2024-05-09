@@ -41,20 +41,17 @@ export default function UserForm({ setIsPending, setIsOpen }: Props) {
       name: "",
       user: "",
       salary: "",
-      profit_margin: 0,
       password: "",
       password_confirmation: "",
       role_id: 0,
     },
   });
-console.log(form.getValues());
+  
   const onSubmit = async (values: z.infer<typeof UserSchema>) => {
     setIsPending(true);
     try {
       const { status } = await api.post("/auth/register", values);
-      //no sale
       if (status == 200) {
-        // color verde
         toast({
           description: "Cuenta creada correctamente",
           variant: "success",
@@ -63,7 +60,6 @@ console.log(form.getValues());
       queryClient.invalidateQueries("users");
       setIsOpen(false);
     } catch (error) {
-      //amarillo or naranja
       toast({
         description: "Error al crear cuenta",
         variant: "destructive",

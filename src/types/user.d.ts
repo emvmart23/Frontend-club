@@ -18,6 +18,7 @@ interface Attendace {
   user_id:number;
   date:string;
   box_id:number;
+  box_date:string;
   present:boolean;
 }
 

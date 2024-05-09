@@ -18,6 +18,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
+import { Input } from "@/components/ui/Input";
 import {
   Table,
   TableBody,
@@ -27,25 +28,21 @@ import {
   TableRow,
 } from "@/components/ui/Table";
 import { Skeleton } from "@/components/ui/Skeleton";
-import { columns } from "../managment/columns";
-import { format } from "date-fns";
-import { Input } from "@/components/ui/Input";
-import { Label } from "@/components/ui/Label";
+import  { columns }  from "../managment/column";
 
 interface Props {
-  data: Attendace[];
+  data: Box[];
   isLoading: boolean;
 }
 
-export default function AttendanceDataTable({ data, isLoading }: Props) {
+export default function BoxDataTable({ data, isLoading }: Props) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([
-    { id: "box_date", value: format(new Date(), "yyyy-MM-dd") },
-  ]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  );
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-
   const table = useReactTable({
     data,
     columns,
@@ -64,26 +61,18 @@ export default function AttendanceDataTable({ data, isLoading }: Props) {
       rowSelection,
     },
   });
-
   return (
     <div className="w-full md:w-[90%] mx-auto">
       <div className="flex items-center py-4">
-        <div className="flex justify-between w-[53%]">
-          <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label>Fecha de caja</Label>
-            <Input
-              type="date"
-              value={
-                (table.getColumn("box_date")?.getFilterValue() as string) ?? ""
-              }
-              onChange={(event) => {
-                table.getColumn("box_date")?.setFilterValue(event.target.value);
-              }}
-              className="max-w-[10rem]"
-            />
-            
-          </div>
-        </div>
+        <Input
+          type="date"
+          placeholder="Filter name..."
+          value={(table.getColumn("opening")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("opening")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
