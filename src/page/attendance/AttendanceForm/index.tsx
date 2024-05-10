@@ -105,7 +105,7 @@ export default function AttendanceForm() {
         </div>
         <div className="flex justify-center items-center gap-4">
           <label className="font-semibold">Fecha caja</label>
-          <Input className="w-32" placeholder="fecha default caja"/>
+          <Input className="w-32" placeholder={format(new Date(), "yyyy-MM-dd")}/>
         </div>
       </div>
       <Table className="w-full">

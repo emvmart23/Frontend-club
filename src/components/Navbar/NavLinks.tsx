@@ -17,7 +17,7 @@ export default function NavLinks({ icon, title, url }: Props ) {
     >
     <div
       className={`${
-        isActive && "bg-foreground dark:text-black text-white "
+        isActive && "bg-foreground dark:text-black text-white"
       } p-2 w-full group-hover:bg-primary group-hover:text-background text-foreground rounded transition-all duration-75 origin-left mt-5 flex gap-5`}
     >
       <span>{icon}</span>

@@ -25,7 +25,7 @@ interface Props {
   setIsOpen: (value: boolean) => void;
 }
 
-const getBoxes = async () => {
+export const getBoxes = async () => {
   try {
     const { data } = await api.get("/boxes");
     return data;
@@ -35,35 +35,40 @@ const getBoxes = async () => {
 };
 
 export default function BoxForm({ setIsPending, setIsOpen }: Props) {
-  const [allBoxes, setAllBoxes] = useState<Box[]>([])
+  const [allBoxes, setAllBoxes] = useState<Box[]>([]);
   const currentDate = format(new Date(), "yyyy-MM-dd");
   const queryClient = useQueryClient();
   const { user } = useAuth();
-  
+
   const form = useForm<z.infer<typeof BoxSchema>>({
     resolver: zodResolver(BoxSchema),
     defaultValues: {
       user_opening: user?.user,
       user_closing: user?.user,
-      closing: currentDate,
-      final_balance: "100.00",
+      final_balance: "0",
       opening: currentDate,
       state: true,
-      initial_balance: undefined,
+      initial_balance: "0",
     },
   });
 
   const fetchBoxes = async () => {
     const data = await getBoxes();
-    setAllBoxes(data.boxes)
-  }
+    setAllBoxes(data.boxes);
+  };
 
-  const boxIsClosed = allBoxes.find((box) => box.opening === currentDate);
-  console.log(boxIsClosed?.state)
+  const lastId = allBoxes.reduceRight(
+    (maxId, box) => Math.max(maxId, box.id),
+    0
+  );
+  const lastBox = allBoxes.find((box) => box.id === lastId);
+
   const onSubmit = async (values: z.infer<typeof BoxSchema>) => {
-    if (boxIsClosed?.state) {
+    const boxIsClose = Boolean(lastBox?.state);
+    if (boxIsClose) {
       toast({
-        description: "No puedes abrir caja cierra la caja actual para aperturar ",
+        description:
+          "No se puede abrir una nueva caja. Cierra la caja actual antes de proceder",
         variant: "destructive",
       });
     } else {

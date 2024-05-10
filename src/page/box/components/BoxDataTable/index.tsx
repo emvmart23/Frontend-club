@@ -62,7 +62,7 @@ export default function BoxDataTable({ data, isLoading }: Props) {
     },
   });
   return (
-    <div className="w-full md:w-[90%] mx-auto">
+    <div className="w-full mx-auto">
       <div className="flex items-center py-4">
         <Input
           type="date"
@@ -71,7 +71,7 @@ export default function BoxDataTable({ data, isLoading }: Props) {
           onChange={(event) =>
             table.getColumn("opening")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-[10rem]"
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

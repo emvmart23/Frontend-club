@@ -70,7 +70,7 @@ export function LoginForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 w-[40%] p-10 mx-auto pt-20"
+        className="space-y-7 w-full pt-12"
       >
         <FormField
           control={form.control}

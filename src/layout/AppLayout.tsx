@@ -10,8 +10,8 @@ export default function AppLayout() {
   const {user} = useAuth()
   return (
     <div className="w-full h-screen flex flex-col">
-      <div className="bg-transparent h-[4.5rem] relative border-b-2 z-50">
-      <div className="flex justify-end items-center h-full px-20">
+      <div className="bg-transparent relative border-b-2 z-50">
+      <div className="flex justify-end items-center h-[4.6rem] px-20">
         <div className="flex justify-center items-center gap-4">
           <span className='font-semibold'>Bienvenido {user?.name}</span>
           <UserDropDown />

@@ -1,7 +1,6 @@
 import { SheetContent, SheetFooter, SheetTitle } from "@/components/ui/Sheet";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { Pencil } from "lucide-react";
 import api from "@/service";
 import { toast } from "@/hooks/useToast";
 import { useQueryClient } from "react-query";
@@ -17,6 +16,7 @@ export default function BoxDetails({ box }: Props) {
   const queryClient = useQueryClient();
 
   const closeBox = async () => {
+    setIsPending(true)
     try {
       const { status } = await api.post(`/boxes/close/${box.id}`);
       if (status === 200) {
@@ -26,16 +26,18 @@ export default function BoxDetails({ box }: Props) {
         });
       }
       queryClient.invalidateQueries("box");
+      setIsPending(false)
     } catch (error) {
       console.log(error);
+    }finally {
+      setIsPending(false);
     }
   };
 
   return (
     <SheetContent className="w-[400px]">
       <SheetTitle>Acciones</SheetTitle>
-
-      <SheetFooter>
+      <SheetFooter className="w-full ">
         <Button
           variant="destructive"
           className="mt-10"

@@ -31,6 +31,39 @@ export const columns: ColumnDef<Box>[] = [
     enableHiding: false,
   },
   {
+    accessorKey: "user_opening",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Aperturador 
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div>{row.getValue("user_opening")}</div>,
+  },
+  {
+    accessorKey: "user_closing",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Cerrador
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const isNull = row.getValue("user_closing") === null ? "null" : row.getValue("user_closing") as string;
+      return <div>{isNull}</div>
+    }
+  },
+  {
     accessorKey: "opening",
     header: ({ column }) => {
       return (
@@ -58,7 +91,10 @@ export const columns: ColumnDef<Box>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("closing")}</div>,
+    cell: ({ row }) => {
+      const isNull = row.getValue("closing") === null ? "null" : row.getValue("closing") as string;
+      return <div>{isNull}</div>
+    },
   },
   {
     accessorKey: "initial_balance",
