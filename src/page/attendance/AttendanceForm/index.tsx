@@ -74,8 +74,8 @@ export default function AttendanceForm() {
       }
     } else {
       try {
-        console.log(users)
         const { status } = await api.post("/attendances/create", users);
+        console.log(users)
         if (status == 201) {
           toast({
             description: "Asistencia guardada",
