@@ -99,4 +99,24 @@ export const columns: ColumnDef<Attendace>[] = [
       return <div className={`${isActive} rounded-full w-5 h-5`} />;
     },
   },
+  {
+    accessorKey: "box_state",
+    header: ({ column }) => {
+      return (
+        <Button
+          className="hidden"
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          state
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const isActive = row.getValue("box_state") as number;
+      return <div className="hidden">{isActive}</div>
+    }
+  },
+  
 ];

@@ -1,4 +1,3 @@
-/* eslint-disable no-unsafe-optional-chaining */
 import { Input } from "@/components/ui/Input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -36,26 +35,30 @@ export default function ProductEditForm({ product, setIsOpen }: Props) {
   const category = useSelector((state: RootState) => state.categories.category);
   const units = useSelector((state: RootState) => state.units.unit);
   const queryClient = useQueryClient();
+
   const form = useForm<z.infer<typeof ProductSchema>>({
     resolver: zodResolver(ProductSchema),
     defaultValues: {
       name: product?.name,
-      price: (product?.price).toString(),
+      price: product?.price.toString(),
       category_id: product?.category_id,
       unit_id: product?.unit_id,
-      has_alcohol: Boolean(product?.has_alcohol),
+      has_alcohol: Boolean(product?.has_alcohol)
     },
   });
+  console.log("errors",form.formState.errors)
 
   const onSubmit = async (values: z.infer<typeof ProductSchema>) => {
+    console.log("values",values)
     try {
-      const { status } = await api.patch(
+      const response = await api.patch(
         `/products/update/${product?.id}`,
         values
       );
-      if (status == 200) {
+      console.log(response)
+      if (response.status == 200) {
         toast({
-          description: "Cuenta editada correctamente",
+          description: "Producto editado correctamente",
           variant: "success",
         });
       }
@@ -63,7 +66,7 @@ export default function ProductEditForm({ product, setIsOpen }: Props) {
       setIsOpen(false);
     } catch (error) {
       toast({
-        description: "Error al editar cuenta",
+        description: "Error al editar producto",
         variant: "destructive",
       });
     } finally {
@@ -127,7 +130,7 @@ export default function ProductEditForm({ product, setIsOpen }: Props) {
                 </FormControl>
                 <SelectContent>
                   {category.map((category) => (
-                    <SelectItem value={(category.category_id).toString()}>{category.name}</SelectItem>
+                    <SelectItem key={category.category_id} value={(category.category_id).toString()}>{category.name}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -155,7 +158,7 @@ export default function ProductEditForm({ product, setIsOpen }: Props) {
                 </FormControl>
                 <SelectContent>
                   {units.map((unit) => (
-                    <SelectItem value={(unit.unit_id).toString()}>{unit.abbreviation}</SelectItem>
+                    <SelectItem key={unit.unit_id} value={(unit.unit_id).toString()}>{unit.abbreviation}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>

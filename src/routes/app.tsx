@@ -5,6 +5,7 @@ import Boxes from "@/page/box/page/Boxes";
 import Categories from "@/page/category/page/Categories";
 import Customers from "@/page/customer/page/Customers";
 import Dashboard from "@/page/home/Dashboard";
+import Orders from "@/page/orders/page/Orders";
 import Products from "@/page/product/page/Products";
 import Roles from "@/page/role/page/Roles";
 import Units from "@/page/unit_measure/page/Units";
@@ -54,6 +55,10 @@ const appRouter = [
       {
         path: '/caja',
         element: <Boxes/>
+      },
+      {
+        path: '/pedido',
+        element: <Orders/>
       }
     ],
   },
