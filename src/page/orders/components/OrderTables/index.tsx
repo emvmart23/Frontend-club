@@ -22,7 +22,7 @@ export default function OrderTables({ pendingOrders }: Props) {
   // console.log(orders);
 console.log(pendingOrders)
   return (
-    <div className="max-h-[10rem]">
+
       <Table className="mb-20 border border-black">
       <TableHeader>
         <TableRow>
@@ -31,18 +31,16 @@ console.log(pendingOrders)
           <TableHead>Precio</TableHead>
         </TableRow>
       </TableHeader>
-
       <TableBody className="">
-        {pendingOrders.map((order) => (
-          <TableRow key={order.id}>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
+        {pendingOrders.map(({id, name, price}) => (
+          <TableRow key={id}>
+            <TableCell>count</TableCell>
+              <TableCell>{name}</TableCell>
+              <TableCell>{price}</TableCell>
           </TableRow>
         ))}
       </TableBody>
       <TableFooter></TableFooter>
     </Table>
-    </div>
   );
 }

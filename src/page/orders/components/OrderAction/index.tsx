@@ -39,13 +39,13 @@ export default function OrderAction({ product, setPendingOrders, pendingOrders }
       onSubmit={onSubmit}
       className="space-y-5 w-[95%]"
     >
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-4 2xl:w-[80%] mx-auto p-2">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-4 2xl:w-[80%] mx-auto md:p-2">
         {product.map((product) => {
           const cardById = product.id == editingProductId
           return (
             <Card
               key={product.id}
-              className="relative flex flex-col justify-center items-center p-4 h-52 max-w-[246px] border-gray-700 border-2 mx-auto"
+              className="relative flex flex-col justify-center items-center md:p-4 h-36 max-w-[230px] border-gray-700 border-2 mx-auto"
             >
               <CardProduct
                 {...product}
@@ -57,7 +57,7 @@ export default function OrderAction({ product, setPendingOrders, pendingOrders }
                 <Button
                   type="submit"
                   form="update-orders-form"
-                  className="absolute -top-3 -right-3 rounded-full w-8 h-8 p-2"
+                  className="absolute -top-3 -right-3 rounded-full w-8 h-8 p-2 bg-green-600 hover:bg-green-600"
                   onClick={() => toggleEdit(product.id)}
                 >
                   <Check className="w-full h-full" />
