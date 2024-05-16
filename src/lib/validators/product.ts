@@ -9,7 +9,3 @@ export const ProductSchema = z.object({
     unit_id: z.number().min(1, { message: requiredErrorMsg }),
     has_alcohol: z.boolean()
 });
-
-export const OrderSchema = z.object({
-    price:z.string().min(1, { message: requiredErrorMsg })
-})

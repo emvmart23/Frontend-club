@@ -26,9 +26,9 @@ import { useSelector } from "react-redux";
 import { z } from "zod";
 
 interface Props {
+  user: User;
   setIsPending: (value: boolean) => void;
   setIsOpen: (value: boolean) => void;
-  user: User;
 }
 
 export default function UserEditForm({ setIsOpen, setIsPending, user }: Props) {
@@ -67,6 +67,7 @@ export default function UserEditForm({ setIsOpen, setIsPending, user }: Props) {
       setIsPending(false);
     }
   };
+  
   return (
     <Form {...form}>
       <form

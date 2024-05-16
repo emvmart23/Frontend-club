@@ -43,19 +43,17 @@ export default function ProductEditForm({ product, setIsOpen }: Props) {
       price: product?.price.toString(),
       category_id: product?.category_id,
       unit_id: product?.unit_id,
-      has_alcohol: Boolean(product?.has_alcohol)
+      has_alcohol: Boolean(product?.has_alcohol),
     },
   });
-  console.log("errors",form.formState.errors)
 
   const onSubmit = async (values: z.infer<typeof ProductSchema>) => {
-    console.log("values",values)
     try {
       const response = await api.patch(
         `/products/update/${product?.id}`,
         values
       );
-      console.log(response)
+      console.log(response);
       if (response.status == 200) {
         toast({
           description: "Producto editado correctamente",
@@ -130,7 +128,12 @@ export default function ProductEditForm({ product, setIsOpen }: Props) {
                 </FormControl>
                 <SelectContent>
                   {category.map((category) => (
-                    <SelectItem key={category.category_id} value={(category.category_id).toString()}>{category.name}</SelectItem>
+                    <SelectItem
+                      key={category.category_id}
+                      value={category.category_id.toString()}
+                    >
+                      {category.name}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -144,9 +147,10 @@ export default function ProductEditForm({ product, setIsOpen }: Props) {
           render={({ field }) => (
             <FormItem className="w-full">
               <FormLabel>Unidad de medida</FormLabel>
-              <Select 
+              <Select
                 onValueChange={(value) => field.onChange(Number(value))}
-                defaultValue={product.unit_id.toString()} >
+                defaultValue={product.unit_id.toString()}
+              >
                 <FormControl>
                   <SelectTrigger
                     className={`${
@@ -158,7 +162,12 @@ export default function ProductEditForm({ product, setIsOpen }: Props) {
                 </FormControl>
                 <SelectContent>
                   {units.map((unit) => (
-                    <SelectItem key={unit.unit_id} value={(unit.unit_id).toString()}>{unit.abbreviation}</SelectItem>
+                    <SelectItem
+                      key={unit.unit_id}
+                      value={unit.unit_id.toString()}
+                    >
+                      {unit.abbreviation}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>

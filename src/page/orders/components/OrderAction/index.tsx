@@ -1,7 +1,4 @@
-import { toast } from "@/hooks/useToast";
-import api from "@/service";
-import { useQueryClient } from "react-query";
-import CardProduct from "../CardProduct";
+import CardProduct from "../OrderCard";
 import { FormEvent, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Check, Pencil } from "lucide-react";
@@ -9,13 +6,14 @@ import { Card } from "@/components/ui/Card";
 
 interface Props {
   product: Product[];
+  pendingOrders:Product[]
   isLoading: boolean;
+  setPendingOrders: (value: Product[]) => void;
 }
 
-export default function OrderAction({ product }: Props) {
+export default function OrderAction({ product, setPendingOrders, pendingOrders }: Props) {
   const [edit, setEdit] = useState(false);
-  const [isPending, setIsPending] = useState(false);
-  const [editedPrice, setEditedPrice] = useState<string | undefined>(undefined);
+  //const [editedPrice, setEditedPrice] = useState<string | undefined>(undefined);
   const [editingProductId, setEditingProductId] = useState<number | null>(null);
 
   const onSubmit = async (event: FormEvent) => {
@@ -23,12 +21,18 @@ export default function OrderAction({ product }: Props) {
   };
 
   const toggleEdit = (productId: number) => {
-    const price = product.find((product) => product.id === productId)?.price;
+    //const price = product.find((product) => product.id === productId)?.price;
     setEditingProductId(productId);
-    setEditedPrice(price?.toString());
+    //setEditedPrice(price?.toString());
     setEdit(!edit);
   };
 
+  const addOrder = (productId: number) => {
+    const newProducts = [...product]
+    const orderInProcess = newProducts.find((product) => product.id === productId) as Product;
+    setPendingOrders([...pendingOrders, orderInProcess]);
+  }
+  
   return (
     <form
       id="update-orders-form"
@@ -44,10 +48,10 @@ export default function OrderAction({ product }: Props) {
               className="relative flex flex-col justify-center items-center p-4 h-52 max-w-[246px] border-gray-700 border-2 mx-auto"
             >
               <CardProduct
-                name={product.name}
-                price={product.price}
-                cardById={cardById}
+                {...product}
+                editingProductId={editingProductId}
                 edit= {edit}
+                addOrder= {addOrder}
               />
               {edit && cardById ? (
                 <Button
