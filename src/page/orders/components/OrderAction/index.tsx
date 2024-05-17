@@ -3,6 +3,7 @@ import { FormEvent, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Check, Pencil } from "lucide-react";
 import { Card } from "@/components/ui/Card";
+import { differenceInSeconds } from "date-fns";
 
 interface Props {
   product: Product[];
@@ -38,6 +39,34 @@ export default function OrderAction({ product, setPendingOrders, pendingOrders }
     const clickedOutside = !cardElement.contains(event.relatedTarget);
     clickedOutside ? setEdit(false) : event.stopPropagation();
   };
+
+  const data = [5, 5, 5, 2, 2, 2, 2, 2, 9, 4]
+
+  // const  suma = data.reduce ((acc, number) => {
+  //   return acc + number
+  // })
+  // console.log(suma)
+
+  // function getAverage (array:number[]) {
+  //   let sum = 0;
+  //   for (let i = 0; i < array.length; i++) {
+  //     sum += array[i]
+  //   }
+  //   return sum / array.length;
+  // }
+
+  const getAverageWithReduce = data.reduce((sum, currentValue) => sum + currentValue, 0) / data.length;
+  console.log(getAverageWithReduce);
+
+  // console.log(getAverage(data));
+
+  const ocurrencces =  data.reduce(( acc: {[ key: number ] :number }, curr ) => {
+    return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc
+  }, {})
+  
+  console.log(ocurrencces)
+
+
   
   return (
     <form
