@@ -39,7 +39,7 @@ console.log(pendingOrders)
               <TableCell>{price}</TableCell>
           </TableRow>
         ))}
-      </TableBody>
+      </TableBody>`
       <TableFooter></TableFooter>
     </Table>
   );
