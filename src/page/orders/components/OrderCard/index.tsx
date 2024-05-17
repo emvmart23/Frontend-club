@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/Button";
 import { CardContent, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
-import { Plus } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 
 interface Props {
   id: number;
@@ -35,8 +35,11 @@ export default function CardProduct({
       <CardTitle className="cursor-pointer">
           {name}
       </CardTitle>
-      <Button  className="rounded-full p-2 absolute -right-4 w-7 h-7" onClick={() => addOrder(id)}>
+      <Button  className="rounded-full p-2 absolute -right-4 w-8 h-8" onClick={() => addOrder(id)}>
         <Plus className=""/>
+      </Button>
+      <Button  className="rounded-full p-2 absolute -left-4 w-8 h-8" onClick={() => addOrder(id)}>
+        <Minus className=""/>
       </Button>
     </>
   );

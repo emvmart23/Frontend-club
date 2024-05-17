@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/Button";
 import { ScrollArea } from "@/components/ui/ScrollArea";
 import {
   Table,
@@ -20,10 +21,30 @@ export default function OrderTables({ pendingOrders }: Props) {
   // });
 
   // console.log(orders);
-console.log(pendingOrders)
-  return (
+  console.log(pendingOrders);
 
-      <Table className="mb-20 border border-black">
+  // const deleteOrder = (orderId: number) => {
+  //   const newOrders = pendingOrders.filter((order) => order.id!== orderId);
+  //   setPendingOrders(newOrders);
+  // }
+
+  const reduce: { [key: number]: number } = pendingOrders.reduce(
+    (acc: { [key: number]: number }, { id }) => {
+      acc[id] = acc[id] ? acc[id] + 1 : 1;
+      return acc;
+    },
+    {}
+  );
+
+  console.log(reduce);
+
+  const result = Object.entries(reduce)
+    .map(([id, count]) => ({ id, count }))
+    .sort((a, b) => b.count - a.count);
+
+  console.log("data", result);
+  return (
+    <Table className="mb-20 border border-black">
       <TableHeader>
         <TableRow>
           <TableHead>Cantidad</TableHead>
@@ -32,15 +53,18 @@ console.log(pendingOrders)
         </TableRow>
       </TableHeader>
       <TableBody className="">
-        {pendingOrders.map(({id, name, price}) => (
+        {pendingOrders.map(({ id, name, price }) => (
           <TableRow key={id}>
             <TableCell>count</TableCell>
-              <TableCell>{name}</TableCell>
-              <TableCell>{price}</TableCell>
+            <TableCell>{name}</TableCell>
+            <TableCell>{price}</TableCell>
+            <TableCell>
+              <Button className="w-16 h-8">Eliminar</Button>
+            </TableCell>
           </TableRow>
         ))}
-      </TableBody>`
-      <TableFooter></TableFooter>
+      </TableBody>
+      `
     </Table>
   );
 }

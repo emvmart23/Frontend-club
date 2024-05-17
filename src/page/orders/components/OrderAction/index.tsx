@@ -32,6 +32,12 @@ export default function OrderAction({ product, setPendingOrders, pendingOrders }
     const orderInProcess = newProducts.find((product) => product.id === productId) as Product;
     setPendingOrders([...pendingOrders, orderInProcess]);
   }
+
+  const handleBlur = (event:any) => {
+    const cardElement = event.currentTarget;
+    const clickedOutside = !cardElement.contains(event.relatedTarget);
+    clickedOutside ? setEdit(false) : event.stopPropagation();
+  };
   
   return (
     <form
@@ -39,13 +45,14 @@ export default function OrderAction({ product, setPendingOrders, pendingOrders }
       onSubmit={onSubmit}
       className="space-y-5 w-[95%]"
     >
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-4 2xl:w-[80%] mx-auto md:p-2">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-8 2xl:w-[80%] mx-auto md:p-2">
         {product.map((product) => {
           const cardById = product.id == editingProductId
           return (
             <Card
               key={product.id}
               className="relative flex flex-col justify-center items-center md:p-4 h-36 max-w-[230px] border-gray-700 border-2 mx-auto"
+              onBlur={ handleBlur}
             >
               <CardProduct
                 {...product}
