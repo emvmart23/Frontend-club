@@ -12,3 +12,10 @@ interface UnitMeasure {
   abbreviation: string;
   description: string;
 }
+
+interface Order {
+  id: number;
+  name: string;
+  price: number;
+  count: number;
+}

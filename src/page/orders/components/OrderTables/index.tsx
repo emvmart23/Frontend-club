@@ -1,70 +1,81 @@
 import { Button } from "@/components/ui/Button";
-import { ScrollArea } from "@/components/ui/ScrollArea";
 import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/Table";
 
 interface Props {
+  totalPrice: number;
   pendingOrders: Product[];
+  
 }
 
-export default function OrderTables({ pendingOrders }: Props) {
+export default function OrderTables({ pendingOrders, totalPrice }: Props) {
   // const orderInProcess = []
   // const orders = pendingOrders.map((x) => {
   //   if(orderInProcess.some((val) => { return val[x.category_id] === x[d] }))
   // });
 
   // console.log(orders);
-  console.log(pendingOrders);
+  // console.log(pendingOrders);
 
   // const deleteOrder = (orderId: number) => {
   //   const newOrders = pendingOrders.filter((order) => order.id!== orderId);
   //   setPendingOrders(newOrders);
   // }
 
-  const reduce: { [key: number]: number } = pendingOrders.reduce(
-    (acc: { [key: number]: number }, { id }) => {
-      acc[id] = acc[id] ? acc[id] + 1 : 1;
-      return acc;
-    },
-    {}
-  );
+  // const reduce: { [key: number]: number } = pendingOrders.reduce(
+  //   (acc: { [key: number]: number }, { id }) => {
+  //     acc[id] = acc[id] ? acc[id] + 1 : 1;
+  //     return acc;
+  //   },
+  //   {}
+  // );
 
-  console.log(reduce);
+  // const result = Object.entries(reduce)
+  //   .map(([id, count]) => ({ id, count }))
+  //   .sort((a, b) => b.count - a.count);
 
-  const result = Object.entries(reduce)
-    .map(([id, count]) => ({ id, count }))
-    .sort((a, b) => b.count - a.count);
-
-  console.log("data", result);
   return (
-    <Table className="mb-20 border border-black">
-      <TableHeader>
-        <TableRow>
-          <TableHead>Cantidad</TableHead>
-          <TableHead>Descripcion</TableHead>
-          <TableHead>Precio</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody className="">
-        {pendingOrders.map(({ id, name, price }) => (
-          <TableRow key={id}>
-            <TableCell>count</TableCell>
-            <TableCell>{name}</TableCell>
-            <TableCell>{price}</TableCell>
-            <TableCell>
-              <Button className="w-16 h-8">Eliminar</Button>
-            </TableCell>
+    <div className="overflow-auto md:h-52 lg:h-72">
+      <Table className="mb-32">
+        <TableHeader>
+          <TableRow>
+            <TableHead>Cantidad</TableHead>
+            <TableHead>Descripcion</TableHead>
+            <TableHead>Precio</TableHead>
+            <TableHead>Accion</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-      `
-    </Table>
+        </TableHeader>
+        <TableBody className="">
+          {pendingOrders.length == 0 ? (
+            <TableRow className="abolute left-10">
+                <TableCell colSpan={4}>No hay pedidos</TableCell>
+            </TableRow>
+          ) : (
+            pendingOrders.map(({ id, name, price }) => (
+              <TableRow className="" key={id}>
+                <TableCell>count</TableCell>
+                <TableCell>{name}</TableCell>
+                <TableCell>{price}</TableCell>
+                <TableCell>
+                  <Button className="w-16 h-8">Eliminar</Button>
+                </TableCell>
+              </TableRow>
+            ))
+          )}
+        </TableBody>
+        {/* <TableFooter>
+          <TableRow>
+            <TableCell colSpan={2}>Total</TableCell>
+            <TableCell>S/.{totalPrice}</TableCell>
+          </TableRow>
+        </TableFooter> */}
+      </Table>
+    </div>
   );
 }
