@@ -1,38 +1,53 @@
-import CardProduct from "../OrderCard";
 import { ChangeEvent, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Check, Pencil } from "lucide-react";
 import { Card } from "@/components/ui/Card";
+import OrderCard from "../OrderCard";
 
 interface Props {
   pendingOrders: Product[];
   isLoading: boolean;
   setPendingOrders: (value: Product[]) => void;
   filteredProducts: Product[];
+  setFilteredProducts: (value: Product[]) => void;
 }
 
 export default function OrderAction({
   setPendingOrders,
   pendingOrders,
-  filteredProducts
+  filteredProducts,
 }: Props) {
   const [edit, setEdit] = useState(false);
-  //const [editedPrice, setEditedPrice] = useState<string | undefined>(undefined);
+  const [editedPriceMap, setEditedPriceMap] = useState(new Map());
   const [editingProductId, setEditingProductId] = useState<number | null>(null);
 
   const toggleEdit = (productId: number) => {
-    //const price = product.find((product) => product.id === productId)?.price;
     setEditingProductId(productId);
-    //setEditedPrice(price?.toString());
     setEdit(!edit);
   };
 
   const addOrder = (productId: number) => {
     const newProducts = [...filteredProducts];
-    const orderInProcess = newProducts.find(
-      (product) => product.id === productId
-    ) as Product;
-    setPendingOrders([...pendingOrders, orderInProcess]);
+    const orderInProcess = newProducts.find((product) => product.id === productId);
+    const editedPrice = editedPriceMap.get(productId);
+
+    const existingOrderIndex = pendingOrders.findIndex((order) => order.id === productId);
+
+    if (existingOrderIndex >= 0) {
+      const updatedOrder = {
+        ...pendingOrders[existingOrderIndex],
+        price: editedPrice !== undefined ? editedPrice : orderInProcess?.price,
+      };
+      const updatedPendingOrders = [...pendingOrders];
+      updatedPendingOrders[existingOrderIndex] = updatedOrder;
+      setPendingOrders(updatedPendingOrders);
+    } else {
+      const orderWithEditedPrice = {
+        ...orderInProcess,
+        price: editedPrice !== undefined ? editedPrice : orderInProcess?.price,
+      };
+      setPendingOrders([...pendingOrders, orderWithEditedPrice]);
+    }
   };
 
   const handleBlur = (event: any) => {
@@ -41,52 +56,27 @@ export default function OrderAction({
     clickedOutside ? setEdit(false) : event.stopPropagation();
   };
 
-  // const data = [5, 5, 5, 2, 2, 2, 2, 2, 9, 4];
-
-  // const  suma = data.reduce ((acc, number) => {
-  //   return acc + number
-  // })
-  // console.log(suma)
-
-  // function getAverage (array:number[]) {
-  //   let sum = 0;
-  //   for (let i = 0; i < array.length; i++) {
-  //     sum += array[i]
-  //   }
-  //   return sum / array.length;
-  // }
-
-  // const getAverageWithReduce =
-  //   data.reduce((sum, currentValue) => sum + currentValue, 0) / data.length;
-  // console.log(getAverageWithReduce);
-
-  // console.log(getAverage(data));
-
-  // const ocurrencces = data.reduce((acc: { [key: number]: number }, curr) => {
-  //   return acc[curr] ? ++acc[curr] : (acc[curr] = 1), acc;
-  // }, {});
-
-  const onChangeInput = (e: ChangeEvent<HTMLInputElement>, productId: number) =>  {
-    const { name, value } = e.target;
-    const editData = pendingOrders.map((item) => item.id === productId && name ? { ...item, [name] : value } : item)
-    setPendingOrders(editData);
-  }
+  const onChangeInput = (e: ChangeEvent<HTMLInputElement>, productId: number) => {
+    const { value } = e.target;
+    setEditedPriceMap(new Map(editedPriceMap.set(productId, value)));
+  };
 
   return (
     <div className="2xl:w-[80%] mx-auto">
-      {filteredProducts.length == 0 ? (
+      {filteredProducts.length === 0 ? (
         <div className="h-52 flex justify-center items-center font-medium">No hay resultados</div>
       ) : (
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-8 2xl:w-[80%] content-center mx-auto md:p-2">
           {filteredProducts.map((product) => {
-            const cardById = product.id == editingProductId;
+            const cardById = product.id === editingProductId;
             return (
               <Card
                 key={product.id}
                 className="relative flex flex-col justify-center items-center md:p-4 h-36 max-w-[230px] border-gray-700 border-2 mx-auto"
                 onBlur={handleBlur}
               >
-                <CardProduct
+                <OrderCard
+                  pendingOrders={pendingOrders}
                   {...product}
                   editingProductId={editingProductId}
                   edit={edit}

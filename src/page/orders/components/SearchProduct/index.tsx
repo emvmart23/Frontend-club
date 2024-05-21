@@ -6,7 +6,6 @@ interface Props {
 }
 
 export default function SearchProduct({ searchValue, setSearchValue }: Props) {
-  
   return (
     <Input
       className="w-full"
