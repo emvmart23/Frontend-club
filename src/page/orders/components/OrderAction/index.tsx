@@ -19,6 +19,7 @@ export default function OrderAction({
 }: Props) {
   const [edit, setEdit] = useState(false);
   const [editedPriceMap, setEditedPriceMap] = useState(new Map());
+  console.log(editedPriceMap)
   const [editingProductId, setEditingProductId] = useState<number | null>(null);
 
   const toggleEdit = (productId: number) => {
@@ -30,17 +31,19 @@ export default function OrderAction({
     const newProducts = [...filteredProducts];
     const orderInProcess = newProducts.find((product) => product.id === productId);
     const editedPrice = editedPriceMap.get(productId);
-
+    console.log("edited Price",editedPrice)
     const existingOrderIndex = pendingOrders.findIndex((order) => order.id === productId);
-
+    console.log(existingOrderIndex)
     if (existingOrderIndex >= 0) {
       const updatedOrder = {
         ...pendingOrders[existingOrderIndex],
         price: editedPrice !== undefined ? editedPrice : orderInProcess?.price,
       };
+
       const updatedPendingOrders = [...pendingOrders];
       updatedPendingOrders[existingOrderIndex] = updatedOrder;
       setPendingOrders(updatedPendingOrders);
+
     } else {
       const orderWithEditedPrice = {
         ...orderInProcess,

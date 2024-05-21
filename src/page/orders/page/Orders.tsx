@@ -11,7 +11,13 @@ export default function Orders() {
 
   const formatOrders = pendindgOrders.reduce((acc, product) => {
     const productExist = acc.find((obj) => obj.id == product.id);
-    productExist ? productExist.count++ : acc.push({ ...product, count: 1 });
+    if(productExist) 
+      {
+        productExist.count++ 
+        productExist.price = Number(product.price) + Number(product.price)  
+      }else {
+        acc.push({ ...product, count: 1 });
+      }
     return acc;
   }, [] as Order[]);
   console.log(formatOrders)
