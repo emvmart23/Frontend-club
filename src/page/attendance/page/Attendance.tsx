@@ -1,12 +1,7 @@
+import { getAttendance } from "@/helpers/getAttendance";
 import AttendanceActions from "../AttendaceActions";
-import api from "@/service";
 import AttendanceDataTable from "../AttendaceDataTable";
 import { useQuery } from "react-query";
-
-const getAttendance = async () => {
-  const { data } = await api.get("/attendances");
-  return data;
-};
 
 export default function Attendance() {
   const { data, isLoading } = useQuery("Attendance", getAttendance);

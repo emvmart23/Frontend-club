@@ -96,7 +96,7 @@ export default function AttendanceForm() {
     <form
       id="add-attendance-form"
       onSubmit={onSubmit}
-      className="space-y-5 flex-col flex w-full p-8 border border-foreground rounded-md shadow-2xl"
+      className="space-y-5 flex-col flex w-full p-8 border border-foreground rounded-md shadow-2xl overflow-auto"
     >
       <div className="flex justify-between">
         <div className="flex justify-center items-center gap-4">

@@ -1,12 +1,7 @@
-import api from "@/service";
 import UserActions from "../components/UserActions";
 import { useQuery } from 'react-query'
 import UserDataTable from "../components/UserDataTable";
-
-const getUsers = async () => {
-    const { data } = await api.get('/users')
-    return data
-}
+import { getUsers } from "@/helpers/getUsers";
 
 export default function Users() {
     const { data, isLoading } = useQuery("users", getUsers)

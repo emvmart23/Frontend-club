@@ -1,15 +1,10 @@
-import { AlarmClock, Boxes, Combine, Fingerprint, LayoutDashboard, ShoppingBasket, SlidersHorizontal, User } from "lucide-react";
+import { AlarmClock, Boxes, Combine, Fingerprint, LayoutDashboard, Settings, ShoppingBasket, SlidersHorizontal, User } from "lucide-react";
 
 export const links = [
     {
         icon: <LayoutDashboard />,
         title: "Dashboard",
         path: "/"
-    },
-    {
-        icon: <User />,
-        title: "Usuarios",
-        path: "/usuarios",
     },
     {
         icon: <ShoppingBasket />,
@@ -27,9 +22,26 @@ export const links = [
         path: "/categorias"
     },
     {
-        icon: <Fingerprint />,
-        title: "Roles",
-        path: "/roles"
+        icon: <Settings/>,
+        title: "Configuracion",
+        path: "/configuracion",
+        submenu: [
+            {
+                icon: <User />,
+                title: "Usuarios",
+                path: "/usuarios",
+            },
+            {
+                icon: <Fingerprint />,
+                title: "Roles",
+                path: "/roles"
+            },
+            {
+                icon: <Combine  />,
+                title: "Unidad",
+                path: "/unidades"
+            }
+        ]
     },
     {
         icon: <Combine  />,

@@ -5,14 +5,15 @@ import { Minus, Plus } from "lucide-react";
 import { ChangeEvent, useState } from "react";
 
 interface Props {
-  pendingOrders: Product[];
+  formatOrders: Product[];
+  setPendingOrders: (value: Product[]) => void;
   id: number;
   price: number;
   name: string;
   edit: boolean;
   addOrder: (productId: number) => void;
   editingProductId: number | null;
-  onChangeInput: (e: ChangeEvent<HTMLInputElement>, productId: number) => void;
+  //onChangeInput: (e: ChangeEvent<HTMLInputElement>, productId: number) => void;
 }
 
 export default function OrderCard({
@@ -22,14 +23,26 @@ export default function OrderCard({
   edit,
   addOrder,
   editingProductId,
-  onChangeInput,
+  formatOrders,
+  //onChangeInput,
+  setPendingOrders,
 }: Props) {
   const [editedPrice, setEditedPrice] = useState(price);
   const cardById = id === editingProductId;
 
   const handlePriceChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEditedPrice(Number(e.target.value));
-    onChangeInput(e, id);
+    //onChangeInput(e, id);
+  };
+  console.log(formatOrders)
+  const deleteOneOrder = (ProductId: number) => {
+    const newPendingOrders = formatOrders.filter((product) => {
+      if (product.id == ProductId) {
+        return product.count--;
+      }
+    }) as Product[];
+    setPendingOrders(newPendingOrders);
+    console.log("newPendingOrders", newPendingOrders)
   };
 
   return (
@@ -56,7 +69,7 @@ export default function OrderCard({
       </Button>
       <Button
         className="rounded-full p-2 absolute -left-4 w-8 h-8"
-        onClick={() => addOrder(id)}
+        onClick={() => deleteOneOrder(id)}
       >
         <Minus className="" />
       </Button>

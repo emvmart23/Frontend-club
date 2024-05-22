@@ -9,15 +9,13 @@ import {
 } from "@/components/ui/Table";
 
 interface Props {
-  totalPrice: number;
-  pendingOrders: Product[];
-  
+  formatOrders: Product[];
 }
 
-export default function OrderTables({ pendingOrders }: Props) {
+export default function OrderTables({ formatOrders }: Props) {
   return (
-    <div className="overflow-auto mt-16 h-[15.3rem] w-full">
-      <Table className="h-full">
+    <div className="overflow-auto mt-16 h-[15.3rem] w-full relative">
+      <Table className="h-full ">
         <TableHeader>
           <TableRow>
             <TableHead>Cantidad</TableHead>
@@ -27,16 +25,18 @@ export default function OrderTables({ pendingOrders }: Props) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {pendingOrders.length == 0 ? (
+          {formatOrders.length == 0 ? (
             <TableRow>
-                <TableCell className="p-16 text-center font-semibold" colSpan={4}>No hay pedidos</TableCell>
+              <TableCell className="p-16 text-center font-semibold" colSpan={4}>
+                No hay pedidos
+              </TableCell>
             </TableRow>
           ) : (
-            pendingOrders.map(({ id, name, price}) => (
+            formatOrders.map(({ id, name, price, count }) => (
               <TableRow className="" key={id}>
-                <TableCell>count</TableCell>
+                <TableCell>{count}</TableCell>
                 <TableCell>{name}</TableCell>
-                <TableCell>{price}</TableCell>
+                <TableCell>S/.{price}</TableCell>
                 <TableCell>
                   <Button className="w-16 h-8">Eliminar</Button>
                 </TableCell>
@@ -44,12 +44,6 @@ export default function OrderTables({ pendingOrders }: Props) {
             ))
           )}
         </TableBody>
-        {/* <TableFooter>
-          <TableRow>
-            <TableCell colSpan={2}>Total</TableCell>
-            <TableCell>S/.{totalPrice}</TableCell>
-          </TableRow>
-        </TableFooter> */}
       </Table>
     </div>
   );

@@ -20,8 +20,9 @@ interface Attendace {
   box_id: number;
   box_date: string;
   present: boolean;
-  user: User; 
-  box_state: boolean;
+  user: string; 
+  box_state: number;
+  role_user: number;
 }
 
 interface Box {

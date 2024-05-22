@@ -1,10 +1,11 @@
-import { ChangeEvent, useState } from "react";
+import { FocusEvent, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Check, Pencil } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import OrderCard from "../OrderCard";
 
 interface Props {
+  formatOrders : Product[]
   pendingOrders: Product[];
   isLoading: boolean;
   setPendingOrders: (value: Product[]) => void;
@@ -16,60 +17,39 @@ export default function OrderAction({
   setPendingOrders,
   pendingOrders,
   filteredProducts,
+  formatOrders
 }: Props) {
-  const [edit, setEdit] = useState(false);
-  const [editedPriceMap, setEditedPriceMap] = useState(new Map());
-  console.log(editedPriceMap)
   const [editingProductId, setEditingProductId] = useState<number | null>(null);
+  const [edit, setEdit] = useState(false);
 
-  const toggleEdit = (productId: number) => {
-    setEditingProductId(productId);
-    setEdit(!edit);
-  };
-
+  
   const addOrder = (productId: number) => {
     const newProducts = [...filteredProducts];
-    const orderInProcess = newProducts.find((product) => product.id === productId);
-    const editedPrice = editedPriceMap.get(productId);
-    console.log("edited Price",editedPrice)
-    const existingOrderIndex = pendingOrders.findIndex((order) => order.id === productId);
-    console.log(existingOrderIndex)
-    if (existingOrderIndex >= 0) {
-      const updatedOrder = {
-        ...pendingOrders[existingOrderIndex],
-        price: editedPrice !== undefined ? editedPrice : orderInProcess?.price,
-      };
-
-      const updatedPendingOrders = [...pendingOrders];
-      updatedPendingOrders[existingOrderIndex] = updatedOrder;
-      setPendingOrders(updatedPendingOrders);
-
-    } else {
-      const orderWithEditedPrice = {
-        ...orderInProcess,
-        price: editedPrice !== undefined ? editedPrice : orderInProcess?.price,
-      };
-      setPendingOrders([...pendingOrders, orderWithEditedPrice]);
-    }
+    const orderInProcess = newProducts.find(
+      (product) => product.id === productId
+    ) as Product;
+    setPendingOrders([...pendingOrders, orderInProcess]);
   };
-
-  const handleBlur = (event: any) => {
+  
+  const handleBlur = (event: FocusEvent) => {
     const cardElement = event.currentTarget;
     const clickedOutside = !cardElement.contains(event.relatedTarget);
     clickedOutside ? setEdit(false) : event.stopPropagation();
   };
-
-  const onChangeInput = (e: ChangeEvent<HTMLInputElement>, productId: number) => {
-    const { value } = e.target;
-    setEditedPriceMap(new Map(editedPriceMap.set(productId, value)));
+  
+  const toggleEdit = (productId: number) => {
+    setEditingProductId(productId);
+    setEdit(!edit);
   };
-
+  
   return (
-    <div className="2xl:w-[80%] mx-auto">
+    <div className="mx-auto">
       {filteredProducts.length === 0 ? (
-        <div className="h-52 flex justify-center items-center font-medium">No hay resultados</div>
+        <div className="h-52 flex justify-center items-center font-medium">
+          No hay resultados
+        </div>
       ) : (
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-8 2xl:w-[80%] content-center mx-auto md:p-2">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-8 2xl:w-[90%] content-center mx-auto md:p-2">
           {filteredProducts.map((product) => {
             const cardById = product.id === editingProductId;
             return (
@@ -79,12 +59,13 @@ export default function OrderAction({
                 onBlur={handleBlur}
               >
                 <OrderCard
-                  pendingOrders={pendingOrders}
+                  formatOrders={formatOrders}
+                  setPendingOrders={setPendingOrders}
                   {...product}
                   editingProductId={editingProductId}
                   edit={edit}
                   addOrder={addOrder}
-                  onChangeInput={onChangeInput}
+                  //onChangeInput={onChangeInput}
                 />
                 {edit && cardById ? (
                   <Button
