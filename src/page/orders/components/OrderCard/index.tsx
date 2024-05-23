@@ -5,15 +5,15 @@ import { Minus, Plus } from "lucide-react";
 import { ChangeEvent, useState } from "react";
 
 interface Props {
+  pendingOrders: Product[];
   formatOrders: Product[];
   setPendingOrders: (value: Product[]) => void;
   id: number;
   price: number;
   name: string;
   edit: boolean;
-  addOrder: (productId: number) => void;
+  filteredProducts: Product[];
   editingProductId: number | null;
-  //onChangeInput: (e: ChangeEvent<HTMLInputElement>, productId: number) => void;
 }
 
 export default function OrderCard({
@@ -21,28 +21,38 @@ export default function OrderCard({
   name,
   price,
   edit,
-  addOrder,
+  filteredProducts,
   editingProductId,
-  formatOrders,
-  //onChangeInput,
   setPendingOrders,
+  pendingOrders,
 }: Props) {
-  const [editedPrice, setEditedPrice] = useState(price);
+  const [editedPrice, setEditedPrice] = useState<number>(price);
   const cardById = id === editingProductId;
+
+  const addOrder = (productId: number, editedPrice: number) => {
+    const newProducts = [...filteredProducts];
+    const orderInProcess = newProducts.find(
+      (product) => product.id === productId
+    ) as Product;
+    // const orderWithEditedPrice = {
+    //   ...orderInProcess,
+    //   price: editedPrice
+    // };
+    setPendingOrders([...pendingOrders, orderInProcess]);
+    setEditedPrice(orderInProcess.price)
+  };
 
   const handlePriceChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEditedPrice(Number(e.target.value));
-    //onChangeInput(e, id);
   };
-  console.log(formatOrders)
-  const deleteOneOrder = (ProductId: number) => {
-    const newPendingOrders = formatOrders.filter((product) => {
-      if (product.id == ProductId) {
-        return product.count--;
-      }
-    }) as Product[];
-    setPendingOrders(newPendingOrders);
-    console.log("newPendingOrders", newPendingOrders)
+
+  const deleteOneOrder = (productId: number) => {
+    const index = pendingOrders.findIndex((p) => p.id === productId);
+    if (index !== -1) {
+      pendingOrders.splice(index, 1);
+      return pendingOrders;
+    }
+    return pendingOrders;
   };
 
   return (
@@ -52,9 +62,6 @@ export default function OrderCard({
           value={edit && cardById ? editedPrice : price}
           disabled={!edit || !cardById}
           onChange={handlePriceChange}
-          onBlur={() => {
-            setEditedPrice(price);
-          }}
           className={`${
             cardById ? (edit ? "shadow-xl h-[3rem]" : "text-black") : ""
           } transition-all duration-500 relative text-center`}
@@ -63,7 +70,7 @@ export default function OrderCard({
       <CardTitle className="cursor-pointer">{name}</CardTitle>
       <Button
         className="rounded-full p-2 absolute -right-4 w-8 h-8"
-        onClick={() => addOrder(id)}
+        onClick={() => addOrder(id, editedPrice)}
       >
         <Plus className="" />
       </Button>

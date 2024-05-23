@@ -13,7 +13,7 @@ export default function Boxes() {
   
   return (
     <section className="flex flex-col gap-8 w-full">
-      <h3 className="text-3xl">Boxes</h3>
+      <h3 className="text-3xl">Cajas</h3>
       <div>
         <BoxActions/>
       </div>

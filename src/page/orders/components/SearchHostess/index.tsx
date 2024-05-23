@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, CircleAlert } from "lucide-react";
 
 import { cn } from "@/lib/utils/tools";
 import { Button } from "@/components/ui/Button";
@@ -24,14 +24,15 @@ export default function SearchHostess() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const currentDate = format(new Date(), "yyyy-MM-dd");
+
   const hostess = (data ? data.attendances : []).filter(
-    ({ user ,box_date, box_state, role_user, present }: Attendace) =>
-      user
-      // box_state === 1
-      // box_date === currentDate &&
-      // role_user === 4 &&
-      // present === 1
+    ({ box_date, box_state, role_user, present }: Attendace) =>
+      box_state === 1 &&
+      box_date === currentDate &&
+      role_user === 4 &&
+      Number(present) === 1
   );
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -42,7 +43,7 @@ export default function SearchHostess() {
           className="w-full justify-between"
         >
           {value
-            ? hostess.find((item: Attendace) => item.user == value)?.user
+            ? hostess.find(({ user }: Attendace) => user == value)?.user
             : "Seleccionar anfitriona..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -52,24 +53,31 @@ export default function SearchHostess() {
           <CommandInput placeholder="Buscar anfitrionas..." />
           <CommandEmpty>Anfitriona no encontrada</CommandEmpty>
           <CommandGroup>
-            {hostess.map((framework: Attendace) => (
-              <CommandItem
-                key={framework.id}
-                value={framework.user}
-                onSelect={(currentValue) => {
-                  setValue(currentValue === value ? "" : currentValue);
-                  setOpen(false);
-                }}
-              >
-                <Check
-                  className={cn(
-                    "mr-2 h-4 w-4",
-                    value === framework.user ? "opacity-100" : "opacity-0"
-                  )}
-                />
-                {framework.user}
+            {hostess.length > 0 ? (
+              hostess.map(({ id, user }: Attendace) => (
+                <CommandItem
+                  key={id}
+                  value={user}
+                  onSelect={() => {
+                    setValue(user);
+                    setOpen(false);
+                  }}
+                >
+                  <Check
+                    className={cn(
+                      "mr-2 h-4 w-4",
+                      value === user ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                  {user}
+                </CommandItem>
+              ))
+            ) : (
+              <CommandItem className="font-semibold">
+                <CircleAlert className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+                No hay anfitrionas
               </CommandItem>
-            ))}
+            )}
           </CommandGroup>
         </Command>
       </PopoverContent>

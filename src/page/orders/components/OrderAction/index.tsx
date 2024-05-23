@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/Card";
 import OrderCard from "../OrderCard";
 
 interface Props {
-  formatOrders : Product[]
+  formatOrders: Product[];
   pendingOrders: Product[];
   isLoading: boolean;
   setPendingOrders: (value: Product[]) => void;
@@ -17,31 +17,22 @@ export default function OrderAction({
   setPendingOrders,
   pendingOrders,
   filteredProducts,
-  formatOrders
+  formatOrders,
 }: Props) {
   const [editingProductId, setEditingProductId] = useState<number | null>(null);
   const [edit, setEdit] = useState(false);
 
-  
-  const addOrder = (productId: number) => {
-    const newProducts = [...filteredProducts];
-    const orderInProcess = newProducts.find(
-      (product) => product.id === productId
-    ) as Product;
-    setPendingOrders([...pendingOrders, orderInProcess]);
-  };
-  
   const handleBlur = (event: FocusEvent) => {
     const cardElement = event.currentTarget;
     const clickedOutside = !cardElement.contains(event.relatedTarget);
     clickedOutside ? setEdit(false) : event.stopPropagation();
   };
-  
+
   const toggleEdit = (productId: number) => {
     setEditingProductId(productId);
     setEdit(!edit);
   };
-  
+
   return (
     <div className="mx-auto">
       {filteredProducts.length === 0 ? (
@@ -59,12 +50,13 @@ export default function OrderAction({
                 onBlur={handleBlur}
               >
                 <OrderCard
+                  pendingOrders={pendingOrders}
                   formatOrders={formatOrders}
                   setPendingOrders={setPendingOrders}
                   {...product}
                   editingProductId={editingProductId}
                   edit={edit}
-                  addOrder={addOrder}
+                  filteredProducts={filteredProducts}
                   //onChangeInput={onChangeInput}
                 />
                 {edit && cardById ? (
