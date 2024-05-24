@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/Button";
-import { Checkbox } from "@/components/ui/Checkbox";
 import { Input } from "@/components/ui/Input";
 import {
   Table,
@@ -9,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/Table";
+import { ChangeEvent } from "react";
 
 interface Props {
   formatOrders: Product[];
@@ -21,6 +21,21 @@ export default function OrderTables({
   pendingOrders,
   setPendingOrders,
 }: Props) {
+
+  const handleCheckboxChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    orderId: number,
+    price: number
+  ) => {
+    const order = pendingOrders.find(({ id }) => id === orderId) as Product;
+    if (e.target.checked) {
+      setPendingOrders([...pendingOrders, { ...order, price: 0 }]);
+    } else {
+      setPendingOrders([...pendingOrders, { ...order, price: price }]);
+    }
+    console.log(pendingOrders)
+  };
+
   const deleteOrder = (productId: number) => {
     const newPendingOrders = pendingOrders.filter(
       (product) => product.id !== productId
@@ -28,21 +43,12 @@ export default function OrderTables({
     setPendingOrders(newPendingOrders);
   };
 
-  // const applyCourtesy = (orderId: number) => {
-  //   const order = pendingOrders.find(({id}) => id === orderId) as Product;
-  //   const apply = {
-  //     ...order,
-  //     price:0
-  //   };
-  //   setPendingOrders([...pendingOrders, apply])
-  // }
-
   return (
     <div className="overflow-auto mt-16 h-[15.3rem] w-full relative">
       <Table className="h-full">
         <TableHeader>
           <TableRow>
-            {/* <TableHead>Cortesia</TableHead> */}
+            <TableHead>Cortesia</TableHead>
             <TableHead>Cantidad</TableHead>
             <TableHead>Descripcion</TableHead>
             <TableHead>Precio</TableHead>
@@ -59,9 +65,13 @@ export default function OrderTables({
           ) : (
             formatOrders.map(({ id, name, price, count }) => (
               <TableRow key={id}>
-                {/* <TableCell>
-                  <Checkbox />
-                </TableCell> */}
+                <TableCell className="px-[2.5rem]">
+                  <Input
+                    className="w-4 h-4"
+                    type="checkbox"
+                    onChange={(e) => handleCheckboxChange(e, id, price)}
+                  />
+                </TableCell>
                 <TableCell>{count}</TableCell>
                 <TableCell>{name}</TableCell>
                 <TableCell>S/.{price}</TableCell>

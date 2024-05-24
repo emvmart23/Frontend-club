@@ -45,7 +45,7 @@ export default function OrderCard({
   const handlePriceChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEditedPrice(Number(e.target.value));
   };
-
+  console.log("precio editado", editedPrice)
   const deleteOneOrder = (productId: number) => {
     const index = pendingOrders.findIndex((p) => p.id === productId);
     if (index !== -1) {

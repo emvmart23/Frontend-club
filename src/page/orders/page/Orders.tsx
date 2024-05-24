@@ -25,9 +25,9 @@ export default function Orders() {
     return acc;
   }, [] as Product[]);
 
-  // const totalPrice = formatOrders.reduce((acc, curr) => {
-  //   return acc + Number(curr.price);
-  // }, 0);
+  const totalPrice = formatOrders.reduce((acc, curr) => {
+    return acc + Number(curr.price);
+  }, 0);
 
   useEffect(() => {
     const newFilteredProducts = (data ? data.product : []).filter(
@@ -53,10 +53,10 @@ export default function Orders() {
             />
           </div>
           <OrderTables formatOrders={formatOrders} pendingOrders={pendingOrders} setPendingOrders={setPendingOrders}/>
-          {/* <div className="flex justify-end items-center gap-x-2 text-xl font-semibold">
+          <div className="absolute right-3 bottom-4 flex justify-end items-center gap-x-2 text-xl font-semibold">
             <span>Total a pagar:</span>
             <span className="w-62 p-1 rounded-md bg-foreground/20">S/.{totalPrice}</span>
-          </div> */}
+          </div>
         </div>
       </div>
       <div className="flex gap-4 relative top-[30rem]">

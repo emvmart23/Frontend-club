@@ -40,8 +40,7 @@ interface Props {
 export default function AttendanceDataTable({ data, isLoading }: Props) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([
-    { id: "box_state", value: "1" },
-    //{ id: "box_date", value: format(new Date(), "yyyy-MM-dd")}
+    { id: "box_date", value: format(new Date(), "yyyy-MM-dd")}
   ]);
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
