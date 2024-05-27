@@ -11,38 +11,43 @@ import {
 import { ChangeEvent } from "react";
 
 interface Props {
-  formatOrders: Product[];
   pendingOrders: Product[];
   setPendingOrders: (product: Product[]) => void;
+  formatOrder: Product[];
+  setFormatOrder: (product: Product[]) => void;
 }
 
 export default function OrderTables({
-  formatOrders,
   pendingOrders,
   setPendingOrders,
+  formatOrder,
+  setFormatOrder,
 }: Props) {
 
   const handleCheckboxChange = (
     e: ChangeEvent<HTMLInputElement>,
     orderId: number,
-    price: number
   ) => {
-    const order = pendingOrders.find(({ id }) => id === orderId) as Product;
-    if (e.target.checked) {
-      setPendingOrders([...pendingOrders, { ...order, price: 0 }]);
-    } else {
-      setPendingOrders([...pendingOrders, { ...order, price: price }]);
-    }
-    console.log(pendingOrders)
+    const updatedOrder = formatOrder.map((order : Product) => {
+      if (order.id === orderId) {
+        return {
+          ...order,
+          initialPrice: order.price,
+          price: e.target.checked ? 0 : order.initialPrice, 
+        };
+      }
+      return order;
+    });
+    setFormatOrder(updatedOrder);
   };
-
+  
   const deleteOrder = (productId: number) => {
     const newPendingOrders = pendingOrders.filter(
       (product) => product.id !== productId
     ) as Product[];
     setPendingOrders(newPendingOrders);
   };
-
+  
   return (
     <div className="overflow-auto mt-16 h-[15.3rem] w-full relative">
       <Table className="h-full">
@@ -56,20 +61,20 @@ export default function OrderTables({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {formatOrders.length == 0 ? (
+          {formatOrder.length == 0 ? (
             <TableRow>
               <TableCell className="p-16 text-center font-semibold" colSpan={5}>
                 No hay pedidos
               </TableCell>
             </TableRow>
           ) : (
-            formatOrders.map(({ id, name, price, count }) => (
+            formatOrder.map(({ id, name, price, count }) => (
               <TableRow key={id}>
                 <TableCell className="px-[2.5rem]">
                   <Input
                     className="w-4 h-4"
                     type="checkbox"
-                    onChange={(e) => handleCheckboxChange(e, id, price)}
+                    onChange={(e) => handleCheckboxChange(e, id)}
                   />
                 </TableCell>
                 <TableCell>{count}</TableCell>

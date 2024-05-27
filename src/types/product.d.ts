@@ -6,6 +6,7 @@ interface Product {
   unit_id: number;
   has_alcohol: boolean;
   count: number;
+  initialPrice: number
 }
 
 interface UnitMeasure {

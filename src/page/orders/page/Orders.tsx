@@ -11,10 +11,12 @@ import {
 export default function Orders() {
   const { data, isLoading } = useQuery("products", getProducts);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [formatOrder, setFormatOrder] = useState<Product[]>([])
   const [pendingOrders, setPendingOrders] = useState<Product[]>([]);
   const [searchValue, setSearchValue] = useState("");
 
-  const formatOrders = pendingOrders.reduce((acc, product) => {
+  const formatOrders = (array:Product[]) =>  {
+    return array.reduce((acc, product) => {
     const productExist = acc.find((obj) => obj.id == product.id);
     if (productExist) {
       productExist.count = productExist.count + 1;
@@ -23,11 +25,16 @@ export default function Orders() {
       acc.push({ ...product, count: 1 });
     }
     return acc;
-  }, [] as Product[]);
+  }, [] as Product[])};
 
-  const totalPrice = formatOrders.reduce((acc, curr) => {
+  const totalPrice = formatOrder.reduce((acc, curr) => {
     return acc + Number(curr.price);
   }, 0);
+
+  useEffect(() => {
+    const newFormatOrders = formatOrders(pendingOrders)
+    setFormatOrder(newFormatOrders)
+  }, [pendingOrders])
 
   useEffect(() => {
     const newFilteredProducts = (data ? data.product : []).filter(
@@ -52,7 +59,7 @@ export default function Orders() {
               setSearchValue={setSearchValue}
             />
           </div>
-          <OrderTables formatOrders={formatOrders} pendingOrders={pendingOrders} setPendingOrders={setPendingOrders}/>
+          <OrderTables setFormatOrder={setFormatOrder} formatOrder={formatOrder} pendingOrders={pendingOrders} setPendingOrders={setPendingOrders}/>
           <div className="absolute right-3 bottom-4 flex justify-end items-center gap-x-2 text-xl font-semibold">
             <span>Total a pagar:</span>
             <span className="w-62 p-1 rounded-md bg-foreground/20">S/.{totalPrice}</span>
@@ -61,12 +68,13 @@ export default function Orders() {
       </div>
       <div className="flex gap-4 relative top-[30rem]">
         <OrderAction
-          formatOrders={formatOrders}
           isLoading={isLoading}
           setPendingOrders={setPendingOrders}
           pendingOrders={pendingOrders}
           filteredProducts={filteredProducts}
           setFilteredProducts={setFilteredProducts}
+          formatOrders={formatOrders}
+          setFormatOrder={setFormatOrder}
         />
       </div>
     </section>
