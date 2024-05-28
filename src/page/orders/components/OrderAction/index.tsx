@@ -1,4 +1,4 @@
-import { ChangeEvent, FocusEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Check, Minus, Pencil, Plus } from "lucide-react";
 import { Card, CardContent, CardTitle } from "@/components/ui/Card";
@@ -28,14 +28,15 @@ export default function OrderAction({
   const [editingProductId, setEditingProductId] = useState<number | null>(null);
   const [edit, setEdit] = useState(false);
 
-  const handleBlur = (event: FocusEvent) => {
-    const cardElement = event.currentTarget;
-    const clickedOutside = !cardElement.contains(event.relatedTarget);
-    clickedOutside ? setEdit(false) : event.stopPropagation();
-  };
+  // const handleBlur = (event: FocusEvent) => {
+  //   const cardElement = event.currentTarget;
+  //   const clickedOutside = !cardElement.contains(event.relatedTarget);
+  //   clickedOutside ? setEdit(false) : event.stopPropagation();
+  // };
 
   const toggleEdit = (productId: number) => {
     const product = filteredProducts.find((p) => p.id === productId);
+
     if (!product) return;
 
     if (editingProductId !== productId) {
@@ -45,7 +46,7 @@ export default function OrderAction({
     setEditingProductId(editingProductId === productId ? null : productId);
     setEdit(!edit);
   };
-  
+
   const addOrder = (
     productId: number,
     editedPrice: number,
@@ -99,13 +100,14 @@ export default function OrderAction({
       ) : (
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-8 2xl:w-[90%] content-center mx-auto md:p-2">
           {filteredProducts.map((product) => {
+            console.log("editinProductId", editingProductId);
+            console.log("productid", product.id);
             const cardById = product.id === editingProductId;
 
             return (
               <Card
                 key={product.id}
                 className="relative flex flex-col justify-center items-center md:p-4 h-36 max-w-[230px] border-gray-700 border-2 mx-auto"
-                onBlur={handleBlur}
               >
                 <CardContent>
                   <Input

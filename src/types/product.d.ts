@@ -5,8 +5,10 @@ interface Product {
   category_id: number;
   unit_id: number;
   has_alcohol: boolean;
+  unit_name: string;
+  category_name: string;
   count: number;
-  initialPrice: number
+  initialPrice: number;
 }
 
 interface UnitMeasure {

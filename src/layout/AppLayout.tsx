@@ -42,8 +42,8 @@ export default function AppLayout() {
         </div>
         <div
           className={`${
-            isExpanded ? "w-[14rem]" : "w-[0rem]"
-          } md:w-[14rem] duration-300 bg-background transition-all h-screen fixed top-0 border-r z-50`}
+            isExpanded ? "w-[15rem]" : "w-[0rem]"
+          } md:w-[15rem] duration-100 bg-background transition-all h-screen fixed top-0 border-r z-50`}
         >
           <Button
             onClick={btnUpdateMenuVisibility}
@@ -54,8 +54,8 @@ export default function AppLayout() {
           >
             <X />
           </Button>
-          <div className="hidden md:block mt-20">
-            <Sidebar />
+          <div className="block mt-20">
+            <Sidebar isExpanded={isExpanded} />
           </div>
         </div>
       </div>

@@ -1,14 +1,16 @@
-import { useState } from "react";
 import NavLinks from "./NavLinks";
 import { links } from "./links";
 
-export default function Sidebar() {
-  const [state, setState] = useState(false);
+interface Props { 
+  isExpanded: boolean;
+}
+
+export default function Sideba({ isExpanded }: Props) {
   return (
     <nav>
       <ul>
         {links.map((link, index) => (
-          <NavLinks key={index} {...link} state={state} setState={setState} />
+          <NavLinks key={index} links={link} isExpanded={isExpanded}/>
         ))}
       </ul>
     </nav>

@@ -13,40 +13,34 @@ import {
 
 export const links = [
   {
-    id: 1,
     icon: <LayoutDashboard />,
     title: "Dashboard",
     path: "/",
   },
   {
-    id: 2,
     icon: <ShoppingBasket />,
     title: "Productos",
     path: "/productos",
   },
   {
-    id: 3,
     icon: <ListOrdered />,
     title: "Pedidos",
     path: "/pedido",
   },
   {
-    id: 4,
     icon: <Boxes />,
     title: "Clientes",
     path: "/clientes",
   },
   {
-    id: 5,
     icon: <SlidersHorizontal />,
     title: "Categorias",
     path: "/categorias",
   },
   {
-    id: 6,
     icon: <Settings />,
     title: "Configuracion",
-    submenu: [
+    childrens: [
       {
         icon: <User />,
         title: "Usuarios",
@@ -65,13 +59,12 @@ export const links = [
     ],
   },
   {
-    id: 8,
     icon: <AlarmClock />,
     title: "Asistencia",
     path: "/asistencia",
   },
   {
-    id: 9,
+
     icon: <Boxes />,
     title: "Caja",
     path: "/caja",
