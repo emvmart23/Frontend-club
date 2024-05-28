@@ -32,8 +32,8 @@ export default function OrderTables({
       if (order.id === orderId) {
         return {
           ...order,
-          initialPrice: 20,
-          price: e.target.checked ? 0 : order.price, 
+          initialPrice: order.price,
+          price: e.target.checked ? 0 : order.initialPrice, 
         };
       }
       return order;
