@@ -9,6 +9,7 @@ interface Product {
   category_name: string;
   count: number;
   initialPrice: number;
+  totalPrice: number;
 }
 
 interface UnitMeasure {

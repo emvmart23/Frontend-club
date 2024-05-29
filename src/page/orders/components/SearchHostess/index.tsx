@@ -40,7 +40,7 @@ export default function SearchHostess() {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between"
+          className="w-full justify-between h-8 md:h-10"
         >
           {value
             ? hostess.find(({ user }: Attendace) => user == value)?.user

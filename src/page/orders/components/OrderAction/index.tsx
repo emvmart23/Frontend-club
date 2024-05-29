@@ -22,22 +22,23 @@ export default function OrderAction({
   formatOrders,
   setFormatOrder,
 }: Props) {
-  const [editedPrices, setEditedPrices] = useState<{ [id: number]: number }>(
-    {}
-  );
+  const [editedPrices, setEditedPrices] = useState<{
+    [id: number]: number | string;
+  }>({});
   const [editingProductId, setEditingProductId] = useState<number | null>(null);
   const [edit, setEdit] = useState(false);
-
-  // const handleBlur = (event: FocusEvent) => {
-  //   const cardElement = event.currentTarget;
-  //   const clickedOutside = !cardElement.contains(event.relatedTarget);
-  //   clickedOutside ? setEdit(false) : event.stopPropagation();
-  // };
 
   const toggleEdit = (productId: number) => {
     const product = filteredProducts.find((p) => p.id === productId);
 
     if (!product) return;
+
+    if ((editedPrices[productId] as number) < product.price) {
+      return toast({
+        description: "El precio no puede ser menor al precio del producto",
+        variant: "warning",
+      });
+    }
 
     if (editingProductId !== productId) {
       setEditedPrices({ ...editedPrices, [productId]: product.price });
@@ -47,36 +48,30 @@ export default function OrderAction({
     setEdit(!edit);
   };
 
-  const addOrder = (
-    productId: number,
-    editedPrice: number,
-    currentPrice: number
-  ) => {
+  const addOrder = (productId: number) => {
     const newProducts = [...filteredProducts];
     const orderInProcess = newProducts.find(
       (product) => product.id === productId
     ) as Product;
 
-    if (editedPrice < currentPrice) {
-      return toast({
-        description: "El precio editado no puede ser menor al precio actual",
-        variant: "destructive",
-      });
-    }
-
     const orderWithEditedPrice = {
       ...orderInProcess,
-      price: editedPrice,
+      price: (editedPrices[productId] as number) || orderInProcess.price,
     };
+
     setPendingOrders([...pendingOrders, orderWithEditedPrice]);
-    setEditedPrices({ ...editedPrices, [productId]: editedPrice });
+    toast({
+      description: "Producto agregado",
+      variant: "success",
+    });
   };
 
   const handlePriceChange = (
     e: ChangeEvent<HTMLInputElement>,
     productId: number
   ) => {
-    setEditedPrices({ ...editedPrices, [productId]: Number(e.target.value) });
+    const value = e.target.value === "" ? "" : Number(e.target.value);
+    setEditedPrices({ ...editedPrices, [productId]: value });
   };
 
   const deleteOneOrder = (productId: number) => {
@@ -98,10 +93,8 @@ export default function OrderAction({
           No hay resultados
         </div>
       ) : (
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-8 2xl:w-[90%] content-center mx-auto md:p-2">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-8 w-[88%] content-center mx-auto md:p-2">
           {filteredProducts.map((product) => {
-            console.log("editinProductId", editingProductId);
-            console.log("productid", product.id);
             const cardById = product.id === editingProductId;
 
             return (
@@ -112,11 +105,9 @@ export default function OrderAction({
                 <CardContent>
                   <Input
                     value={
-                      edit && cardById
-                        ? isNaN(editedPrices[product.id])
-                          ? ""
-                          : editedPrices[product.id]
-                        : product.price
+                      editedPrices[product.id] !== undefined
+                        ? editedPrices[product.id]?.toString()
+                        : product.price.toString()
                     }
                     disabled={!edit || !cardById}
                     onChange={(e) => handlePriceChange(e, product.id)}
@@ -131,18 +122,14 @@ export default function OrderAction({
                 </CardContent>
                 <CardTitle className="cursor-pointer">{product.name}</CardTitle>
                 <Button
+                  disabled={edit}
                   className="rounded-full p-2 absolute -right-4 w-8 h-8"
-                  onClick={() =>
-                    addOrder(
-                      product.id,
-                      editedPrices[product.id] || product.price,
-                      product.price
-                    )
-                  }
+                  onClick={() => addOrder(product.id)}
                 >
                   <Plus className="" />
                 </Button>
                 <Button
+                  disabled={edit}
                   className="rounded-full p-2 absolute -left-4 w-8 h-8"
                   onClick={() => deleteOneOrder(product.id)}
                 >

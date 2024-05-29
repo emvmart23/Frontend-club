@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/Table";
+import { toast } from "@/hooks/useToast";
 import { ChangeEvent } from "react";
 
 interface Props {
@@ -23,33 +24,36 @@ export default function OrderTables({
   formatOrder,
   setFormatOrder,
 }: Props) {
-
   const handleCheckboxChange = (
     e: ChangeEvent<HTMLInputElement>,
-    orderId: number,
+    orderId: number
   ) => {
-    const updatedOrder = formatOrder.map((order : Product) => {
+    const updatedOrder = formatOrder.map((order: Product) => {
       if (order.id === orderId) {
         return {
           ...order,
           initialPrice: order.price,
-          price: e.target.checked ? 0 : order.initialPrice, 
+          price: e.target.checked ? 0 : order.initialPrice,
         };
       }
       return order;
     });
     setFormatOrder(updatedOrder);
   };
-  
+
   const deleteOrder = (productId: number) => {
     const newPendingOrders = pendingOrders.filter(
       (product) => product.id !== productId
     ) as Product[];
     setPendingOrders(newPendingOrders);
+    toast({
+      description: "Producto eliminado",
+      variant: "destructive",
+    });
   };
   
   return (
-    <div className="overflow-auto mt-16 h-[15.3rem] w-full relative">
+    <div className="overflow-auto mt-8 h-[12rem] w-full relative z-50">
       <Table className="h-full">
         <TableHeader>
           <TableRow>

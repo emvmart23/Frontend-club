@@ -8,7 +8,7 @@ interface Props {
 export default function SearchProduct({ searchValue, setSearchValue }: Props) {
   return (
     <Input
-      className="w-full"
+      className="w-full h-8 md:h-10"
       type="text"
       value={searchValue}
       placeholder="buscar producto"

@@ -29,7 +29,7 @@ export default function SidebarItems({ links, isExpanded }: Props) {
     <div
       className={`${open ? "h-auto" : "h-[3.8rem]"} ${
         isExpanded ? "visible" : "invisible"
-      } md:visible ml-4 block rounded-md overflow-none px-2 pt-7`}
+      } lg:visible ml-4 block rounded-md overflow-none px-2 pt-7`}
     >
       <div onClick={handleClick} className="flex gap-x-4 items-center">
         <span className="flex justify-start gap-5">
@@ -56,7 +56,7 @@ export default function SidebarItems({ links, isExpanded }: Props) {
     <NavLink
       className={`${
         isExpanded ? "visible" : "invisible"
-      } md:visible flex w-[11.5rem] ml-4 h-[3.8rem]`}
+      } lg:visible flex w-[11.5rem] ml-4 h-[3.8rem]`}
       to={links.path || ""}
     >
       <div
@@ -70,19 +70,3 @@ export default function SidebarItems({ links, isExpanded }: Props) {
     </NavLink>
   );
 }
-
-// <NavLink
-//       onBlur={() => setState(false)}
-//       onClick={handleClick}
-//       to={path}
-//       className="group flex relative w-[12rem] ml-4 h-[3.8rem] mx-auto z-40"
-//     >
-//       <div
-//         className={`${
-//           isActive && "bg-foreground dark:text-black text-white"
-//         } p-2 w-full group-hover:bg-primary group-hover:text-background text-foreground rounded transition-all duration-75 origin-left mt-5 flex gap-5`}
-//       >
-//         <span>{icon}</span>
-//         <span className="origin-left">{title}</span>
-//       </div>
-//     </NavLink>
