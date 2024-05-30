@@ -19,10 +19,14 @@ import { useState } from "react";
 import { getAttendance } from "@/helpers/getAttendance";
 import { format } from "date-fns";
 
-export default function SearchHostess() {
+interface Props { 
+  value:string
+  setValue: (value:string) => void
+}
+
+export default function SearchHostess({ value, setValue } : Props) {
   const { data } = useQuery("Attendance", getAttendance);
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
   const currentDate = format(new Date(), "yyyy-MM-dd");
 
   const hostess = (data ? data.attendances : []).filter(

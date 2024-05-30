@@ -48,8 +48,8 @@ export default function AppLayout() {
           <Button
             onClick={btnUpdateMenuVisibility}
             className={`${
-              isExpanded ? "blocx" : "hidden"
-            } lg:hidden absolute top-4 right-4 p-2 w-8 h-8`}
+              isExpanded ? "block" : "hidden"
+            } lg:hidden absolute top-4 right-4 p-2 w-8 h-8 flex justify-center`}
             variant={"outline"}
           >
             <X />
@@ -59,7 +59,7 @@ export default function AppLayout() {
           </div>
         </div>
       </div>
-      <div className="transition-all duration-200 mx-auto w-[80%] md:w-[77%] lg:ml-[15rem] md:pl-20 max-w-320 pt-10">
+      <div className="transition-all duration-200 mx-auto w-[80%] md:w-full lg:w-[77%] lg:ml-[14rem] md:pl-20 max-w-320 pt-10">
         <Outlet />
       </div>
       <Toaster />

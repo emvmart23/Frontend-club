@@ -21,8 +21,10 @@ import {
 import api from "@/service";
 import { toast } from "@/hooks/useToast";
 import { Loader2 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Orders() {
+  const { user } = useAuth();
   const { data, isLoading } = useQuery("products", getProducts);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [formatOrder, setFormatOrder] = useState<Product[]>([]);
@@ -30,6 +32,7 @@ export default function Orders() {
   const [searchValue, setSearchValue] = useState("");
   const [orders, setOrders] = useState<Product[]>([]);
   const [isPending, setIsPending] = useState(false);
+  const [value, setValue] = useState("");
 
   const formatOrders = (array: Product[]) => {
     return array.reduce((acc, product) => {
@@ -48,20 +51,65 @@ export default function Orders() {
     return acc + Number(curr.price);
   }, 0);
 
-  const combineOrders = (formatOrders: Product[], totalPrice: number) => {
+  const combineOrders = (
+    formatOrders: Product[],
+    totalPrice: number,
+    hostess: string
+  ) => {
     return formatOrders.map((order) => {
       return {
         ...order,
+        hostess: hostess,
         total_price: totalPrice,
       };
     });
   };
 
+  const createHeader = async (headerData: { mozo: string | undefined }) => {
+    try {
+      const response = await api.post("/headers/create", headerData);
+
+      if (response.status !== 200) {
+        toast({
+          description: "Hubo un error al guardar el pedido",
+          variant: "destructive",
+        });
+      }
+      return response;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const saveOrder = async () => {
     setIsPending(true);
+
+    if (value === "" || value === undefined) {
+      toast({
+        description: "Debe seleccionar un mozo",
+        variant: "destructive",
+      });
+      setIsPending(false);
+      return;
+    }
+
     try {
-      const response = await api.post("/orders/create", orders);
-      if (response.status === 200) {
+      const header = {
+        mozo: user?.name,
+      };
+
+      const data = await createHeader(header);
+
+      const orderWithHosstes = orders.map((order) => {
+        return {
+          ...order,
+          hostess: value,
+        };
+      });
+
+      const response = await api.post("/orders/create", orderWithHosstes);
+
+      if (response.status === 200 && data?.status === 200) {
         toast({
           description: "Pedido guardado correctamente",
           variant: "success",
@@ -72,8 +120,10 @@ export default function Orders() {
           variant: "destructive",
         });
       }
-      setIsPending(false);
+
+      setValue("");
       setPendingOrders([]);
+      setIsPending(false);
     } catch (error) {
       console.log(error);
     } finally {
@@ -98,7 +148,7 @@ export default function Orders() {
   }, [data, searchValue]);
 
   useEffect(() => {
-    const combinedOrders = combineOrders(formatOrder, totalPrice);
+    const combinedOrders = combineOrders(formatOrder, totalPrice, value);
     setOrders(combinedOrders);
   }, [formatOrder]);
 
@@ -108,7 +158,7 @@ export default function Orders() {
         <h3 className="text-3xl">Pedido</h3>
         <div className="relative">
           <div className="flex flex-col md:flex-row gap-6 md:gap-8 lg:gap-24">
-            <SearchHostess />
+            <SearchHostess value={value} setValue={setValue} />
             <SearchProduct
               searchValue={searchValue}
               setSearchValue={setSearchValue}

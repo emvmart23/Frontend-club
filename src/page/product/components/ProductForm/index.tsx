@@ -33,7 +33,6 @@ interface Props {
 export default function ProductForm({ setIsOpen, setIsPending }: Props) {
   const category = useSelector((state: RootState) => state.categories.category);
   const units = useSelector((state: RootState) => state.units.unit);
-  console.log('data', units)
   const queryClient = useQueryClient();
   const form = useForm<z.infer<typeof ProductSchema>>({
     resolver: zodResolver(ProductSchema),
@@ -47,6 +46,7 @@ export default function ProductForm({ setIsOpen, setIsPending }: Props) {
   });
 
   const onSubmit = async (values: z.infer<typeof ProductSchema>) => {
+    console.log("producto", values)
     setIsPending(true);
     try {
       const { status } = await api.post("/products/create", values);

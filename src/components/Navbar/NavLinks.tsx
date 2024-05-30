@@ -27,9 +27,9 @@ export default function SidebarItems({ links, isExpanded }: Props) {
 
   return links.childrens ? (
     <div
-      className={`${open ? "h-auto" : "h-[3.8rem]"} ${
-        isExpanded ? "visible" : "invisible"
-      } lg:visible ml-4 block rounded-md overflow-none px-2 pt-7`}
+     className={`${open ? "h-auto" : "h-[3.8rem]"} ${
+    isExpanded ? "visible" : "invisible"
+  } lg:visible ml-4 block rounded-md overflow-none px-2 pt-7`}
     >
       <div onClick={handleClick} className="flex gap-x-4 items-center">
         <span className="flex justify-start gap-5">
