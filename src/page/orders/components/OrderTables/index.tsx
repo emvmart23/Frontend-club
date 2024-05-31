@@ -24,11 +24,12 @@ export default function OrderTables({
   formatOrder,
   setFormatOrder,
 }: Props) {
+
   const handleCheckboxChange = (
     e: ChangeEvent<HTMLInputElement>,
     orderId: number
   ) => {
-    const updatedOrder = formatOrder.map((order: Product) => {
+    const updatedOrders = formatOrder.map((order: Product) => {
       if (order.id === orderId) {
         return {
           ...order,
@@ -38,7 +39,7 @@ export default function OrderTables({
       }
       return order;
     });
-    setFormatOrder(updatedOrder);
+    setFormatOrder(updatedOrders);
   };
 
   const deleteOrder = (productId: number) => {

@@ -30,7 +30,7 @@ export default function AttendanceActions() {
         <Button disabled={boxIsClose === true ? false : true }>Asistencia</Button>
       </DialogTrigger>
       <DialogContent className="md:max-w-2xl h-[30rem]">
-        <AttendanceForm />
+        <AttendanceForm setIsOpen={setIsOpen}/>
       </DialogContent>
     </Dialog>
   );

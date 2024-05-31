@@ -35,16 +35,28 @@ export default function Orders() {
   const [value, setValue] = useState("");
 
   const formatOrders = (array: Product[]) => {
-    return array.reduce((acc, product) => {
-      const productExist = acc.find((obj) => obj.id == product.id);
-      if (productExist) {
-        productExist.count = productExist.count + 1;
-        productExist.price = Number(product.price) * productExist.count;
+    const formattedOrders = array.reduce((acc, product) => {
+      const existingProduct = acc.find((obj) => obj.id === product.id);
+      if (existingProduct) {
+        existingProduct.count = existingProduct.count + 1;
+        existingProduct.price = Number(product.price) * existingProduct.count;
       } else {
-        acc.push({ ...product, count: 1 });
+        const newProduct = { ...product, count: 1 };
+        
+        const modifiedProduct = formatOrder.find(
+          (order) => order.id === newProduct.id
+        );
+        if (modifiedProduct) {
+          newProduct.price = modifiedProduct.price;
+          newProduct.initialPrice = modifiedProduct.initialPrice;
+        }
+  
+        acc.push(newProduct);
       }
       return acc;
     }, [] as Product[]);
+    return formattedOrders
+    setFormatOrder(formattedOrders);
   };
 
   const totalPrice = formatOrder.reduce((acc, curr) => {
@@ -86,8 +98,8 @@ export default function Orders() {
 
     if (value === "" || value === undefined) {
       toast({
-        description: "Debe seleccionar un mozo",
-        variant: "destructive",
+        description: "Debe seleccionar una anfitriona",
+        variant: "warning",
       });
       setIsPending(false);
       return;

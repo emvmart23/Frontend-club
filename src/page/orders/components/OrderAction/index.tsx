@@ -40,9 +40,9 @@ export default function OrderAction({
       });
     }
 
-    if (editingProductId !== productId) {
-      setEditedPrices({ ...editedPrices, [productId]: product.price });
-    }
+    // if (editingProductId !== productId) {
+    //   setEditedPrices({ ...editedPrices, [productId]: product.price });
+    // }
 
     setEditingProductId(editingProductId === productId ? null : productId);
     setEdit(!edit);

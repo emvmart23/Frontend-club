@@ -15,31 +15,53 @@ import { useEffect } from "react";
 import { getUsersWithOutRedux } from "@/store/slices/user/thunk";
 import { Button } from "@/components/ui/Button";
 import { useQueryClient } from "react-query";
+import { Skeleton } from "@/components/ui/Skeleton";
 
-export default function AttendanceForm() {
+interface Props {
+  setIsOpen: (value: boolean) => void;
+}
+
+export default function AttendanceForm({ setIsOpen }: Props) {
   const queryClient = useQueryClient();
   const currentDate = format(new Date(), "yyyy-MM-dd");
   const [users, setUsers] = useState<Attendace[]>([]);
   const [textShadow, setTextShadow] = useState<User[]>([]);
   const [allAttendances, setAllAttendances] = useState<Attendace[]>([]);
-  
-  
-  // const isPresent =  allAttendances.filter(attendance => attendance.date === currentDate).map(i => !!i.present);
-  const fetchUsers = async () => {
-    const allUsers = await getUsersWithOutRedux();
-    setTextShadow(allUsers.map((user: User) => user.name));
-    const { data } = await api.get("/attendances");
-    setAllAttendances(data.attendances);
-    setUsers(
-      allUsers.map((u: Attendace) => {
-        return {
-          user_id: u.id,
-          present: false,
-          date: currentDate,
-        };
-      })
-    );
-  };
+  const [isPending, setIsPending] = useState(false);
+
+  useEffect(() => {
+    setIsPending(true);
+    const fetchData = async () => {
+      try {
+        const allUsers = await getUsersWithOutRedux();
+        setTextShadow(allUsers.map((user: User) => user.name));
+
+        const { data } = await api.get("/attendances");
+        setAllAttendances(data.attendances);
+
+        const isPresent = data.attendances.filter(
+          (attendance: Attendace) => attendance.date === currentDate
+        );
+        const isAttendancePresent = (index: number) =>
+          isPresent[index] && isPresent[index].present;
+
+        setUsers(
+          allUsers.map((u: Attendace, index: number) => {
+            return {
+              user_id: u.id,
+              present: isAttendancePresent(index),
+              date: currentDate,
+            };
+          })
+        );
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsPending(false);
+      }
+    };
+    fetchData();
+  }, [currentDate]);
 
   const isDateExist = allAttendances.some(
     (attendance) => attendance.box_date === currentDate
@@ -49,10 +71,6 @@ export default function AttendanceForm() {
     users[index].present = !users[index].present;
     setUsers([...users]);
   };
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -66,6 +84,7 @@ export default function AttendanceForm() {
           });
         }
         queryClient.invalidateQueries("Attendance");
+        setIsOpen(false);
       } catch (error) {
         toast({
           description: "Error al actualizar",
@@ -75,7 +94,6 @@ export default function AttendanceForm() {
     } else {
       try {
         const { status } = await api.post("/attendances/create", users);
-        console.log(users)
         if (status == 201) {
           toast({
             description: "Asistencia guardada",
@@ -83,6 +101,7 @@ export default function AttendanceForm() {
           });
         }
         queryClient.invalidateQueries("Attendance");
+        setIsOpen(false);
       } catch (error) {
         toast({
           description: "Error al registrar",
@@ -98,52 +117,64 @@ export default function AttendanceForm() {
       onSubmit={onSubmit}
       className="space-y-5 flex-col flex w-full p-8 border border-foreground rounded-md shadow-2xl overflow-auto"
     >
-      <div className="flex justify-between">
-        <div className="flex justify-center items-center gap-4">
-          <label className="font-semibold">Fecha</label>
-          <Input readOnly placeholder={format(new Date(), "yyyy-MM-dd' 'HH:mm:ss")} />
-        </div>
-        <div className="flex justify-center items-center gap-4">
-          <label className="font-semibold">Fecha caja</label>
-          <Input className="w-32" placeholder={format(new Date(), "yyyy-MM-dd")}/>
-        </div>
-      </div>
-      <Table className="w-full">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Usuario</TableHead>
-            <TableHead>Asistencia</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-            {users.map((user, index) => (
-              <TableRow key={user.user_id} >
-                <TableCell className="relative">
-                  <Input
-                    readOnly
-                    type="text"
-                    value={user.user_id}
-                    className="transparent text-shadow hidden"
-                  />
-                  <span className="absolute top-[å©30%]">
-                    {textShadow[index].toString()}
-                  </span>
-                </TableCell>
-                <TableCell>
-                  <div className="w-8 h-8 p-1 ml-4">
-                    <Input
-                      className="w-full h-full"
-                      type="checkbox"
-                      onChange={() => handleCheckOnChange(index)}
-                      value={user.present ? "on" : "off"}
-                      //checked={isPresent[index]}
-                    />
-                  </div>
-                </TableCell>
+      {isPending ? (
+        <Skeleton className="h-[326px] w-[34.5rem]" />
+      ) : (
+        <>
+          <div className="flex justify-between">
+            <div className="flex justify-center items-center gap-4">
+              <label className="font-semibold">Fecha</label>
+              <Input
+                readOnly
+                placeholder={format(new Date(), "yyyy-MM-dd' 'HH:mm:ss")}
+              />
+            </div>
+            <div className="flex justify-center items-center gap-4">
+              <label className="font-semibold">Fecha caja</label>
+              <Input
+                className="w-32"
+                placeholder={format(new Date(), "yyyy-MM-dd")}
+              />
+            </div>
+          </div>
+          <Table className="w-full">
+            <TableHeader>
+              <TableRow>
+                <TableHead>Usuario</TableHead>
+                <TableHead>Asistencia</TableHead>
               </TableRow>
-            ))}
-        </TableBody>
-      </Table>
+            </TableHeader>
+            <TableBody>
+              {users.map((user, index) => (
+                <TableRow key={user.user_id}>
+                  <TableCell className="relative">
+                    <Input
+                      readOnly
+                      type="text"
+                      value={user.user_id}
+                      className="transparent text-shadow hidden"
+                    />
+                    <span className="text-[1rem] font-medium">
+                      {textShadow[index].toString()}
+                    </span>
+                  </TableCell>
+                  <TableCell>
+                    <div className="w-8 h-8 p-1 ml-4">
+                      <Input
+                        className="w-full h-full"
+                        type="checkbox"
+                        onChange={() => handleCheckOnChange(index)}
+                        value={user.present ? "on" : "off"}
+                        checked={user.present ? true : false}
+                      />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </>
+      )}
       {isDateExist ? (
         <Button className="" type="submit">
           Editar
