@@ -43,7 +43,7 @@ export default function AttendanceForm({ setIsOpen }: Props) {
           (attendance: Attendace) => attendance.date === currentDate
         );
         const isAttendancePresent = (index: number) =>
-          isPresent[index] && isPresent[index].present;
+          isPresent[index] ? isPresent[index].present : false;
 
         setUsers(
           allUsers.map((u: Attendace, index: number) => {
@@ -103,6 +103,7 @@ export default function AttendanceForm({ setIsOpen }: Props) {
         queryClient.invalidateQueries("Attendance");
         setIsOpen(false);
       } catch (error) {
+        console.log(error)
         toast({
           description: "Error al registrar",
           variant: "destructive",

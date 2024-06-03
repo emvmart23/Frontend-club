@@ -1,6 +1,8 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
 import AppLayout from "@/layout/AppLayout";
 import Attendance from "@/page/attendance/page/Attendance";
+import OrderHandling from "@/page/barman/page/OrderHandling";
+import OrdersProcessed from "@/page/barman/page/OrdersProcessed";
 import Boxes from "@/page/box/page/Boxes";
 import Categories from "@/page/category/page/Categories";
 import Customers from "@/page/customer/page/Customers";
@@ -59,6 +61,14 @@ const appRouter = [
       {
         path: '/pedido',
         element: <Orders/>
+      },
+      {
+        path: '/atencion-de-pedidos',
+        element: <OrderHandling/>
+      },
+      {
+        path: '/pedidos-atendidos',
+        element: <OrdersProcessed/>
       }
     ],
   },

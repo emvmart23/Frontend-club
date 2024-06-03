@@ -31,7 +31,7 @@ export default function SidebarItems({ links, isExpanded }: Props) {
     isExpanded ? "visible" : "invisible"
   } lg:visible ml-4 block rounded-md overflow-none px-2 pt-7`}
     >
-      <div onClick={handleClick} className="flex gap-x-4 items-center">
+      <div onClick={handleClick} className="flex gap-x-3 items-center">
         <span className="flex justify-start gap-5">
           {links.icon && <i>{links.icon}</i>}
           <span>{links.title}</span>
@@ -44,8 +44,8 @@ export default function SidebarItems({ links, isExpanded }: Props) {
       </div>
       <div
         className={`${
-          open ? "h-auto block" : "h-[0rem] hidden"
-        } transition-all duration-300`}
+          open ? "h-auto block text-[0.8rem] leading-loose" : "h-[0rem] hidden"
+        } transition-all duration-300 font-normal`}
       >
         {links?.childrens.map((child, index) => (
           <SidebarItems key={index} links={child} />

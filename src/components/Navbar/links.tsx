@@ -9,6 +9,7 @@ import {
   ShoppingBasket,
   SlidersHorizontal,
   User,
+  Wine,
 } from "lucide-react";
 
 export const links = [
@@ -64,9 +65,24 @@ export const links = [
     path: "/asistencia",
   },
   {
-
     icon: <Boxes />,
     title: "Caja",
     path: "/caja",
+  },
+  {
+    icon: <Wine />,
+    title: "Barman",
+    childrens: [
+      {
+        icon: <Fingerprint />,
+        title: "Atencion de pedidos",
+        path: "/atencion-de-pedidos",
+      },
+      {
+        icon: <Combine />,
+        title: "Pedidos atendidos",
+        path: "/pedidos-atendidos",
+      },
+    ],
   },
 ];
