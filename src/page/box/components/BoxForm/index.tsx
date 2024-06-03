@@ -24,7 +24,7 @@ interface Props {
   setIsPending: (value: boolean) => void;
   setIsOpen: (value: boolean) => void;
 }
-
+//corregir este codigo
 export const getBoxes = async () => {
   try {
     const { data } = await api.get("/boxes");
