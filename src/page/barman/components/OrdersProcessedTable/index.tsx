@@ -28,18 +28,18 @@ import {
   TableRow,
 } from "@/components/ui/Table";
 import { Skeleton } from "@/components/ui/Skeleton";
-import  { columns }  from "../managment/column";
+import { columns } from "../managment/column";
 
 interface Props {
   data: Header[];
   isLoading: boolean;
 }
 
-export default function  OrdersProcessedDataTable({ data, isLoading }: Props) {
+export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-     [{ id: "state", value: "0" }]
-  );
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([
+    { id: "state", value: "00" },
+  ]);
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
@@ -61,18 +61,39 @@ export default function  OrdersProcessedDataTable({ data, isLoading }: Props) {
       rowSelection,
     },
   });
+
   return (
     <div className="w-full mx-auto">
       <div className="flex items-center py-4">
-        <Input
-          type=""
-          placeholder="Filter name..."
-          value={(table.getColumn("")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("")?.setFilterValue(event.target.value)
-          }
-          className="max-w-[10rem]"
-        />
+        <div className="flex gap-6">
+          <Input
+            type="text"
+            placeholder="Filter mozo..."
+            value={(table.getColumn("mozo")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("")?.setFilterValue(event.target.value)
+            }
+            className="max-w-[10rem]"
+          />
+          <Input
+            type="date"
+            placeholder="Filter name..."
+            value={(table.getColumn("created_at")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("")?.setFilterValue(event.target.value)
+            }
+            className="max-w-[10rem]"
+          />
+          <Input
+            type="text"
+            placeholder="Filtart anfitriona..."
+            value={(table.getColumn("hostess")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("")?.setFilterValue(event.target.value)
+            }
+            className="max-w-[10rem]"
+          />
+        </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">

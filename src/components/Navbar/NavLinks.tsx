@@ -3,7 +3,10 @@ import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 interface Props {
+  setIsOpenSubmenu: (value: boolean) => void;
+  setIsExpanded: (value: boolean) => void;
   isExpanded?: boolean;
+  isOpenSubmenu: boolean;
   links: {
     icon: React.ReactNode;
     title: string;
@@ -27,9 +30,9 @@ export default function SidebarItems({ links, isExpanded }: Props) {
 
   return links.childrens ? (
     <div
-     className={`${open ? "h-auto" : "h-[3.8rem]"} ${
-    isExpanded ? "visible" : "invisible"
-  } lg:visible ml-4 block rounded-md overflow-none px-2 pt-7`}
+      className={`${open ? "h-auto" : "h-[3.8rem]"} ${
+        isExpanded ? "visible" : "invisible"
+      } lg:visible ml-4 block rounded-md overflow-none px-2 pt-7`}
     >
       <div onClick={handleClick} className="flex gap-x-3 items-center">
         <span className="flex justify-start gap-5">
@@ -48,15 +51,26 @@ export default function SidebarItems({ links, isExpanded }: Props) {
         } transition-all duration-300 font-normal`}
       >
         {links?.childrens.map((child, index) => (
-          <SidebarItems key={index} links={child} />
+          <NavLink
+            key={index}
+            className="flex w-[11.5rem] ml-4 h-[3.8rem]"
+            to={child.path || ""}
+          >
+            <div
+              className={`${
+                isActive && "bg-foreground dark:text-black text-white"
+              } p-2 w-full group-hover:bg-primary group-hover:text-background text-foreground rounded transition-all duration-75 origin-left mt-5 flex gap-5`}
+            >
+              {child.icon && <i>{child.icon}</i>}
+              {child.title}
+            </div>
+          </NavLink>
         ))}
       </div>
     </div>
   ) : (
     <NavLink
-      className={`${
-        isExpanded ? "visible" : "invisible"
-      } lg:visible flex w-[11.5rem] ml-4 h-[3.8rem]`}
+      className={` ${ isExpanded ? "visible" : "invisible" } lg:visible flex w-[11.5rem] ml-4 h-[3.8rem]`}
       to={links.path || ""}
     >
       <div

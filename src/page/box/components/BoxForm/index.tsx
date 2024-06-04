@@ -18,21 +18,13 @@ import { BoxSchema } from "@/lib/validators/box";
 import api from "@/service";
 import { useAuth } from "@/hooks/useAuth";
 import { format } from "date-fns";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
+import { getBoxes } from "@/helpers/getBoxes";
 
 interface Props {
   setIsPending: (value: boolean) => void;
   setIsOpen: (value: boolean) => void;
 }
-//corregir este codigo
-export const getBoxes = async () => {
-  try {
-    const { data } = await api.get("/boxes");
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 export default function BoxForm({ setIsPending, setIsOpen }: Props) {
   const [allBoxes, setAllBoxes] = useState<Box[]>([]);
@@ -53,14 +45,19 @@ export default function BoxForm({ setIsPending, setIsOpen }: Props) {
   });
 
   const fetchBoxes = async () => {
-    const data = await getBoxes();
-    setAllBoxes(data.boxes);
+    try {
+      const  data  = await getBoxes();
+      setAllBoxes(data.boxes);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const lastId = allBoxes.reduceRight(
     (maxId, box) => Math.max(maxId, box.id),
     0
   );
+
   const lastBox = allBoxes.find((box) => box.id === lastId);
 
   const onSubmit = async (values: z.infer<typeof BoxSchema>) => {

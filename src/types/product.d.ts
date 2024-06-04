@@ -31,5 +31,7 @@ interface Header {
   count: number;
   total_price: number;
   orders: Orders[];
+  hostess:string;
   state:number
+  created_at:string;
 }

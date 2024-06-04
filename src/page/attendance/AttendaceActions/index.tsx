@@ -2,7 +2,8 @@ import { Button } from "@/components/ui/Button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/Dialog";
 import { useEffect, useState } from "react";
 import AttendanceForm from "../AttendanceForm";
-import { getBoxes } from "@/page/box/components/BoxForm";
+import { getBoxes } from "@/helpers/getBoxes";
+
 
 export default function AttendanceActions() {
   const [allBoxes, setBoxes] = useState<Box[]>([]);

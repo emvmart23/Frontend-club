@@ -12,10 +12,12 @@ import useBreakpointer from "@/hooks/useBreackpointer";
 export default function AppLayout() {
   const { user } = useAuth();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [open, setOpen] = useState(false)
   const width = useBreakpointer();
 
   const btnUpdateMenuVisibility = () => {
     setIsExpanded(!isExpanded);
+    setOpen(false);
   };
 
   useEffect(() => {
@@ -55,7 +57,7 @@ export default function AppLayout() {
             <X />
           </Button>
           <div className="mt-20">
-            <Sidebar isExpanded={isExpanded} />
+            <Sidebar isExpanded={isExpanded} setIsExpanded={setIsExpanded} open={open} setOpen={setOpen}/>
           </div>
         </div>
       </div>
