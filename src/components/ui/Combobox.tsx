@@ -1,115 +1,78 @@
-import { Popover } from "@radix-ui/react-popover";
-import { useState } from "react";
-import { PopoverContent, PopoverTrigger } from "./Popover";
-import { Button } from "./Button";
-import { cn } from "@/lib/utils/tools";
-import { Check, ChevronsUpDown } from "lucide-react";
+import React, { useState } from 'react'
+import { Popover, PopoverContent, PopoverTrigger } from './Popover';
+import { Button } from './Button';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from './Command';
+import { CheckIcon } from 'lucide-react';
+import { cn } from '@/lib/utils/tools';
 
-import {
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "./Command";
-import { ScrollArea } from "./ScrollArea";
-
-export type ComboboxTypeProps = {
+interface Option {
+  value:string;
   label: string;
-  value: string;
-};
+}
 
-type ComboboxProps = {
-  value: string;
-  onSelect: (value: string | undefined) => void;
-  items: ComboboxTypeProps[];
-  searchPlaceholders?: string;
-  noResultsMsg?: string;
-  selecItemMsg: string;
-  className?: string;
-  unSelect?: boolean;
-  unSelectMsg?: string;
-  onSearchChange?: (e: string) => void;
-};
+interface Props {
+  selectItemMsg?:string;
+  data: Option[]
+  onSelect: ( selectedValue: string ) => void
+}
 
-export default function Combobox({
-  value,
-  onSelect,
-  items,
-  searchPlaceholders = "Buscar item",
-  noResultsMsg = "No se encontro",
-  selecItemMsg = "Selecciona un item",
-  className,
-  unSelect,
-  unSelectMsg,
-  onSearchChange,
-}: ComboboxProps) {
-  const [open, setOpen] = useState(false);
+function Combobox({ data, onSelect, selectItemMsg } : Props) {
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState("");
 
-  //use debounce here
-  const handleOnSearchChange = (e: string) => {
-    if (e === "") {
-      return;
-    }
+    const handleSelect = (selectedValue: string) => {
+        setValue(selectedValue);
+        setOpen(false);
+        onSelect(selectedValue);
+    };
 
-    if (onSearchChange) {
-      onSearchChange(e);
-    }
-  };
-
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          type="button"
-          role="combobox"
-          aria-expanded={open}
-          className={cn("justify-between", className)}
-        >
-          {value
-            ? items.find((item) => item.value === value)?.label
-            : selecItemMsg}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="p-0">
-        <CommandInput
-          placeholder={searchPlaceholders}
-          onValueChange={handleOnSearchChange}
-        />
-        <ScrollArea className="max-h-[220px] overflow-auto">
-          <CommandEmpty>{noResultsMsg}</CommandEmpty>
-          <CommandGroup>
-            {unSelect && (
-              <CommandItem>
-                <Check
-                  className={cn(
-                    "mr-2 h-4 w-4",
-                    value === "" ? "oapcity-100" : "opacity-0"
-                  )}
-                />
-                {unSelectMsg}
-              </CommandItem>
-            )}
-            {items.map((item) => (
-              <CommandItem
-                key={item.value}
-                value={item.label}
-                onSelect={(currentValue) => {
-                  onSelect(
-                    currentValue === item.label.toLocaleLowerCase()
-                      ? item.value
-                      : ""
-                  );
-                  setOpen(false);
-                }}
+    return (
+      <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+              <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={open}
+                  className="w-full justify-between"
               >
-                {item.label}
-              </CommandItem>
-            ))}
-          </CommandGroup>
-        </ScrollArea>
-      </PopoverContent>
-    </Popover>
+                  {value ? data.find((item) => item.value === value)?.label : selectItemMsg}
+                  <CheckIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-full p-0">
+              <Command>
+                  <CommandInput placeholder="Search..." className="h-9" />
+                  <CommandList
+                  >
+                      <CommandEmpty>No item found.</CommandEmpty>
+                      <CommandGroup heading="Options">
+                          {data?.map((item) => (
+                              <CommandItem
+                                  key={item.value}
+                                  onSelect={() => handleSelect(item.value)}
+                                  className={cn("flex items-center", {
+                                      "bg-primary-50": item.value === value,
+                                      "cursor-not-allowed opacity-50": item.value === value,
+                                  })}
+                                  disabled={item.value === value}
+                              >
+                                  {item.label}
+                                  <CheckIcon
+                                      className={cn(
+                                          "ml-auto h-4 w-4",
+                                          value === item.value ? "opacity-100" : "opacity-0"
+                                      )}
+                                  />
+                              </CommandItem>
+                          ))}
+                      </CommandGroup>
+                  </CommandList>
+              </Command>
+          </PopoverContent>
+      </Popover>
   );
+}
+
+export {
+   Combobox
 }
