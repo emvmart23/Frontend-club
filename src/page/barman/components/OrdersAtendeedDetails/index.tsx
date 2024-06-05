@@ -16,9 +16,12 @@ export default function OrdersAtendeedDetails({ data }: Props) {
       <DialogHeader>
         <DialogTitle>Productos atendidos</DialogTitle>
       </DialogHeader>
-      <ul className="grid gap-4 py-4">
+      <ul className="grid gap-4 py-4 font-medium pl-6 list-disc">
         {data.map((item, index) => (
-          <li key={index}> <span> </span> {item.name}</li>
+          <li key={index}>
+            {" "}
+            <span>{item.count}</span> {item.name}
+          </li>
         ))}
       </ul>
       <DialogFooter>

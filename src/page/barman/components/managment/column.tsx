@@ -2,8 +2,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/Button";
 import { ArrowUpDown, Eye } from "lucide-react";
 import { Dialog, DialogTrigger } from "@/components/ui/Dialog";
-import OrdersAtendeedDetails from "../OrdersAtendeedDetails";
 import { format } from "date-fns";
+import OrdersAtendeedDetails from "../OrdersAtendeedDetails";
 
 export const columns: ColumnDef<Header>[] = [
   {
@@ -69,7 +69,7 @@ export const columns: ColumnDef<Header>[] = [
       );
     },
     cell: ({ row }) => {
-      return <div>{row.getValue('')}</div>  
+      return <div>{row.getValue('hostess')}</div>  
     }
   },
   {
@@ -85,7 +85,7 @@ export const columns: ColumnDef<Header>[] = [
         </Button>
       );
     },
-    cell: ({row}) => {
+    cell: () => {
       return (
         <Dialog>
           <DialogTrigger>
@@ -93,7 +93,6 @@ export const columns: ColumnDef<Header>[] = [
               <Eye />
             </Button>
           </DialogTrigger> 
-          {/* <OrdersAtendeedDetails data={row.original.orders}/> */}
         </Dialog>
       );
     },

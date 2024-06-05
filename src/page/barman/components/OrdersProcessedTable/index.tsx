@@ -71,7 +71,7 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
             placeholder="Filter mozo..."
             value={(table.getColumn("mozo")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
-              table.getColumn("")?.setFilterValue(event.target.value)
+              table.getColumn("mozo")?.setFilterValue(event.target.value)
             }
             className="max-w-[10rem]"
           />
@@ -80,7 +80,7 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
             placeholder="Filter name..."
             value={(table.getColumn("created_at")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
-              table.getColumn("")?.setFilterValue(event.target.value)
+              table.getColumn("created_at")?.setFilterValue(event.target.value)
             }
             className="max-w-[10rem]"
           />
@@ -89,7 +89,7 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
             placeholder="Filtart anfitriona..."
             value={(table.getColumn("hostess")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
-              table.getColumn("")?.setFilterValue(event.target.value)
+              table.getColumn("hostess")?.setFilterValue(event.target.value)
             }
             className="max-w-[10rem]"
           />

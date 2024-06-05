@@ -32,7 +32,7 @@ export default function Orders() {
   const [searchValue, setSearchValue] = useState("");
   const [orders, setOrders] = useState<Product[]>([]);
   const [isPending, setIsPending] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(0);
 
   const formatOrders = (array: Product[]) => {
     const formattedOrders = array.reduce((acc, product) => {
@@ -66,7 +66,7 @@ export default function Orders() {
   const combineOrders = (
     formatOrders: Product[],
     totalPrice: number,
-    hostess: string
+    hostess: number
   ) => {
     return formatOrders.map((order) => {
       return {
@@ -92,11 +92,11 @@ export default function Orders() {
       console.log(err);
     }
   };
-
+console.log(value)
   const saveOrder = async () => {
     setIsPending(true);
 
-    if (value === "" || value === undefined) {
+    if (value <= 1) {
       toast({
         description: "Debe seleccionar una anfitriona",
         variant: "warning",
@@ -115,7 +115,7 @@ export default function Orders() {
       const orderWithHosstes = orders.map((order) => {
         return {
           ...order,
-          hostess: value,
+          hostess_id: value,
         };
       });
 
@@ -133,7 +133,7 @@ export default function Orders() {
         });
       }
 
-      setValue("");
+      setValue(0);
       setPendingOrders([]);
       setIsPending(false);
     } catch (error) {

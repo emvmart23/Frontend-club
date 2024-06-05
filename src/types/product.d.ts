@@ -30,8 +30,9 @@ interface Header {
   mozo: string;
   count: number;
   total_price: number;
-  orders: Orders[];
   hostess:string;
+  orders: Orders[];
+  hostess_id:string;
   state:number
   created_at:string;
 }

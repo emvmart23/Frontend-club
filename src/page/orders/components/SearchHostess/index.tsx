@@ -20,8 +20,8 @@ import { getAttendance } from "@/helpers/getAttendance";
 import { format } from "date-fns";
 
 interface Props { 
-  value:string
-  setValue: (value:string) => void
+  value:number
+  setValue: (value:number) => void
 }
 
 export default function SearchHostess({ value, setValue } : Props) {
@@ -36,7 +36,7 @@ export default function SearchHostess({ value, setValue } : Props) {
       role_user === 4 &&
       Number(present) === 1
   );
-
+  console.log("value", value)
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -47,7 +47,7 @@ export default function SearchHostess({ value, setValue } : Props) {
           className="w-full justify-between h-8 md:h-10"
         >
           {value
-            ? hostess.find(({ user }: Attendace) => user == value)?.user
+            ? hostess.find(({ user_id }: Attendace) => user_id == value)?.user
             : "Seleccionar anfitriona..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -58,19 +58,19 @@ export default function SearchHostess({ value, setValue } : Props) {
           <CommandEmpty>Anfitriona no encontrada</CommandEmpty>
           <CommandGroup>
             {hostess.length > 0 ? (
-              hostess.map(({ id, user }: Attendace) => (
+              hostess.map(({ id, user_id, user }: Attendace) => (
                 <CommandItem
                   key={id}
-                  value={user}
+                  value={id.toString()}
                   onSelect={() => {
-                    setValue(user);
+                    setValue(user_id);
                     setOpen(false);
                   }}
                 >
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === user ? "opacity-100" : "opacity-0"
+                      value === user_id ? "opacity-100" : "opacity-0"
                     )}
                   />
                   {user}
