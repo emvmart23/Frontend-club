@@ -7,10 +7,11 @@ export default function OrdersProcessed() {
   const dataHeaders = data ? data : [];
 
   const format = dataHeaders.map((item: Header) => {
-    const order = item.orders.find((item) => item);
+    const order = item.orders.find((order) =>order);
     return {
       ...item,
-      hostess: order?.hostess,
+      hostess_id: order?.hostess_id,
+      hostess: order?.hostess
     };
   });
 

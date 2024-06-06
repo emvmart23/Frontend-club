@@ -38,7 +38,7 @@ interface Props {
 }
 
 export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
-  const [hostess, setHostess] = React.useState<[]>([]);
+  const [users, setUsers] = React.useState<[]>([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([
     { id: "state", value: "00" },
@@ -68,21 +68,20 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
   const fetchUsers = async () => {
     try {
       const response = await getUsers();
-      setHostess(response.data);
+      setUsers(response.data);
     } catch (err) {
       console.log(err);
     }
   };
 
-  
-  const formatHostess = hostess
-  .filter((user : User) => user.role_id === 4)
-  .map((user: User) => {
-    return {
-      value: user.id.toString(),
-      label: user.name,
-    };
-  });
+  const formatUsers = (rol:number) => users
+    .filter((user: User) => user.role_id === rol)
+    .map((user: User) => {
+      return {
+        value: user.id.toString(),
+        label: user.name,
+      };
+    });
 
   React.useEffect(() => {
     fetchUsers();
@@ -91,17 +90,34 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
   return (
     <div className="w-full mx-auto">
       <div className="flex items-center py-4">
-        <div className="flex gap-6">
-          <Combobox selectItemMsg="Selecciona una anfitriona" data={formatHostess} onSelect={() => (table.getColumn("hostess")?.getFilterValue() as string) ?? ""} />
-          <Combobox selectItemMsg="Selecciona una mozo"  data={[]} onSelect={() => ""} />
-          <Input
-            type="text"
-            placeholder="Filter mozo..."
-            value={(table.getColumn("mozo")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("mozo")?.setFilterValue(event.target.value)
+        <div className="flex gap-4">
+          <Combobox
+            heading={"Anfitriones"}
+            selectItemMsg="Filtra por anfitriona"
+            data={formatUsers(4)}
+            // onSelect={(value) =>
+            //   table.getColumn("hostess")?.setFilterValue(value)
+            // }
+            onSelect={(value) =>
+              ""
             }
-            className="max-w-[10rem]"
+            tabelValue={
+              (table.getColumn("hostess")?.getFilterValue() as string) ?? ""
+            }
+            onChange={(value) =>
+              table.getColumn("hostess")?.setFilterValue(value)
+            }
+          />
+          <Combobox
+            heading="Mozos"
+            selectItemMsg="Filtra por mozo"
+            data={formatUsers(7)}
+            // onSelect={(value) => table.getColumn("mozo")?.setFilterValue(value)}
+            onSelect={(value) => ""}
+            tabelValue={
+              (table.getColumn("mozo")?.getFilterValue() as string) ?? ""
+            }
+            onChange={(value) => table.getColumn("mozo")?.setFilterValue(value)}
           />
           <Input
             type="date"
@@ -112,7 +128,7 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
             onChange={(event) =>
               table.getColumn("created_at")?.setFilterValue(event.target.value)
             }
-            className="max-w-[10rem]"
+            className="min-w-[10rem]"
           />
         </div>
         <DropdownMenu>

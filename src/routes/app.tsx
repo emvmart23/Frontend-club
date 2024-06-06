@@ -1,4 +1,5 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
+import RouteNotFound from "@/components/RouteNotFound";
 import AppLayout from "@/layout/AppLayout";
 import Attendance from "@/page/attendance/page/Attendance";
 import OrderHandling from "@/page/barman/page/OrderHandling";
@@ -51,25 +52,29 @@ const appRouter = [
         element: <Units />,
       },
       {
-        path: '/asistencia',
-        element: <Attendance/>
+        path: "/asistencia",
+        element: <Attendance />,
       },
       {
-        path: '/caja',
-        element: <Boxes/>
+        path: "/caja",
+        element: <Boxes />,
       },
       {
-        path: '/pedido',
-        element: <Orders/>
+        path: "/pedido",
+        element: <Orders />,
       },
       {
-        path: '/atencion-de-pedidos',
-        element: <OrderHandling/>
+        path: "/atencion-de-pedidos",
+        element: <OrderHandling />,
       },
       {
-        path: '/pedidos-atendidos',
-        element: <OrdersProcessed/>
-      }
+        path: "/pedidos-atendidos",
+        element: <OrdersProcessed />,
+      },
+      {
+        path: "*",
+        element: <RouteNotFound/>
+      },
     ],
   },
 ];

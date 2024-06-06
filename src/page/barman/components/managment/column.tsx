@@ -85,14 +85,15 @@ export const columns: ColumnDef<Header>[] = [
         </Button>
       );
     },
-    cell: () => {
+    cell: ({ row }) => {
       return (
         <Dialog>
           <DialogTrigger>
             <Button className="border-none" variant={"outline"}>
               <Eye />
             </Button>
-          </DialogTrigger> 
+          </DialogTrigger>
+          <OrdersAtendeedDetails data={row.original.orders}/>
         </Dialog>
       );
     },

@@ -23,6 +23,7 @@ interface Orders {
   total_price: number;
   count:number;
   hostess: string;
+  hostess_id: number
 }
 
 interface Header {
@@ -32,7 +33,6 @@ interface Header {
   total_price: number;
   hostess:string;
   orders: Orders[];
-  hostess_id:string;
   state:number
   created_at:string;
 }

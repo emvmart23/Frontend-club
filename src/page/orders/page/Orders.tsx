@@ -42,7 +42,7 @@ export default function Orders() {
         existingProduct.price = Number(product.price) * existingProduct.count;
       } else {
         const newProduct = { ...product, count: 1 };
-        
+
         const modifiedProduct = formatOrder.find(
           (order) => order.id === newProduct.id
         );
@@ -50,12 +50,12 @@ export default function Orders() {
           newProduct.price = modifiedProduct.price;
           newProduct.initialPrice = modifiedProduct.initialPrice;
         }
-  
+
         acc.push(newProduct);
       }
       return acc;
     }, [] as Product[]);
-    return formattedOrders
+    return formattedOrders;
     setFormatOrder(formattedOrders);
   };
 
@@ -92,7 +92,7 @@ export default function Orders() {
       console.log(err);
     }
   };
-console.log(value)
+
   const saveOrder = async () => {
     setIsPending(true);
 

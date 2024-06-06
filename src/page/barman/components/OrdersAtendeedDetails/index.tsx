@@ -20,13 +20,11 @@ export default function OrdersAtendeedDetails({ data }: Props) {
         {data.map((item, index) => (
           <li key={index}>
             {" "}
-            <span>{item.count}</span> {item.name}
+            {index}
+            {/* <span>{item.count}</span> {item.name} */}
           </li>
         ))}
       </ul>
-      <DialogFooter>
-        <Button type="submit">Save changes</Button>
-      </DialogFooter>
     </DialogContent>
   );
 }
