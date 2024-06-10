@@ -56,6 +56,10 @@ const appRouter = [
         element: <Attendance />,
       },
       {
+        path: "/apertura-caja",
+        element: <Boxes />,
+      },
+      {
         path: "/caja",
         element: <Boxes />,
       },

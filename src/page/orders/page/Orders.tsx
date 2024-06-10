@@ -80,7 +80,6 @@ export default function Orders() {
   const createHeader = async (headerData: { mozo: string | undefined }) => {
     try {
       const response = await api.post("/headers/create", headerData);
-
       if (response.status !== 200) {
         toast({
           description: "Hubo un error al guardar el pedido",

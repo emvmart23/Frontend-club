@@ -66,8 +66,19 @@ export const links = [
   },
   {
     icon: <Boxes />,
-    title: "Caja",
-    path: "/caja",
+    title: "Cajero",
+    childrens:[
+      {
+        icon:<Boxes />,
+        title:"Apertura de caja",
+        path:"apertura-caja"
+      },
+      {
+        icon:<Boxes />,
+        title:"Caja",
+        path:"caja"
+      } 
+    ],
   },
   {
     icon: <Wine />,

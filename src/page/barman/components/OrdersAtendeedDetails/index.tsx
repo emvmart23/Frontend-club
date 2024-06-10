@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/Button";
 import {
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/Dialog";
@@ -11,6 +9,7 @@ interface Props {
 }
 
 export default function OrdersAtendeedDetails({ data }: Props) {
+  console.log(data);
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
@@ -19,9 +18,7 @@ export default function OrdersAtendeedDetails({ data }: Props) {
       <ul className="grid gap-4 py-4 font-medium pl-6 list-disc">
         {data.map((item, index) => (
           <li key={index}>
-            {" "}
-            {index}
-            {/* <span>{item.count}</span> {item.name} */}
+            <span className="hidden">daaa</span>
           </li>
         ))}
       </ul>

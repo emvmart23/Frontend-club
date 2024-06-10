@@ -95,11 +95,8 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
             heading={"Anfitriones"}
             selectItemMsg="Filtra por anfitriona"
             data={formatUsers(4)}
-            // onSelect={(value) =>
-            //   table.getColumn("hostess")?.setFilterValue(value)
-            // }
             onSelect={(value) =>
-              ""
+              table.getColumn("hostess")?.setFilterValue(value)
             }
             tabelValue={
               (table.getColumn("hostess")?.getFilterValue() as string) ?? ""
@@ -112,8 +109,7 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
             heading="Mozos"
             selectItemMsg="Filtra por mozo"
             data={formatUsers(7)}
-            // onSelect={(value) => table.getColumn("mozo")?.setFilterValue(value)}
-            onSelect={(value) => ""}
+            onSelect={(value) => table.getColumn("mozo")?.setFilterValue(value)}
             tabelValue={
               (table.getColumn("mozo")?.getFilterValue() as string) ?? ""
             }
