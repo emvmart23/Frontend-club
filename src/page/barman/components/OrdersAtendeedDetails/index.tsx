@@ -18,7 +18,10 @@ export default function OrdersAtendeedDetails({ data }: Props) {
       <ul className="grid gap-4 py-4 font-medium pl-6 list-disc">
         {data.map((item, index) => (
           <li key={index}>
-            <span className="hidden">daaa</span>
+            <span>
+              <strong>{item.count} </strong>
+              {item.name}
+            </span>
           </li>
         ))}
       </ul>

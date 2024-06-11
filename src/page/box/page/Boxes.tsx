@@ -1,25 +1,25 @@
-import api from "@/service";
 import { useQuery } from "react-query";
 import BoxDataTable from "../components/BoxDataTable";
-import BoxActions from "../components/BoxActions";
-
-const getBox = async () => {
-  const { data } = await api.get("/boxes");
-  return data;
-};
+import { getHeaders } from "@/helpers/getHeaders";
+import FinishSaleForm from "../components/FinishSaleForm";
 
 export default function Boxes() {
-  const { data, isLoading } = useQuery("box", getBox);
-  
+
+  const { data, isLoading } = useQuery("orders", getHeaders);
+  const formatHeader = (data ? data : []).map((header: Header) => {
+    const order = header.orders.find((order) => order);
+    return {
+      ...header,
+      total_price: order?.total_price
+    };
+  });
+
   return (
-    <section className="flex flex-col gap-8 w-full">
-      <h3 className="text-3xl">Cajas</h3>
-      <div>
-        <BoxActions/>
-      </div>
-      <div>
-        <BoxDataTable data={data ? data.boxes : []} isLoading={isLoading} />
-      </div>
+    <section>
+      <h1>Cobranza</h1>
+      <FinishSaleForm />
+
+      <BoxDataTable data={formatHeader} isLoading={isLoading} />
     </section>
   );
 }

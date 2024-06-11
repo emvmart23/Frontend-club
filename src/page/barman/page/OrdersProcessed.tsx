@@ -3,7 +3,7 @@ import OrdersProcessedDataTable from "../components/OrdersProcessedTable";
 import { getHeaders } from "@/helpers/getHeaders";
 
 export default function OrdersProcessed() {
-  const { data, isLoading } = useQuery("headersActive", getHeaders);
+  const { data, isLoading } = useQuery("orders", getHeaders);
   const dataHeaders = data ? data : [];
 
   const format = dataHeaders.map((item: Header) => {

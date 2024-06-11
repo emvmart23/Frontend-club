@@ -10,16 +10,14 @@ interface Props {
   open: boolean;
   setIsOpen: (value: boolean) => void;
 }
-export default function BoxDetails({ box }: Props) {
+export default function OpeningBoxDetails({ box }: Props) {
   const [isPending, setIsPending] = useState(false);
   const queryClient = useQueryClient();
 
   const closeBox = async () => {
     setIsPending(true)
     try {
-      console.log(box.id)
       const response = await api.post(`/boxes/close/${box.id}`);
-      console.log(response)
       if (response.status === 200) {
         toast({
           description: "Caja cerrada correctamente",

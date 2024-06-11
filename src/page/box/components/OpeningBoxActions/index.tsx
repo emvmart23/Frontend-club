@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/Dialog";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
-import BoxForm from "../BoxForm";
+import BoxForm from "../OpeningBoxForm";
 
-export default function BoxActions() {
+export default function OpeningBoxActions() {
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, setIsPending] = useState(false);
 

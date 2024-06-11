@@ -28,14 +28,14 @@ import {
   TableRow,
 } from "@/components/ui/Table";
 import { Skeleton } from "@/components/ui/Skeleton";
-import { columns } from "../managment/column";
+import { columns } from "../OpeningManagment/column";
 
 interface Props {
-  data: Header[];
+  data: Box[];
   isLoading: boolean;
 }
 
-export default function BoxDataTable({ data, isLoading }: Props) {
+export default function OpeningBoxDataTable({ data, isLoading }: Props) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []

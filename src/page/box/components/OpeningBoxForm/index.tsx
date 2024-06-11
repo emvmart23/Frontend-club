@@ -26,7 +26,7 @@ interface Props {
   setIsOpen: (value: boolean) => void;
 }
 
-export default function BoxForm({ setIsPending, setIsOpen }: Props) {
+export default function OpeningBoxForm({ setIsPending, setIsOpen }: Props) {
   const [allBoxes, setAllBoxes] = useState<Box[]>([]);
   const currentDate = format(new Date(), "yyyy-MM-dd");
   const queryClient = useQueryClient();

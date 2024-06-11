@@ -86,7 +86,6 @@ export const columns: ColumnDef<Header>[] = [
       );
     },
     cell: ({ row }) => {
-      console.log(row.original)
       return (
         <Dialog>
           <DialogTrigger>
