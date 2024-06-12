@@ -70,7 +70,9 @@ export default function SidebarItems({ links, isExpanded }: Props) {
     </div>
   ) : (
     <NavLink
-      className={` ${ isExpanded ? "visible" : "invisible" } lg:visible flex w-[11.5rem] ml-4 h-[3.8rem]`}
+      className={` ${
+        isExpanded ? "visible" : "invisible"
+      } lg:visible flex w-[11.5rem] ml-4 h-[3.8rem]`}
       to={links.path || ""}
     >
       <div

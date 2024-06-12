@@ -21,6 +21,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/Select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/Table";
 import { getCustomer } from "@/helpers/getCustomer";
 import { toast } from "@/hooks/useToast";
 import { cn } from "@/lib/utils/tools";
@@ -30,17 +38,67 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 
-export default function FinishSaleForm() {
+const method_payment = [
+  {
+    id: 1,
+    name: "Efectivo",
+  },
+  {
+    id: 2,
+    name: "Tranferencia",
+  },
+  {
+    id: 3,
+    name: "Factura a 30 días",
+  },
+  {
+    id: 4,
+    name: "A 30 días",
+  },
+  {
+    id: 5,
+    name: "Crédito",
+  },
+  {
+    id: 6,
+    name: "Tarjeta",
+  },
+  {
+    id: 7,
+    name: "Yape",
+  },
+  {
+    id: 8,
+    name: "Plin",
+  },
+];
+
+interface Props {
+  header: Header;
+  setIsOpen: (value: boolean) => void;
+}
+
+export default function FinishSaleForm({ header, setIsOpen }: Props) {
   const [customer, setCustomer] = useState<Customer[]>([]);
+
+  const ordersDetails = header?.orders.find((order) => order);
+
   const form = useForm<z.infer<typeof NoteScheme>>({
     resolver: zodResolver(NoteScheme),
     defaultValues: {
+      client_id: 1,
       issue_date: new Date(Date.now()),
-      payment_method: "",
-      reference: "",
+      payment: [
+        {
+          payment_method: "e",
+          mountain: 20,
+          total_price: ordersDetails?.total_price,
+          reference: "e",
+        },
+      ],
     },
   });
 
@@ -59,6 +117,7 @@ export default function FinishSaleForm() {
   }, []);
 
   const onSubmit = async (values: z.infer<typeof NoteScheme>) => {
+    setIsOpen(true);
     try {
       const response = await api.post("/details/create", values);
       if (response.status === 200) {
@@ -74,47 +133,19 @@ export default function FinishSaleForm() {
       }
     } catch (err) {
       console.log(err);
+    } finally {
+      setIsOpen(false);
     }
   };
 
-  const method_payment = [
-    {
-      id: 1,
-      name: "Efectivo",
-    },
-    {
-      id: 2,
-      name: "Tranferencia",
-    },
-    {
-      id: 3,
-      name: "Factura a 30 días",
-    },
-    {
-      id: 4,
-      name: "A 30 días",
-    },
-    {
-      id: 5,
-      name: "Crédito",
-    },
-    {
-      id: 6,
-      name: "Tarjeta",
-    },
-    {
-      id: 7,
-      name: "Yape",
-    },
-    {
-      id: 8,
-      name: "Plin",
-    },
-  ];
+  const { fields, append, remove } = useFieldArray({
+    name: "payment",
+    control: form.control,
+  });
 
   return (
     <Form {...form}>
-      <form className="hidden" onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="fixed" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="client_id"
@@ -165,7 +196,7 @@ export default function FinishSaleForm() {
                       {field.value ? (
                         format(field.value, "yyyy-MM-dd")
                       ) : (
-                        <span>Pick a date</span>
+                        <span>Seleccione una foto</span>
                       )}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
@@ -187,62 +218,118 @@ export default function FinishSaleForm() {
             </FormItem>
           )}
         />
-        <div className="flex gap-20">
-          <FormField
-            control={form.control}
-            name="payment_method"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Metodo de pago</FormLabel>
-                <Select onValueChange={(value) => field.onChange(value)}>
-                  <FormControl>
-                    <SelectTrigger
-                      className={`${
-                        !field.value && "text-muted-foreground"
-                      } hover:text-accent-foreground`}
-                    >
-                      <SelectValue placeholder="Seleccione un metodo de pago" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {method_payment.map((data) => (
-                      <SelectItem key={data.id} value={data.name}>
-                        {data.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="total_price"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Precio total</FormLabel>
-                <FormControl>
-                  <Input placeholder="Precio total" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="reference"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Referencia</FormLabel>
-                <FormControl>
-                  <Input placeholder="Referencia" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Metodo de pago</TableHead>
+              <TableHead>Monto</TableHead>
+              <TableHead>Referencia</TableHead>
+              <TableHead>Total</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {fields.map((field, index) => (
+              <TableRow key={field.id}>
+                <TableCell>
+                  <FormField
+                    control={form.control}
+                    name={`payment.${index}.payment_method`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <Select
+                          onValueChange={(value) => field.onChange(value)}
+                        >
+                          <FormControl>
+                            <SelectTrigger
+                              className={`${
+                                !field.value && "text-muted-foreground"
+                              } hover:text-accent-foreground`}
+                            >
+                              <SelectValue placeholder="Seleccione un metodo de pago" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {method_payment.map((data) => (
+                              <SelectItem key={data.id} value={data.name}>
+                                {data.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </TableCell>
+                <TableCell>
+                  <FormField
+                    control={form.control}
+                    name={`payment.${index}.mountain`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input placeholder="shadcn" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </TableCell>
+                <TableCell>
+                  <FormField
+                    control={form.control}
+                    name={`payment.${index}.total_price`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input placeholder="shadcn" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </TableCell>
+                <TableCell>
+                  <FormField
+                    control={form.control}
+                    name={`payment.${index}.reference`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input placeholder="referencia" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </TableCell>
+                <TableCell>
+                  <Button
+                    className={`${index == 0 && "invisible"}`}
+                    variant={"outline"}
+                    onClick={() => remove(index)}
+                  >
+                    Eliminar
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <Button
+          className="mt-6"
+          variant={"outline"}
+          onClick={() =>
+            append({
+              payment_method: "ingresa",
+              mountain: 10,
+              total_price: 10,
+              reference: "ingresa",
+            })
+          }
+        >
+          Agregar
+        </Button>
       </form>
     </Form>
   );

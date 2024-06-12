@@ -3,6 +3,10 @@ import { Checkbox } from "@/components/ui/Checkbox";
 import { Button } from "@/components/ui/Button";
 import { ArrowUpDown } from "lucide-react";
 import { format } from "date-fns";
+import { useState } from "react";
+import FinishSaleForm from "../FinishSaleForm";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/Dialog";
+
 
 export const columns: ColumnDef<Header>[] = [
   {
@@ -36,7 +40,7 @@ export const columns: ColumnDef<Header>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Numero 
+          Numero
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -51,15 +55,15 @@ export const columns: ColumnDef<Header>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Fecha de emision 
+          Fecha de emision
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const date = format(row.getValue("created_at"), "yyyy-MM-dd")
-      return <div>{date}</div>
-  }
+      const date = format(row.getValue("created_at"), "yyyy-MM-dd");
+      return <div>{date}</div>;
+    },
   },
   {
     accessorKey: "state_doc",
@@ -75,9 +79,10 @@ export const columns: ColumnDef<Header>[] = [
       );
     },
     cell: ({ row }) => {
-      const isAnulated = row.getValue("state_doc") === 1 ? "en proceso" : "Anulado"
-      return <div>{isAnulated}</div>
-    }
+      const isAnulated =
+        row.getValue("state_doc") === 1 ? "en proceso" : "Anulado";
+      return <div>{isAnulated}</div>;
+    },
   },
   {
     accessorKey: "mozo",
@@ -87,7 +92,7 @@ export const columns: ColumnDef<Header>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-            Mozo
+          Mozo
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -95,14 +100,14 @@ export const columns: ColumnDef<Header>[] = [
     cell: ({ row }) => <div>{row.getValue("mozo")}</div>,
   },
   {
-    accessorKey:"total_price",
+    accessorKey: "total_price",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-            Total
+          Total
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -110,21 +115,40 @@ export const columns: ColumnDef<Header>[] = [
     cell: ({ row }) => <div>{row.getValue("total_price")}</div>,
   },
   {
-    accessorKey:"note_sale",
+    accessorKey: "note_sale",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-            Nota de venta
+          Nota de venta
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
+    cell: ({ row }) =>  <div className="text-center">{row.getValue("note_sale")}</div>
+  },
+  {
+    id: "actions",
+    enableHiding: false,
     cell: ({ row }) => {
-      const note = (row.getValue("note_sale") ? row.getValue("note_sale") : "-") as string
-      return <div className="text-center">{note}</div>;
+      const data = row.original;
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const [isOpen, setIsOpen] = useState(false);
+      return (
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+          <DialogTrigger asChild>
+            <Button variant="outline">Ver</Button>
+          </DialogTrigger>
+          <DialogContent className="">
+            <FinishSaleForm
+              setIsOpen={setIsOpen}
+              header={data}
+            />
+          </DialogContent>
+        </Dialog>
+      );
     },
   },
 ];

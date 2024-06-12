@@ -1,7 +1,6 @@
 import { useQuery } from "react-query";
 import BoxDataTable from "../components/BoxDataTable";
 import { getHeaders } from "@/helpers/getHeaders";
-import FinishSaleForm from "../components/FinishSaleForm";
 
 export default function Boxes() {
 
@@ -13,12 +12,10 @@ export default function Boxes() {
       total_price: order?.total_price
     };
   });
-
+  console.log(formatHeader)
   return (
     <section>
       <h1>Cobranza</h1>
-      <FinishSaleForm />
-
       <BoxDataTable data={formatHeader} isLoading={isLoading} />
     </section>
   );

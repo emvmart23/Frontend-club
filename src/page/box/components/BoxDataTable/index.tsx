@@ -18,7 +18,6 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
-import { Input } from "@/components/ui/Input";
 import {
   Table,
   TableBody,
@@ -61,18 +60,19 @@ export default function BoxDataTable({ data, isLoading }: Props) {
       rowSelection,
     },
   });
+  
   return (
     <div className="w-full mx-auto">
       <div className="flex items-center py-4">
-        <Input
+        {/* <Input
           type="date"
           placeholder="Filter name..."
-          value={(table.getColumn("opening")?.getFilterValue() as string) ?? ""}
+          value={(table.getColumn("")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("opening")?.setFilterValue(event.target.value)
+            table.getColumn("")?.setFilterValue(event.target.value)
           }
           className="max-w-[10rem]"
-        />
+        /> */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
