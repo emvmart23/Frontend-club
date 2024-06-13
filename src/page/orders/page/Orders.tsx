@@ -55,8 +55,8 @@ export default function Orders() {
       }
       return acc;
     }, [] as Product[]);
-    return formattedOrders;
     setFormatOrder(formattedOrders);
+    return formattedOrders;
   };
 
   const totalPrice = formatOrder.reduce((acc, curr) => {

@@ -4,9 +4,8 @@ import { Button } from "@/components/ui/Button";
 import { ArrowUpDown } from "lucide-react";
 import { format } from "date-fns";
 import { useState } from "react";
-import FinishSaleForm from "../FinishSaleForm";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/Dialog";
-
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/Dialog";
+import NoteSaleDetails from "../NoteSaleDetails";
 
 export const columns: ColumnDef<Header>[] = [
   {
@@ -127,25 +126,26 @@ export const columns: ColumnDef<Header>[] = [
         </Button>
       );
     },
-    cell: ({ row }) =>  <div className="text-center">{row.getValue("note_sale")}</div>
+    cell: ({ row }) => (
+      <div className="text-center">{row.getValue("note_sale")}</div>
+    ),
   },
   {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const data = row.original;
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      const [isOpen, setIsOpen] = useState(false);
+      const [isOpen, setIsOpen] = useState(true);
       return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
             <Button variant="outline">Ver</Button>
           </DialogTrigger>
-          <DialogContent className="">
-            <FinishSaleForm
-              setIsOpen={setIsOpen}
-              header={data}
-            />
+          <DialogContent className="max-w-[55rem] h-[27rem]">
+            <DialogHeader>
+              <DialogTitle>Nota de venta</DialogTitle>
+            </DialogHeader>
+            <NoteSaleDetails setIsOpen={setIsOpen} header={row.original}/>
           </DialogContent>
         </Dialog>
       );
