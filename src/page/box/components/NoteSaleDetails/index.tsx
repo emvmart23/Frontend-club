@@ -1,6 +1,5 @@
-import { useQuery } from "react-query";
-import FinishSaleForm from "../NoteSaleForm";
-import { getDetails } from "@/helpers/getDetails";
+import NoteSaleForm from "../NoteSaleForm";
+import { useEffect, useState } from "react";
 
 interface Props {
   setIsOpen: (value: boolean) => void;
@@ -8,16 +7,20 @@ interface Props {
 }
 
 export default function NoteSaleDetails({ setIsOpen, header }: Props) {
-  const { data } = useQuery("details", getDetails);
+  const [paymentFields, setPaymentFields] = useState<PaymentField[]>([])
+  const [pendingPayment, setPendingPayment] = useState<number>(0);
   const ordersDetails = header?.orders.find((order) => order);
+  
+  useEffect(() => {
+    const totalPayment = paymentFields.reduce((acc: number, curr) => acc + Number(curr.mountain), 0);
+    setPendingPayment(totalPayment);
+  }, [paymentFields]);
 
-  const pendingPayments = data?.data.find.reduce((acc: Header, curr) => {
-    return;
-  }, 0);
-
+  const pendingValue = Number(ordersDetails?.total_price) - pendingPayment;
+  console.log(pendingValue);
   return (
     <>
-      <FinishSaleForm setIsOpen={setIsOpen} ordersDetails={ordersDetails} />
+      <NoteSaleForm setIsOpen={setIsOpen} ordersDetails={ordersDetails} setPaymentFields={setPaymentFields}/>
       <div className="absolute right-8 bottom-20">
         <strong>Total : </strong>
         <strong>S/. {ordersDetails?.total_price}</strong>

@@ -38,3 +38,25 @@ interface Header {
   state_doc: number;
   created_at:string;
 }
+
+interface Payments {
+  id:number;
+  detail_id: number;
+  payment_method:string;
+  mountain: string;
+  reference: string;
+}
+
+interface Detail {
+  id:number;
+  client_id:1;
+  issue_date:string;
+  total_price:number;
+  payments:Payments[]
+}
+
+interface PaymentField {
+  payment_method: string;
+  mountain: number;
+  reference: string;
+}

@@ -77,14 +77,19 @@ const method_payment = [
 ];
 
 interface Props {
+  setPaymentFields: (value: PaymentField[]) => void;
   ordersDetails: Orders | undefined;
   setIsOpen: (value: boolean) => void;
 }
 
-export default function NoteSaleForm({ ordersDetails, setIsOpen }: Props) {
+export default function NoteSaleForm({
+  ordersDetails,
+  setIsOpen,
+  setPaymentFields,
+}: Props) {
   const [customer, setCustomer] = useState<Customer[]>([]);
   const currentDate = format(new Date(), "yyyy-MM-dd");
-  
+
   const form = useForm<z.infer<typeof NoteScheme>>({
     resolver: zodResolver(NoteScheme),
     defaultValues: {
@@ -92,26 +97,12 @@ export default function NoteSaleForm({ ordersDetails, setIsOpen }: Props) {
       total_price: Number(ordersDetails?.total_price),
       payment: [
         {
-          mountain: 2000,
+          mountain: 20,
           reference: "todo bien",
         },
       ],
     },
   });
-
-  const fetchCustomer = async () => {
-    try {
-      const { data } = await getCustomer();
-      setCustomer(data.customer);
-      return;
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    fetchCustomer();
-  }, []);
 
   const onSubmit = async (values: z.infer<typeof NoteScheme>) => {
     setIsOpen(true);
@@ -140,11 +131,29 @@ export default function NoteSaleForm({ ordersDetails, setIsOpen }: Props) {
     control: form.control,
   });
 
+  const fetchCustomer = async () => {
+    try {
+      const { data } = await getCustomer();
+      setCustomer(data.customer);
+      return;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchCustomer();
+  }, []);
+
+  useEffect(() => {
+    setPaymentFields(fields);
+  }, [fields, setPaymentFields]);
+
   return (
     <Form {...form}>
       <form
         id="finish-sale-form"
-        className=""
+        className="hidden"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <div className="w-[60%] space-y-4">
