@@ -28,13 +28,18 @@ import {
 } from "@/components/ui/Table";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { columns } from "../managment/column";
+import { Combobox } from "@/components/ui/Combobox";
+import { Input } from "@/components/ui/Input";
+import { getUsers } from "@/helpers/users/getUsers";
+import { formatUsers } from "@/helpers/users/formatUsers";
 
 interface Props {
   data: Header[];
   isLoading: boolean;
 }
 
-export default function BoxDataTable({ data, isLoading }: Props) {
+export default function NoteSaleDataTable({ data, isLoading }: Props) {
+  const [users, setUsers] = React.useState<User[]>([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -60,19 +65,71 @@ export default function BoxDataTable({ data, isLoading }: Props) {
       rowSelection,
     },
   });
-  
+
+  const boxState = [
+    {
+      value: "1",
+      label: "Normal",
+    },
+    {
+      value: "0",
+      label: "Anulado",
+    },
+  ];
+
+  const fetchUsers = async () => {
+    try {
+      const response = await getUsers();
+      setUsers(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchUsers();
+  }, []);
+
   return (
     <div className="w-full mx-auto">
       <div className="flex items-center py-4">
-        {/* <Input
-          type="date"
-          placeholder="Filter name..."
-          value={(table.getColumn("")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("")?.setFilterValue(event.target.value)
-          }
-          className="max-w-[10rem]"
-        /> */}
+        <div className="flex gap-3">
+          {/* <Combobox
+            heading={"Estados"}
+            selectItemMsg="Filtra por estado"
+            data={boxState}
+            onSelect={(value) =>
+              table.getColumn("state_doc")?.setFilterValue(value)
+            }
+            tabelValue={
+              (table.getColumn("state_doc")?.getFilterValue() as string) ?? ""
+            }
+            onChange={(value) =>
+              table.getColumn("state_doc")?.setFilterValue(value)
+            }
+          /> */}
+          <Combobox
+            heading={"Mozos"}
+            selectItemMsg="Filtra por mozo"
+            data={formatUsers(users, 7)}
+            onSelect={(value) => table.getColumn("mozo")?.setFilterValue(value)}
+            tabelValue={
+              (table.getColumn("mozo")?.getFilterValue() as string) ?? ""
+            }
+            onChange={(value) => table.getColumn("mozo")?.setFilterValue(value)}
+          />
+          {/* <Input
+            type="date"
+            placeholder="Filtrar por fecha..."
+            value={
+              (table.getColumn("created_at")?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) =>
+              table.getColumn("created_at")?.setFilterValue(event.target.value)
+            }
+            className="min-w-[10rem]"
+          /> */}
+        </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">

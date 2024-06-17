@@ -30,7 +30,8 @@ import {
 import { Skeleton } from "@/components/ui/Skeleton";
 import { columns } from "../managment/column";
 import { Combobox } from "@/components/ui/Combobox";
-import { getUsers } from "@/helpers/getUsers";
+import { getUsers } from "@/helpers/users/getUsers";
+import { formatUsers } from "@/helpers/users/formatUsers";
 
 interface Props {
   data: Header[];
@@ -74,15 +75,6 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
     }
   };
 
-  const formatUsers = (rol:number) => users
-    .filter((user: User) => user.role_id === rol)
-    .map((user: User) => {
-      return {
-        value: user.id.toString(),
-        label: user.name,
-      };
-    });
-
   React.useEffect(() => {
     fetchUsers();
   }, []);
@@ -94,7 +86,7 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
           <Combobox
             heading={"Anfitriones"}
             selectItemMsg="Filtra por anfitriona"
-            data={formatUsers(4)}
+            data={formatUsers(users,4)}
             onSelect={(value) =>
               table.getColumn("hostess")?.setFilterValue(value)
             }
@@ -108,7 +100,7 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
           <Combobox
             heading="Mozos"
             selectItemMsg="Filtra por mozo"
-            data={formatUsers(7)}
+            data={formatUsers(users,7)}
             onSelect={(value) => table.getColumn("mozo")?.setFilterValue(value)}
             tabelValue={
               (table.getColumn("mozo")?.getFilterValue() as string) ?? ""

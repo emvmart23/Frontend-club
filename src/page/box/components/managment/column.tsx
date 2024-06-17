@@ -1,36 +1,18 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { Checkbox } from "@/components/ui/Checkbox";
 import { Button } from "@/components/ui/Button";
 import { ArrowUpDown } from "lucide-react";
 import { format } from "date-fns";
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/Dialog";
-import NoteSaleDetails from "../NoteSaleDetails";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/Dialog";
+import NoteSaleActions from "../NoteSaleActions";
 
 export const columns: ColumnDef<Header>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        className="ml-4"
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
   {
     accessorKey: "id",
     header: ({ column }) => {
@@ -44,7 +26,7 @@ export const columns: ColumnDef<Header>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("id")}</div>,
+    cell: ({ row }) => <div className="text-center">{row.getValue("id")}</div>,
   },
   {
     accessorKey: "created_at",
@@ -61,7 +43,7 @@ export const columns: ColumnDef<Header>[] = [
     },
     cell: ({ row }) => {
       const date = format(row.getValue("created_at"), "yyyy-MM-dd");
-      return <div>{date}</div>;
+      return <div className="text-center">{date}</div>;
     },
   },
   {
@@ -78,9 +60,8 @@ export const columns: ColumnDef<Header>[] = [
       );
     },
     cell: ({ row }) => {
-      const isAnulated =
-        row.getValue("state_doc") === 1 ? "en proceso" : "Anulado";
-      return <div>{isAnulated}</div>;
+      const isAnulated = Boolean(row.getValue("state_doc")) === true ? "Normal" : "Anulado";
+      return <div className="text-center">{isAnulated}</div>;
     },
   },
   {
@@ -96,7 +77,7 @@ export const columns: ColumnDef<Header>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("mozo")}</div>,
+    cell: ({ row }) => <div className="text-start">{row.getValue("mozo")}</div>,
   },
   {
     accessorKey: "total_price",
@@ -136,16 +117,17 @@ export const columns: ColumnDef<Header>[] = [
     cell: ({ row }) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const [isOpen, setIsOpen] = useState(false);
+      console.log(row.original)
       return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
-            <Button variant="outline">Ver</Button>
+            <Button>Acciones</Button>
           </DialogTrigger>
-          <DialogContent className="max-w-[55rem] h-[27rem]">
-            <DialogHeader>
-              <DialogTitle>Nota de venta</DialogTitle>
+          <DialogContent className="max-w-[20rem] h-[16rem]">
+            <DialogHeader className="mb-2">
+              <DialogTitle>Acciones</DialogTitle>
             </DialogHeader>
-            <NoteSaleDetails setIsOpen={setIsOpen} header={row.original}/>
+            <NoteSaleActions setIsOpen={setIsOpen} header={row.original} />
           </DialogContent>
         </Dialog>
       );

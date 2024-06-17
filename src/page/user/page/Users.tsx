@@ -1,11 +1,11 @@
 import UserActions from "../components/UserActions";
-import { useQuery } from 'react-query'
+import { useQuery } from "react-query";
 import UserDataTable from "../components/UserDataTable";
-import { getUsers } from "@/helpers/getUsers";
+import { getUsers } from "@/helpers/users/getUsers";
 
 export default function Users() {
-    const { data, isLoading } = useQuery("users", getUsers)
-    
+  const { data, isLoading } = useQuery("users", getUsers);
+
   return (
     <section className="flex flex-col gap-8 w-full">
       <h3 className="text-3xl">Usuarios</h3>
@@ -16,5 +16,5 @@ export default function Users() {
         <UserDataTable data={data ? data.data : []} isLoading={isLoading} />
       </div>
     </section>
-  )
+  );
 }

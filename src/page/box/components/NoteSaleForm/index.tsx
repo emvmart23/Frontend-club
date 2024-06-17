@@ -80,12 +80,14 @@ interface Props {
   setPaymentFields: (value: PaymentField[]) => void;
   ordersDetails: Orders | undefined;
   setIsOpen: (value: boolean) => void;
+  header:Header
 }
 
 export default function NoteSaleForm({
   ordersDetails,
   setIsOpen,
   setPaymentFields,
+  header
 }: Props) {
   const [customer, setCustomer] = useState<Customer[]>([]);
   const currentDate = format(new Date(), "yyyy-MM-dd");
@@ -97,17 +99,17 @@ export default function NoteSaleForm({
       total_price: Number(ordersDetails?.total_price),
       payment: [
         {
-          mountain: 20,
+          mountain: Number(ordersDetails?.total_price),
           reference: "todo bien",
         },
       ],
     },
   });
-
+  console.log("form", form.formState.errors)
   const onSubmit = async (values: z.infer<typeof NoteScheme>) => {
     setIsOpen(true);
     try {
-      const response = await api.post("/details/create", values);
+      const response = await api.post(`/details/create/${header.id}`, values);
       if (response.status === 200) {
         toast({
           description: "Venta realizada correctamente",
@@ -153,7 +155,6 @@ export default function NoteSaleForm({
     <Form {...form}>
       <form
         id="finish-sale-form"
-        className="hidden"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <div className="w-[60%] space-y-4">
@@ -241,8 +242,8 @@ export default function NoteSaleForm({
             )}
           />
         </div>
-        <div className="overflow-auto h-32 mt-4">
-          <Table>
+        <div className="overflow-auto h-40 mt-4">
+          <Table className="">
             <TableHeader>
               <TableRow>
                 <TableHead className="pl-[0.5rem]">Metodo de pago</TableHead>
@@ -257,7 +258,7 @@ export default function NoteSaleForm({
                       append({
                         payment_method: "ingresa",
                         mountain: 10,
-                        reference: "ingresa",
+                        reference: "ok",
                       })
                     }
                   >
@@ -267,7 +268,7 @@ export default function NoteSaleForm({
                 </TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
+            <TableBody className="hidden">
               {fields.map((field, index) => (
                 <TableRow key={field.id}>
                   <TableCell className="pl-[0.3rem]">
