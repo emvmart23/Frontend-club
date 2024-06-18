@@ -60,7 +60,7 @@ export const columns: ColumnDef<Header>[] = [
       );
     },
     cell: ({ row }) => {
-      const isAnulated = Boolean(row.getValue("state_doc")) === true ? "Normal" : "Anulado";
+      const isAnulated = Boolean(row.getValue("state_doc")) === true ? "Normal" : "Finalizado";
       return <div className="text-center">{isAnulated}</div>;
     },
   },
@@ -117,7 +117,6 @@ export const columns: ColumnDef<Header>[] = [
     cell: ({ row }) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const [isOpen, setIsOpen] = useState(false);
-      console.log(row.original)
       return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>

@@ -39,6 +39,7 @@ import { format } from "date-fns";
 import { CalendarIcon, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import { useQueryClient } from "react-query";
 import { z } from "zod";
 
 const method_payment = [
@@ -80,17 +81,18 @@ interface Props {
   setPaymentFields: (value: PaymentField[]) => void;
   ordersDetails: Orders | undefined;
   setIsOpen: (value: boolean) => void;
-  header:Header
+  header: Header;
 }
 
 export default function NoteSaleForm({
   ordersDetails,
   setIsOpen,
   setPaymentFields,
-  header
+  header,
 }: Props) {
   const [customer, setCustomer] = useState<Customer[]>([]);
   const currentDate = format(new Date(), "yyyy-MM-dd");
+  const queryClient = useQueryClient();
 
   const form = useForm<z.infer<typeof NoteScheme>>({
     resolver: zodResolver(NoteScheme),
@@ -105,7 +107,7 @@ export default function NoteSaleForm({
       ],
     },
   });
-  console.log("form", form.formState.errors)
+
   const onSubmit = async (values: z.infer<typeof NoteScheme>) => {
     setIsOpen(true);
     try {
@@ -115,6 +117,8 @@ export default function NoteSaleForm({
           description: "Venta realizada correctamente",
           variant: "success",
         });
+        queryClient.invalidateQueries("headers");
+        setIsOpen(false);
       } else {
         toast({
           description: "Error al realizar venta",
@@ -153,10 +157,7 @@ export default function NoteSaleForm({
 
   return (
     <Form {...form}>
-      <form
-        id="finish-sale-form"
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
+      <form id="finish-sale-form" onSubmit={form.handleSubmit(onSubmit)}>
         <div className="w-[60%] space-y-4">
           <FormField
             control={form.control}
@@ -173,7 +174,7 @@ export default function NoteSaleForm({
                         !field.value && "text-muted-foreground"
                       } hover:text-accent-foreground`}
                     >
-                      <SelectValue placeholder="Seleccione un tipo" />
+                      <SelectValue placeholder="Seleccione un cliente" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
