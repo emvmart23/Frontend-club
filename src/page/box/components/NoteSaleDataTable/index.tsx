@@ -94,7 +94,7 @@ export default function NoteSaleDataTable({ data, isLoading }: Props) {
     <div className="w-full mx-auto">
       <div className="flex items-center py-4">
         <div className="flex gap-3">
-          {/* <Combobox
+          <Combobox
             heading={"Estados"}
             selectItemMsg="Filtra por estado"
             data={boxState}
@@ -107,7 +107,7 @@ export default function NoteSaleDataTable({ data, isLoading }: Props) {
             onChange={(value) =>
               table.getColumn("state_doc")?.setFilterValue(value)
             }
-          /> */}
+          />
           <Combobox
             heading={"Mozos"}
             selectItemMsg="Filtra por mozo"
@@ -118,7 +118,7 @@ export default function NoteSaleDataTable({ data, isLoading }: Props) {
             }
             onChange={(value) => table.getColumn("mozo")?.setFilterValue(value)}
           />
-          {/* <Input
+          <Input
             type="date"
             placeholder="Filtrar por fecha..."
             value={
@@ -128,7 +128,7 @@ export default function NoteSaleDataTable({ data, isLoading }: Props) {
               table.getColumn("created_at")?.setFilterValue(event.target.value)
             }
             className="min-w-[10rem]"
-          /> */}
+          />
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

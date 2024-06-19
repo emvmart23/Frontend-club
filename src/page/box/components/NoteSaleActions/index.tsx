@@ -7,12 +7,14 @@ interface Props {
 }
 
 export default function NoteSaleActions({ setIsOpen, header }: Props) {
-  console.log(header)
+  
   return (
     <>
       <Button> Generar ticket </Button>
-      {Boolean(header.state_doc) === true && (
+      {Boolean(header.state_doc) === true ? (
         <NoteSaleFinish setIsOpen={setIsOpen} header={header} />
+      ) : (
+        <Button className="bg-orange-500">Anular</Button>
       )}
       <Button className="bg-orange-500">PDF ticket</Button>
     </>

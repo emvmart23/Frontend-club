@@ -86,6 +86,7 @@ export default function AttendanceForm({ setIsOpen }: Props) {
         queryClient.invalidateQueries("Attendance");
         setIsOpen(false);
       } catch (error) {
+        console.log(error);
         toast({
           description: "Error al actualizar",
           variant: "destructive",
@@ -99,15 +100,27 @@ export default function AttendanceForm({ setIsOpen }: Props) {
             description: "Asistencia guardada",
             variant: "success",
           });
+          queryClient.invalidateQueries("Attendance");
+        } else {
+          toast({
+            description: "Asistencia guardada",
+            variant: "success",
+          });
         }
-        queryClient.invalidateQueries("Attendance");
         setIsOpen(false);
-      } catch (error) {
-        console.log(error)
-        toast({
-          description: "Error al registrar",
-          variant: "destructive",
-        });
+      } catch (error: any) {
+        console.log(error);
+        if (error.response && error.response.status === 400) {
+          toast({
+            description: "La caja anterior debe ser cerrada",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            description: "Error al registrar",
+            variant: "destructive",
+          });
+        }
       }
     }
   };

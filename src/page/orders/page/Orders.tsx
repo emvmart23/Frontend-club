@@ -77,7 +77,7 @@ export default function Orders() {
     });
   };
 
-  const createHeader = async (headerData: { mozo: string | undefined }) => {
+  const createHeader = async (headerData: { mozo_id: number | undefined }) => {
     try {
       const response = await api.post("/headers/create", headerData);
       if (response.status !== 200) {
@@ -106,7 +106,7 @@ export default function Orders() {
 
     try {
       const header = {
-        mozo: user?.name,
+        mozo_id: user?.id,
       };
 
       const data = await createHeader(header);

@@ -14,19 +14,22 @@ import NoteSaleActions from "../NoteSaleActions";
 
 export const columns: ColumnDef<Header>[] = [
   {
-    accessorKey: "id",
+    accessorKey: "note_id",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Numero
+          Numero de venta
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => <div className="text-center">{row.getValue("id")}</div>,
+    cell: ({ row }) => {
+      const format = row.getValue("note_id") as number ? row.getValue("note_id") as number : "-";
+      return <div className="text-center">{format}</div>
+    }
   },
   {
     accessorKey: "created_at",
@@ -77,7 +80,7 @@ export const columns: ColumnDef<Header>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="text-start">{row.getValue("mozo")}</div>,
+    
   },
   {
     accessorKey: "total_price",
@@ -107,9 +110,10 @@ export const columns: ColumnDef<Header>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="text-center">{row.getValue("note_sale")}</div>
-    ),
+    cell: ({ row }) => {
+      const format = row.getValue("note_sale") as number ? row.getValue("note_sale") as number : "-";
+      return <div className="text-center">{format}</div>
+    }
   },
   {
     id: "actions",
