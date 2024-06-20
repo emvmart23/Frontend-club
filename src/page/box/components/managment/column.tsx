@@ -27,7 +27,7 @@ export const columns: ColumnDef<Header>[] = [
       );
     },
     cell: ({ row }) => {
-      const format = row.getValue("note_id") as number ? row.getValue("note_id") as number : "-";
+      const format = row.getValue("note_id") == null || row.getValue("note_id") == undefined ?  "-" : "PD-" + row.getValue("note_id")
       return <div className="text-center">{format}</div>
     }
   },
@@ -111,7 +111,7 @@ export const columns: ColumnDef<Header>[] = [
       );
     },
     cell: ({ row }) => {
-      const format = row.getValue("note_sale") as number ? row.getValue("note_sale") as number : "-";
+      const format = row.getValue("note_sale") == null || row.getValue("note_id") == undefined ?  "-" : "NV1-" + row.getValue("note_sale")
       return <div className="text-center">{format}</div>
     }
   },

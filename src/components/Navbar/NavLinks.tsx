@@ -27,14 +27,16 @@ export default function SidebarItems({ links, isExpanded }: Props) {
   const handleClick = () => {
     setOpen(!open);
   };
-
   return links.childrens ? (
     <div
       className={`${open ? "h-auto" : "h-[3.8rem]"} ${
         isExpanded ? "visible" : "invisible"
       } lg:visible ml-4 block rounded-md overflow-none px-2 pt-7`}
     >
-      <div onClick={handleClick} className="flex gap-x-3 items-center">
+      <div
+        onClick={handleClick}
+        className="flex gap-x-3 items-center hover:scale-105"
+      >
         <span className="flex justify-start gap-5">
           {links.icon && <i>{links.icon}</i>}
           <span>{links.title}</span>
@@ -50,29 +52,32 @@ export default function SidebarItems({ links, isExpanded }: Props) {
           open ? "h-auto block text-[0.8rem] leading-loose" : "h-[0rem] hidden"
         } transition-all duration-300 font-normal`}
       >
-        {links?.childrens.map((child, index) => (
-          <NavLink
-            key={index}
-            className="flex w-[11.5rem] ml-4 h-[3.8rem]"
-            to={child.path || ""}
-          >
-            <div
-              className={`${
-                isActive && "bg-foreground dark:text-black text-white"
-              } p-2 w-full group-hover:bg-primary group-hover:text-background text-foreground rounded transition-all duration-75 origin-left mt-5 flex gap-5`}
+        {links?.childrens.map((child, index) => {
+          const isActiveSubMenu = location.pathname === child.path;
+          return (
+            <NavLink
+              key={index}
+              className="flex w-[11.5rem] ml-4 h-[3.8rem] hover:scale-105"
+              to={child.path || ""}
             >
-              {child.icon && <i>{child.icon}</i>}
-              {child.title}
-            </div>
-          </NavLink>
-        ))}
+              <div
+                className={`${
+                  isActiveSubMenu && "bg-foreground dark:text-black text-white"
+                } p-2 w-full group-hover:bg-primary group-hover:text-background text-foreground rounded transition-all duration-75 origin-left mt-5 flex gap-5`}
+              >
+                {child.icon && <i>{child.icon}</i>}
+                {child.title}
+              </div>
+            </NavLink>
+          );
+        })}
       </div>
     </div>
   ) : (
     <NavLink
       className={` ${
         isExpanded ? "visible" : "invisible"
-      } lg:visible flex w-[11.5rem] ml-4 h-[3.8rem]`}
+      } lg:visible flex w-[11.5rem] ml-4 h-[3.8rem] hover:scale-105`}
       to={links.path || ""}
     >
       <div

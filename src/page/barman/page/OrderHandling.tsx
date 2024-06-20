@@ -6,7 +6,7 @@ export default function OrderHandling() {
   const { data } = useQuery("orders", getHeaders);
   
   const orderActives = (data ? data : []).filter((data: Header) => data.state === 1)
-  
+
   return (
     <section>
       <h1 className="text-[1.5rem] mb-8">Pedidos</h1>

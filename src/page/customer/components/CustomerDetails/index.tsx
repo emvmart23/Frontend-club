@@ -14,7 +14,6 @@ export default function CustomerDetails({ customer, setIsOpen} : Props) {
     return (
       <SheetContent>
         <SheetTitle>Informacion del cliente</SheetTitle>
-  
         <CustomerEditForm
           customer={customer}
           setIsOpen={setIsOpen}

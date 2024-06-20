@@ -1,35 +1,11 @@
+import { Sheet, SheetTrigger } from "@/components/ui/Sheet";
 import { ColumnDef } from "@tanstack/react-table";
-import { Checkbox } from "@/components/ui/Checkbox";
 import { Button } from "@/components/ui/Button";
 import { ArrowUpDown } from "lucide-react";
-import { Sheet, SheetTrigger } from "@/components/ui/Sheet";
-import { useState } from "react";
 import UnitDetails from "../UnitDetails";
+import { useState } from "react";
 
 export const columns: ColumnDef<UnitMeasure>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        className="ml-4"
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
   {
     accessorKey: "abbreviation",
     header: ({ column }) => {

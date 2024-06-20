@@ -16,7 +16,7 @@ export default function Boxes() {
 
   return (
     <section>
-      <h1>Cobranza</h1>
+      <h1 className="mb-4">Cobranza</h1>
       <NoteSaleDataTable data={formatHeader} isLoading={isLoading} />
     </section>
   );

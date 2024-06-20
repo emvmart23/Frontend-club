@@ -53,7 +53,6 @@ export default function ProductEditForm({ product, setIsOpen }: Props) {
         `/products/update/${product?.id}`,
         values
       );
-      console.log(response);
       if (response.status == 200) {
         toast({
           description: "Producto editado correctamente",
@@ -67,10 +66,10 @@ export default function ProductEditForm({ product, setIsOpen }: Props) {
         description: "Error al editar producto",
         variant: "destructive",
       });
-    } finally {
-      console.log("data");
+    }finally{
+      setIsOpen(false);
     }
-  };
+  }
 
   return (
     <Form {...form}>

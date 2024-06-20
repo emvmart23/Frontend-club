@@ -16,12 +16,10 @@ import { User } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { logout } from "@/store/slices/auth";
 import { useTheme } from "@/context/theme";
-import { useAuth } from "@/hooks/useAuth";
 
 export default function UserDropDown() {
   const dispatch = useDispatch();
   const { setTheme } = useTheme();
-  const { user } = useAuth();
 
   const handleLogout = () => {
     dispatch(logout());
@@ -37,11 +35,6 @@ export default function UserDropDown() {
       <DropdownMenuContent>
         <DropdownMenuLabel>Mi cuenta</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {(user?.role_id === 1|| user?.role_id === 2)  && (
-          <DropdownMenuItem>
-            <span>Asistencia</span>
-          </DropdownMenuItem>
-        )}
         <DropdownMenuGroup>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>

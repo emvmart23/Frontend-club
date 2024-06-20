@@ -91,26 +91,26 @@ export default function NoteSaleDataTable({ data, isLoading }: Props) {
   }, []);
 
   return (
-    <div className="w-full mx-auto">
-      <div className="flex items-center py-4">
-        <div className="flex gap-3">
+    <div className="w-full md:w-[93%] lg:w-full">
+      <div className="flex flex-col md:flex-row gap-3 justify-between mb-6">
+        <div className="flex flex-col md:flex-row md:space-y-0 gap-3">
           <Combobox
             heading={"Estados"}
-            selectItemMsg="Filtra por estado"
+            selectItemMsg="Filtrar estado"
             data={boxState}
             onSelect={(value) =>
               table.getColumn("state_doc")?.setFilterValue(value)
             }
             tabelValue={
               (table.getColumn("state_doc")?.getFilterValue() as string) ?? ""
-            }
+            } 
             onChange={(value) =>
               table.getColumn("state_doc")?.setFilterValue(value)
             }
           />
           <Combobox
             heading={"Mozos"}
-            selectItemMsg="Filtra por mozo"
+            selectItemMsg="Filtrar mozo"
             data={formatUsers(users, 7)}
             onSelect={(value) => table.getColumn("mozo")?.setFilterValue(value)}
             tabelValue={
@@ -127,13 +127,13 @@ export default function NoteSaleDataTable({ data, isLoading }: Props) {
             onChange={(event) =>
               table.getColumn("created_at")?.setFilterValue(event.target.value)
             }
-            className="min-w-[10rem]"
+            className="w-full"
           />
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columnas <ChevronDown className="ml-2 h-4 w-4" />
+            <Button variant="outline" className="w-full max-w-[7.5rem]">
+              Columnas <ChevronDown className="ml-2 h-4 w-4"/>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">

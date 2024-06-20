@@ -36,7 +36,7 @@ export default function SearchHostess({ value, setValue } : Props) {
       role_user === 4 &&
       Number(present) === 1
   );
-  console.log("value", value)
+  
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>

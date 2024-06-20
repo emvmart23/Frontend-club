@@ -63,7 +63,7 @@ export default function OpeningBoxDataTable({ data, isLoading }: Props) {
   });
   
   return (
-    <div className="w-full mx-auto">
+    <div className="w-full md:w-[93%] lg:w-ful">
       <div className="flex items-center py-4">
         <Input
           type="date"
@@ -132,7 +132,7 @@ export default function OpeningBoxDataTable({ data, isLoading }: Props) {
                     data-state={row.getIsSelected() && "selected"}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
+                      <TableCell key={cell.id} className="px-[0.9rem]">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

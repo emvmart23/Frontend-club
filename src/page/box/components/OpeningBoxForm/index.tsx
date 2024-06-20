@@ -36,7 +36,6 @@ export default function OpeningBoxForm({ setIsPending, setIsOpen }: Props) {
     resolver: zodResolver(BoxSchema),
     defaultValues: {
       user_opening: user?.user,
-      user_closing: "null",
       final_balance: "0",
       opening: currentDate,
       state: true,

@@ -9,7 +9,6 @@ interface Props {
 }
 
 export default function OrdersAtendeedDetails({ data }: Props) {
-  console.log(data);
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>

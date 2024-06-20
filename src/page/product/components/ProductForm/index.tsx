@@ -46,7 +46,6 @@ export default function ProductForm({ setIsOpen, setIsPending }: Props) {
   });
 
   const onSubmit = async (values: z.infer<typeof ProductSchema>) => {
-    console.log("producto", values)
     setIsPending(true);
     try {
       const { status } = await api.post("/products/create", values);

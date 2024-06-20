@@ -71,12 +71,12 @@ export const links = [
       {
         icon:<Boxes />,
         title:"Apertura de caja",
-        path:"apertura-caja"
+        path:"/apertura-caja"
       },
       {
         icon:<Boxes />,
         title:"Caja",
-        path:"caja"
+        path:"/caja"
       } 
     ],
   },

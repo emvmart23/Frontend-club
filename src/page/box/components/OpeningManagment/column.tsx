@@ -1,9 +1,9 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/Button";
 import { ArrowUpDown } from "lucide-react";
-import { Sheet, SheetTrigger } from "@/components/ui/Sheet";
 import { useState } from "react";
 import BoxDetails from "../OpeningBoxDetails";
+import { Dialog, DialogTrigger } from "@/components/ui/Dialog";
 
 export const columns: ColumnDef<Box>[] = [
   {
@@ -35,7 +35,7 @@ export const columns: ColumnDef<Box>[] = [
       );
     },
     cell: ({ row }) => {
-      const isNull = row.getValue("user_closing") === null ? "null" : row.getValue("user_closing") as string;
+      const isNull = row.getValue("user_closing") === null ? "-" : row.getValue("user_closing") as string;
       return <div>{isNull}</div>
     }
   },
@@ -68,7 +68,7 @@ export const columns: ColumnDef<Box>[] = [
       );
     },
     cell: ({ row }) => {
-      const isNull = row.getValue("closing") === null ? "null" : row.getValue("closing") as string;
+      const isNull = row.getValue("closing") === null ? "-" : row.getValue("closing") as string;
       return <div>{isNull}</div>
     },
   },
@@ -128,12 +128,12 @@ export const columns: ColumnDef<Box>[] = [
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const [open, setIsOpen] = useState(false)
       return (
-        <Sheet open={open} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild>
+        <Dialog open={open} onOpenChange={setIsOpen}>
+          <DialogTrigger asChild>
             <Button variant="outline">Ver</Button>
-          </SheetTrigger>
+          </DialogTrigger>
           <BoxDetails box={box} open={open} setIsOpen={setIsOpen}  />
-        </Sheet>
+        </Dialog>
       );
     },
   },
