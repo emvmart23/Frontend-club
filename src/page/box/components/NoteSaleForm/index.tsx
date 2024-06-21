@@ -30,6 +30,7 @@ import {
   TableRow,
 } from "@/components/ui/Table";
 import { getCustomer } from "@/helpers/getCustomer";
+import { getMethodPayments } from "@/helpers/getMethodPayments";
 import { toast } from "@/hooks/useToast";
 import { cn } from "@/lib/utils/tools";
 import { NoteScheme } from "@/lib/validators/product";
@@ -41,41 +42,6 @@ import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 import { z } from "zod";
-
-const method_payment = [
-  {
-    id: 1,
-    name: "Efectivo",
-  },
-  {
-    id: 2,
-    name: "Tranferencia",
-  },
-  {
-    id: 3,
-    name: "Factura a 30 días",
-  },
-  {
-    id: 4,
-    name: "A 30 días",
-  },
-  {
-    id: 5,
-    name: "Crédito",
-  },
-  {
-    id: 6,
-    name: "Tarjeta",
-  },
-  {
-    id: 7,
-    name: "Yape",
-  },
-  {
-    id: 8,
-    name: "Plin",
-  },
-];
 
 interface Props {
   setPaymentFields: (value: PaymentField[]) => void;
@@ -91,6 +57,7 @@ export default function NoteSaleForm({
   header,
 }: Props) {
   const [customer, setCustomer] = useState<Customer[]>([]);
+  const [methodPayments, setMethodPayments] = useState<MethodPayment[]>([]);
   const currentDate = format(new Date(), "yyyy-MM-dd");
   const queryClient = useQueryClient();
 
@@ -111,7 +78,7 @@ export default function NoteSaleForm({
   const onSubmit = async (values: z.infer<typeof NoteScheme>) => {
     setIsOpen(true);
     try {
-      const response = await api.post(`/details/create/${header.id}`, values);
+      const response = await api.post(`/details/creat/${header.id}`, values);
       if (response.status === 200) {
         toast({
           description: "Venta realizada correctamente",
@@ -127,6 +94,10 @@ export default function NoteSaleForm({
       }
     } catch (err) {
       console.log(err);
+      toast({
+        description: "Error al realizar venta",
+        variant: "destructive",
+      });
     } finally {
       setIsOpen(false);
     }
@@ -136,6 +107,15 @@ export default function NoteSaleForm({
     name: "payment",
     control: form.control,
   });
+
+  const fetchMethosPayments = async () => {
+    try {
+      const { data } = await getMethodPayments();
+      setMethodPayments(data); 
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const fetchCustomer = async () => {
     try {
@@ -149,6 +129,10 @@ export default function NoteSaleForm({
 
   useEffect(() => {
     fetchCustomer();
+  }, []);
+
+  useEffect(() => {
+    fetchMethosPayments();
   }, []);
 
   useEffect(() => {
@@ -269,7 +253,7 @@ export default function NoteSaleForm({
                 </TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody className="hidden">
+            <TableBody>
               {fields.map((field, index) => (
                 <TableRow key={field.id}>
                   <TableCell className="pl-[0.3rem]">
@@ -291,7 +275,7 @@ export default function NoteSaleForm({
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              {method_payment.map((data) => (
+                              {methodPayments?.map((data) => (
                                 <SelectItem key={data.id} value={data.name}>
                                   {data.name}
                                 </SelectItem>

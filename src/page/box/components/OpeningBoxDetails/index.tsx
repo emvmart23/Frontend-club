@@ -15,7 +15,7 @@ interface Props {
   setIsOpen: (value: boolean) => void;
 }
 
-export default function OpeningBoxDetails({ box }: Props) {
+export default function OpeningBoxDetails({ box, setIsOpen }: Props) {
   const [isPending, setIsPending] = useState(false);
   const queryClient = useQueryClient();
 
@@ -31,10 +31,12 @@ export default function OpeningBoxDetails({ box }: Props) {
       }
       queryClient.invalidateQueries("box");
       setIsPending(false);
+      setIsOpen(false);
     } catch (error) {
       console.log(error);
     } finally {
       setIsPending(false);
+      setIsOpen(false);
     }
   };
 

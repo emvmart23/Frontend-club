@@ -25,8 +25,9 @@ export default function SidebarItems({ links, isExpanded }: Props) {
   const isActive = location.pathname === links.path;
 
   const handleClick = () => {
-    setOpen(!open);
+    setOpen(!open)
   };
+
   return links.childrens ? (
     <div
       className={`${open ? "h-auto" : "h-[3.8rem]"} ${

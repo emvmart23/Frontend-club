@@ -47,7 +47,7 @@ function Combobox({
     setValue(newValue);
     onChange(newValue);
   };
-  
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>

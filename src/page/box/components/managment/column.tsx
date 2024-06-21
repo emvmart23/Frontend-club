@@ -63,7 +63,8 @@ export const columns: ColumnDef<Header>[] = [
       );
     },
     cell: ({ row }) => {
-      const isAnulated = Boolean(row.getValue("state_doc")) === true ? "Normal" : "Finalizado";
+      const value = row.getValue("state_doc") as number;
+      const isAnulated = value.toString() === "1" ? "Normal" : "Finalizado";
       return <div className="text-center">{isAnulated}</div>;
     },
   },

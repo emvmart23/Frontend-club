@@ -32,6 +32,7 @@ import { Combobox } from "@/components/ui/Combobox";
 import { Input } from "@/components/ui/Input";
 import { getUsers } from "@/helpers/users/getUsers";
 import { formatUsers } from "@/helpers/users/formatUsers";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select";
 
 interface Props {
   data: Header[];
@@ -66,16 +67,16 @@ export default function NoteSaleDataTable({ data, isLoading }: Props) {
     },
   });
 
-  const boxState = [
-    {
-      value: "1",
-      label: "Normal",
-    },
-    {
-      value: "0",
-      label: "Anulado",
-    },
-  ];
+  // const boxState = [
+  //   {
+  //     value: "1",
+  //     label: "Normal",
+  //   },
+  //   {
+  //     value: "0",
+  //     label: "Anulado",
+  //   },
+  // ];
 
   const fetchUsers = async () => {
     try {
@@ -93,21 +94,25 @@ export default function NoteSaleDataTable({ data, isLoading }: Props) {
   return (
     <div className="w-full md:w-[93%] lg:w-full">
       <div className="flex flex-col md:flex-row gap-3 justify-between mb-6">
-        <div className="flex flex-col md:flex-row md:space-y-0 gap-3">
-          <Combobox
-            heading={"Estados"}
-            selectItemMsg="Filtrar estado"
-            data={boxState}
-            onSelect={(value) =>
-              table.getColumn("state_doc")?.setFilterValue(value)
-            }
-            tabelValue={
-              (table.getColumn("state_doc")?.getFilterValue() as string) ?? ""
-            } 
-            onChange={(value) =>
-              table.getColumn("state_doc")?.setFilterValue(value)
-            }
-          />
+        <div className="flex flex-col md:flex-row md:space-y-0 gap-2 md:w-[75%] lg:w-[65%]">
+          <Select
+            onValueChange={(value) => {
+              if (value === "1")
+                table.getColumn("state_doc")?.setFilterValue("1");
+              if (value === "0")
+                table.getColumn("state_doc")?.setFilterValue("00");
+            }}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Filtrar por estado..." />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="1">Normal</SelectItem>
+                <SelectItem value="0">Finalizado</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
           <Combobox
             heading={"Mozos"}
             selectItemMsg="Filtrar mozo"
@@ -133,7 +138,7 @@ export default function NoteSaleDataTable({ data, isLoading }: Props) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="w-full max-w-[7.5rem]">
-              Columnas <ChevronDown className="ml-2 h-4 w-4"/>
+              Columnas <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
