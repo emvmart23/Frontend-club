@@ -67,17 +67,6 @@ export default function NoteSaleDataTable({ data, isLoading }: Props) {
     },
   });
 
-  // const boxState = [
-  //   {
-  //     value: "1",
-  //     label: "Normal",
-  //   },
-  //   {
-  //     value: "0",
-  //     label: "Anulado",
-  //   },
-  // ];
-
   const fetchUsers = async () => {
     try {
       const response = await getUsers();

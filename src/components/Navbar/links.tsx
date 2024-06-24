@@ -57,6 +57,11 @@ export const links = [
         title: "Unidad",
         path: "/unidades",
       },
+      {
+        icon: <Combine />,
+        title: "Metodos de pago",
+        path: "/metodos-de-pago",
+      }
     ],
   },
   {

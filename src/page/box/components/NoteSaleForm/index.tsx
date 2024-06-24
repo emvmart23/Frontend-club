@@ -78,7 +78,7 @@ export default function NoteSaleForm({
   const onSubmit = async (values: z.infer<typeof NoteScheme>) => {
     setIsOpen(true);
     try {
-      const response = await api.post(`/details/creat/${header.id}`, values);
+      const response = await api.post(`/details/create/${header.id}`, values);
       if (response.status === 200) {
         toast({
           description: "Venta realizada correctamente",

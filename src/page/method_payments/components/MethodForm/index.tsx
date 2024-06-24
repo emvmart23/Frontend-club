@@ -12,22 +12,30 @@ import { MethodPaymentsSchema } from "@/lib/validators/method_payments";
 import api from "@/service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useQueryClient } from "react-query";
 import { z } from "zod";
 
-export default function MethodForm() {
+interface Props {
+  setIsPending: (value: boolean) => void;
+  setIsOpen: (value: boolean) => void;  
+}
+
+export default function MethodForm({setIsPending, setIsOpen}:Props) {
+  const queryClient = useQueryClient()
   const form = useForm<z.infer<typeof MethodPaymentsSchema>>({
     resolver: zodResolver(MethodPaymentsSchema),
   });
 
   const onSubmit = async (values: z.infer<typeof MethodPaymentsSchema>) => {
+    setIsPending(true);
     try {
       const response = await api.post("/payments/create", values);
-
       if (response.status === 200) {
         toast({
           description: "Método de pago creado correctamente",
           variant: "success",
         });
+        queryClient.invalidateQueries("methods");
       } else {
         toast({
           description: "Error al crear el método de pago",
@@ -40,6 +48,8 @@ export default function MethodForm() {
         description: "Error al crear el método de pago",
         variant: "destructive",
       });
+    }finally{
+      setIsOpen(false);
     }
   };
 

@@ -3,6 +3,9 @@ import NoteSaleFinish from "../NoteSaleFinish";
 import api from "@/service";
 import { toast } from "@/hooks/useToast";
 import { useQueryClient } from "react-query";
+import { useRef } from "react";
+import generatePDF from "react-to-pdf";
+import PdfNotes from "../../Pdf/PdfNotes";
 
 interface Props {
   setIsOpen: (value: boolean) => void;
@@ -11,6 +14,7 @@ interface Props {
 
 export default function NoteSaleActions({ setIsOpen, header }: Props) {
   const queryClient = useQueryClient();
+  const targetRef = useRef(null);
 
   const cancelNote = async () => {
     try {
@@ -36,10 +40,28 @@ export default function NoteSaleActions({ setIsOpen, header }: Props) {
       });
     }
   };
-  
+  [];
+
   return (
     <>
-      <Button> Generar ticket </Button>
+      <Button
+        onClick={() => generatePDF(targetRef, { filename: "ticket.pdf" })}
+      >
+        {" "}
+        Generar ticket{" "}
+      </Button>
+
+      <div className="hidden">
+        <Button
+          onClick={() => generatePDF(targetRef, { filename: "ticket.pdf" })}
+        >
+          {" "}
+          Generar ticket{" "}
+        </Button>
+        <div ref={targetRef} className="">
+          <PdfNotes />
+        </div>
+      </div>
       {Boolean(header.state_doc) === true ? (
         <NoteSaleFinish setIsOpen={setIsOpen} header={header} />
       ) : (
