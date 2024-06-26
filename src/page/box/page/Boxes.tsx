@@ -12,17 +12,15 @@ export default function Boxes() {
     const order = header.orders.find((order) => order);
     return {
       ...header,
-      total_price: order?.total_price
+      total_price: order?.total_price,
+      hostess:order?.hostess
     };
   });
-
+  console.log("dsds", formatHeader)
   return (
     <section>
       <h1 className="mb-4">Cobranza</h1>
       <NoteSaleDataTable data={formatHeader} isLoading={isLoading} />
-      <PDFViewer className="w-full h-screen absolute top-12">
-        <PDF />
-      </PDFViewer>
     </section>
   );
 }

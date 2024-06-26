@@ -15,6 +15,7 @@ import Products from "@/page/product/page/Products";
 import Roles from "@/page/role/page/Roles";
 import Units from "@/page/unit_measure/page/Units";
 import Users from "@/page/user/page/Users";
+import OrdersOfUser from "@/page/orders/page/OrdersOfUser";
 
 const appRouter = [
   {
@@ -70,8 +71,12 @@ const appRouter = [
         element: <Boxes />,
       },
       {
-        path: "/pedido",
+        path: "/generar-pedido",
         element: <Orders />,
+      },
+      {
+        path: "/lista-de-pedidos",
+        element: <OrdersOfUser/>
       },
       {
         path: "/atencion-de-pedidos",

@@ -3,7 +3,7 @@ import NoteSaleFinish from "../NoteSaleFinish";
 import api from "@/service";
 import { toast } from "@/hooks/useToast";
 import { useQueryClient } from "react-query";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { Loader2 } from "lucide-react";
 import PdfNotes from "../../Pdf/PdfNotes";
 import PDF from "../../Pdf/PdfNotes";
@@ -41,19 +41,26 @@ export default function NoteSaleActions({ setIsOpen, header }: Props) {
     }
   };
   [];
-
+  console.log("header", header);
   return (
     <>
+      {/* <PDFViewer className="w-full h-screen absolute top-12">
+        <PDF data={header} />
+      </PDFViewer> */}
       <div>
         <PDFDownloadLink document={<PDF />} fileName="notes.pdf">
-          {({ loading }) => "Download"}
+          {({ loading }) => (
+            <Button className="w-full">
+              PDF Nota
+            </Button>
+          )}
         </PDFDownloadLink>
       </div>
       {Boolean(header.state_doc) === true ? (
         <NoteSaleFinish setIsOpen={setIsOpen} header={header} />
       ) : (
         <Button onClick={cancelNote} variant="destructive">
-          Anular
+          Anular nota de venta
         </Button>
       )}
       <Button className="bg-orange-500">PDF ticket</Button>

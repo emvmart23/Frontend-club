@@ -1,6 +1,11 @@
+import { Document, Page } from "@react-pdf/renderer";
 
 export default function PdfTickets() {
   return (
-    <div></div>
+    <Document>
+      <Page>
+        
+      </Page>
+    </Document>
   )
 }

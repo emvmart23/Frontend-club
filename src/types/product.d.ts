@@ -23,7 +23,8 @@ interface Orders {
   total_price: number;
   count:number;
   hostess: string;
-  hostess_id: number
+  hostess_id: number;
+  price: number;
 }
 
 interface Header {

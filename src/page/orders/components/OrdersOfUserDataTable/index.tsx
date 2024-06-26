@@ -1,57 +1,40 @@
-import * as React from "react";
 import {
   ColumnFiltersState,
   SortingState,
   VisibilityState,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/DropdownMenu";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/Table";
-import { Skeleton } from "@/components/ui/Skeleton";
-import { columns } from "../managment/column";
-import { Combobox } from "@/components/ui/Combobox";
+import { columns } from "../managment/columns";
+import React, { useState } from "react";
 import { Input } from "@/components/ui/Input";
-import { getUsers } from "@/helpers/users/getUsers";
-import { formatUsers } from "@/helpers/users/formatUsers";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/DropdownMenu";
+import { Button } from "@/components/ui/Button";
+import { ChevronDown } from "lucide-react";
+import { Skeleton } from "@/components/ui/Skeleton";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/Table";
 
 interface Props {
   data: Header[];
   isLoading: boolean;
 }
 
-export default function NoteSaleDataTable({ data, isLoading }: Props) {
-  const [users, setUsers] = React.useState<User[]>([]);
+export function OrdersOfUserDataTable({ data, isLoading }: Props) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [ { id: "state", value: "00"}]
+    []
   );
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-  const [pagination, setPagination] = React.useState({
+  const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 6,
-  })
+  });
+
   const table = useReactTable({
     data,
     columns,
@@ -61,7 +44,6 @@ export default function NoteSaleDataTable({ data, isLoading }: Props) {
     getPaginationRowModel: getPaginationRowModel(),
     onPaginationChange: setPagination,
     getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     state: {
@@ -73,66 +55,20 @@ export default function NoteSaleDataTable({ data, isLoading }: Props) {
     },
   });
 
-  const fetchUsers = async () => {
-    try {
-      const response = await getUsers();
-      setUsers(response.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  React.useEffect(() => {
-    fetchUsers();
-  }, []);
-
   return (
-    <div className="w-full md:w-[93%] lg:w-full">
-      <div className="flex flex-col md:flex-row gap-3 justify-between mb-6">
-        <div className="flex flex-col md:flex-row md:space-y-0 gap-2 md:w-[75%] lg:w-[65%]">
-          <Select
-            onValueChange={(value) => {
-              if (value === "1")
-                table.getColumn("state_doc")?.setFilterValue("1");
-              if (value === "0")
-                table.getColumn("state_doc")?.setFilterValue("00");
-            }}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Filtrar por estado..." />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="1">Normal</SelectItem>
-                <SelectItem value="0">Finalizado</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <Combobox
-            heading={"Mozos"}
-            selectItemMsg="Filtrar mozo"
-            data={formatUsers(users, 7)}
-            onSelect={(value) => table.getColumn("mozo")?.setFilterValue(value)}
-            tabelValue={
-              (table.getColumn("mozo")?.getFilterValue() as string) ?? ""
-            }
-            onChange={(value) => table.getColumn("mozo")?.setFilterValue(value)}
-          />
-          <Input
-            type="date"
-            placeholder="Filtrar por fecha..."
-            value={
-              (table.getColumn("created_at")?.getFilterValue() as string) ?? ""
-            }
-            onChange={(event) =>
-              table.getColumn("created_at")?.setFilterValue(event.target.value)
-            }
-            className="w-full"
-          />
-        </div>
+    <div className="w-full md:w-[90%] mx-auto">
+      <div className="flex items-center py-4">
+        <Input
+          placeholder="Filter name..."
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("name")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="w-full max-w-[7.5rem]">
+            <Button variant="outline" className="ml-auto">
               Columnas <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
@@ -188,7 +124,7 @@ export default function NoteSaleDataTable({ data, isLoading }: Props) {
                     data-state={row.getIsSelected() && "selected"}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
+                      <TableCell key={cell.id} className="px-8">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

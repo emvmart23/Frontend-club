@@ -26,7 +26,18 @@ export const links = [
   {
     icon: <ListOrdered />,
     title: "Pedidos",
-    path: "/pedido",
+    childrens: [
+      {
+        icon: <ListOrdered />,
+        title: "Generar pedido",
+        path: "/generar-pedido",
+      },
+      {
+        icon: <ListOrdered />,
+        title: "Lista de pedidos",
+        path: "/lista-de-pedidos",
+      }
+    ],
   },
   {
     icon: <Boxes />,
@@ -61,7 +72,7 @@ export const links = [
         icon: <Combine />,
         title: "Metodos de pago",
         path: "/metodos-de-pago",
-      }
+      },
     ],
   },
   {
@@ -72,17 +83,17 @@ export const links = [
   {
     icon: <Boxes />,
     title: "Cajero",
-    childrens:[
+    childrens: [
       {
-        icon:<Boxes />,
-        title:"Apertura de caja",
-        path:"/apertura-caja"
+        icon: <Boxes />,
+        title: "Apertura de caja",
+        path: "/apertura-caja",
       },
       {
-        icon:<Boxes />,
-        title:"Caja",
-        path:"/caja"
-      } 
+        icon: <Boxes />,
+        title: "Caja",
+        path: "/caja",
+      },
     ],
   },
   {

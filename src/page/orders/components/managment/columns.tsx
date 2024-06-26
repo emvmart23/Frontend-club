@@ -10,7 +10,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/Dialog";
-import NoteSaleActions from "../NoteSaleActions";
+import NoteSaleActions from "../OrdersOfUserAction";
+import OrdersOfUserAction from "../OrdersOfUserAction";
 
 export const columns: ColumnDef<Header>[] = [
   {
@@ -146,7 +147,7 @@ export const columns: ColumnDef<Header>[] = [
             <DialogHeader className="mb-2">
               <DialogTitle>Acciones</DialogTitle>
             </DialogHeader>
-            <NoteSaleActions setIsOpen={setIsOpen} header={row.original} />
+            <OrdersOfUserAction setIsOpen={setIsOpen} header={row.original} />
           </DialogContent>
         </Dialog>
       );
