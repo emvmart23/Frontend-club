@@ -27,8 +27,8 @@ export const columns: ColumnDef<Header>[] = [
       );
     },
     cell: ({ row }) => {
-      return <div className="text-center">PD-{row.getValue("id")}</div>
-    }
+      return <div className="text-center">PD-{row.getValue("id")}</div>;
+    },
   },
   {
     accessorKey: "created_at",
@@ -63,7 +63,12 @@ export const columns: ColumnDef<Header>[] = [
     },
     cell: ({ row }) => {
       const value = row.getValue("state_doc") as number;
-      const isAnulated = value.toString() === "1" ? "Normal" : "Finalizado";
+      const isAnulated =
+        value !== null
+          ? Boolean(value) === true
+            ? "Normal"
+            : "Finalizado"
+          : "Anulado";
       return <div className="text-center">{isAnulated}</div>;
     },
   },
@@ -72,11 +77,10 @@ export const columns: ColumnDef<Header>[] = [
     header: ({ column }) => {
       return (
         <Button
-        className="hidden"
+          className="hidden"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-        </Button>
+        ></Button>
       );
     },
     cell: ({ row }) => {
@@ -96,7 +100,6 @@ export const columns: ColumnDef<Header>[] = [
         </Button>
       );
     },
-    
   },
   {
     accessorKey: "total_price",
@@ -127,9 +130,13 @@ export const columns: ColumnDef<Header>[] = [
       );
     },
     cell: ({ row }) => {
-      const format = row.getValue("note_sale") == null || row.getValue("note_sale") == undefined ?  "-" : "NV1-" + row.getValue("note_sale")
-      return <div className="text-center">{format}</div>
-    }
+      const format =
+        row.getValue("note_sale") == null ||
+        row.getValue("note_id") == undefined
+          ? "-"
+          : "NV1-" + row.getValue("note_sale");
+      return <div className="text-center">{format}</div>;
+    },
   },
   {
     id: "actions",

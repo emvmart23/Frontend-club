@@ -10,15 +10,17 @@ const getBox = async () => {
 
 export default function OpeningBoxes() {
   const { data, isLoading } = useQuery("box", getBox);
-  
   return (
     <section className="flex flex-col gap-8 w-full">
       <h3 className="text-3xl">Apertura de cajas</h3>
       <div>
-        <BoxActions/>
+        <BoxActions />
       </div>
       <div>
-        <OpeningBoxDataTable data={data ? data.boxes : []} isLoading={isLoading} />
+        <OpeningBoxDataTable
+          data={data ? data.boxes : []}
+          isLoading={isLoading}
+        />
       </div>
     </section>
   );

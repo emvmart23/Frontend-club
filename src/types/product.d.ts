@@ -37,6 +37,8 @@ interface Header {
   orders: Orders[];
   state:number;
   state_doc: number;
+  box_date: string;
+  current_user: number;
   created_at:string;
 }
 

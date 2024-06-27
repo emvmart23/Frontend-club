@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import api from "@/service";
 import { toast } from "@/hooks/useToast";
@@ -17,9 +17,18 @@ interface Props {
 
 export default function OpeningBoxDetails({ box, setIsOpen }: Props) {
   const [isPending, setIsPending] = useState(false);
+  const [headers, setHeaders] = useState<Header[]>([]);
   const queryClient = useQueryClient();
 
   const closeBox = async () => {
+    if (isActive) {
+      toast({
+        description: "Finaliza todas las notas de venta",
+        variant: "warning",
+      });
+      return;
+    }
+
     setIsPending(true);
     try {
       const response = await api.post(`/boxes/close/${box.id}`);
@@ -40,10 +49,24 @@ export default function OpeningBoxDetails({ box, setIsOpen }: Props) {
     }
   };
 
+  const fetchHeaders = async () => {
+    try {
+      const response = await api.get("/headers");
+      setHeaders(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const isActive = headers.some((header) => Boolean(header.state_doc) === true);
+
+  useEffect(() => {
+    fetchHeaders();
+  }, []);
+
   return (
     <DialogContent className="w-[400px]">
       <DialogHeader>
-        <DialogTitle >Acciones</DialogTitle>
+        <DialogTitle>Acciones</DialogTitle>
       </DialogHeader>
       <div className="flex flex-col gap-x-4 gap-y-6 justify-center items-center mt-6">
         <Button

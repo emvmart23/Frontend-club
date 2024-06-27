@@ -10,7 +10,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/Dialog";
-import NoteSaleActions from "../OrdersOfUserAction";
 import OrdersOfUserAction from "../OrdersOfUserAction";
 
 export const columns: ColumnDef<Header>[] = [
@@ -28,8 +27,8 @@ export const columns: ColumnDef<Header>[] = [
       );
     },
     cell: ({ row }) => {
-      return <div className="text-center">PD-{row.getValue("id")}</div>
-    }
+      return <div className="text-center">PD-{row.getValue("id")}</div>;
+    },
   },
   {
     accessorKey: "created_at",
@@ -64,24 +63,13 @@ export const columns: ColumnDef<Header>[] = [
     },
     cell: ({ row }) => {
       const value = row.getValue("state_doc") as number;
-      const isAnulated = value.toString() === "1" ? "Normal" : "Finalizado";
+      const isAnulated =
+        value !== null
+          ? Boolean(value) === true
+            ? "Normal"
+            : "Finalizado"
+          : "Anulado";
       return <div className="text-center">{isAnulated}</div>;
-    },
-  },
-  {
-    accessorKey: "state",
-    header: ({ column }) => {
-      return (
-        <Button
-        className="hidden"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      return <div className="text-center hidden">{row.getValue("state")}</div>;
     },
   },
   {
@@ -97,40 +85,6 @@ export const columns: ColumnDef<Header>[] = [
         </Button>
       );
     },
-    
-  },
-  {
-    accessorKey: "total_price",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Total
-          <ArrowUpDown className="ml-1 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div>{row.getValue("total_price")}</div>,
-  },
-  {
-    accessorKey: "note_sale",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Nota de venta
-          <ArrowUpDown className="ml-1 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      const format = row.getValue("note_sale") == null || row.getValue("note_sale") == undefined ?  "-" : "NV1-" + row.getValue("note_sale")
-      return <div className="text-center">{format}</div>
-    }
   },
   {
     id: "actions",
@@ -138,12 +92,13 @@ export const columns: ColumnDef<Header>[] = [
     cell: ({ row }) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const [isOpen, setIsOpen] = useState(false);
+      const isAnulated = row.original.state_doc
       return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
-            <Button>Acciones</Button>
+             <Button className={isAnulated !== null ? "visible" : "invisible"}>Acciones</Button>
           </DialogTrigger>
-          <DialogContent className="max-w-[20rem] h-[16rem]">
+          <DialogContent className="max-w-[20rem]">
             <DialogHeader className="mb-2">
               <DialogTitle>Acciones</DialogTitle>
             </DialogHeader>

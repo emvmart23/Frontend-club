@@ -1,8 +1,6 @@
 import { useQuery } from "react-query";
 import NoteSaleDataTable from "../components/NoteSaleDataTable";
 import { getHeaders } from "@/helpers/getHeaders";
-import { PDFViewer } from "@react-pdf/renderer";
-import PDF from "../Pdf/PdfNotes";
 
 export default function Boxes() {
 
@@ -16,7 +14,7 @@ export default function Boxes() {
       hostess:order?.hostess
     };
   });
-  console.log("dsds", formatHeader)
+  console.log(formatHeader)
   return (
     <section>
       <h1 className="mb-4">Cobranza</h1>

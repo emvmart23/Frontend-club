@@ -18,7 +18,7 @@ export default function NoteSaleActions({ setIsOpen, header }: Props) {
 
   const cancelNote = async () => {
     try {
-      const response = await api.post(`/anulated/${header?.id}`);
+      const response = await api.post(`/note/anulated/${header?.id}`);
       if (response.status === 200) {
         toast({
           description: "Venta anulada correctamente",
@@ -41,7 +41,7 @@ export default function NoteSaleActions({ setIsOpen, header }: Props) {
     }
   };
   [];
-  console.log("header", header);
+  console.log("header", header.state_doc);
   return (
     <>
       {/* <PDFViewer className="w-full h-screen absolute top-12">
@@ -51,18 +51,20 @@ export default function NoteSaleActions({ setIsOpen, header }: Props) {
         <PDFDownloadLink document={<PDF />} fileName="notes.pdf">
           {({ loading }) => (
             <Button className="w-full">
+              {loading && <Loader2 className="animate-spin" />}
               PDF Nota
             </Button>
           )}
         </PDFDownloadLink>
       </div>
-      {Boolean(header.state_doc) === true ? (
-        <NoteSaleFinish setIsOpen={setIsOpen} header={header} />
-      ) : (
-        <Button onClick={cancelNote} variant="destructive">
-          Anular nota de venta
-        </Button>
-      )}
+      {header.state_doc !== null &&
+        (Boolean(header.state_doc) === true ? (
+          <NoteSaleFinish setIsOpen={setIsOpen} header={header} />
+        ) : (
+          <Button onClick={cancelNote} variant="destructive">
+            Anular nota de venta
+          </Button>
+        ))}
       <Button className="bg-orange-500">PDF ticket</Button>
     </>
   );

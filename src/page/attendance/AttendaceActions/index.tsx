@@ -4,14 +4,17 @@ import { useEffect, useState } from "react";
 import AttendanceForm from "../AttendanceForm";
 import { getBoxes } from "@/helpers/getBoxes";
 
-
 export default function AttendanceActions() {
   const [allBoxes, setBoxes] = useState<Box[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
   const fetchBox = async () => {
-    const data = await getBoxes();
-    setBoxes(data.boxes);
+    try {
+      const data = await getBoxes();
+      setBoxes(data.boxes);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -28,10 +31,12 @@ export default function AttendanceActions() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button disabled={boxIsClose === true ? false : true }>Asistencia</Button>
+        <Button disabled={boxIsClose === true ? false : true}>
+          Asistencia
+        </Button>
       </DialogTrigger>
       <DialogContent className="md:max-w-2xl h-[30rem]">
-        <AttendanceForm setIsOpen={setIsOpen}/>
+        <AttendanceForm setIsOpen={setIsOpen} />
       </DialogContent>
     </Dialog>
   );

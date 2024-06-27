@@ -5,14 +5,15 @@ import { useAuth } from "@/hooks/useAuth";
 
 export default function OrdersOfUser() {
   const { data, isLoading } = useQuery("headers", getHeaders);
-  //inserta el id del usuario en cabcera para que puedas hacer la condicion
   const { user } = useAuth();
-  const currentUser = (data ? data : []).filter((u: User) => u.id);
+  
+  const ordersOfCurrentUser = (data ? data : []).filter((header: Header) => header.current_user === user?.id);
+  
   return (
     <section>
-      <h1 className="">Lista de pedidos</h1>
+      <h1 className="text-3xl font-medium">Lista de pedidos</h1>
       <div>
-        <OrdersOfUserDataTable data={currentUser} isLoading={isLoading} />
+        <OrdersOfUserDataTable data={ordersOfCurrentUser} isLoading={isLoading} />
       </div>
     </section>
   );

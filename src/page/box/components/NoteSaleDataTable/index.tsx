@@ -43,7 +43,7 @@ export default function NoteSaleDataTable({ data, isLoading }: Props) {
   const [users, setUsers] = React.useState<User[]>([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [ { id: "state", value: "00"}]
+    []
   );
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -52,6 +52,7 @@ export default function NoteSaleDataTable({ data, isLoading }: Props) {
     pageIndex: 0,
     pageSize: 6,
   })
+  
   const table = useReactTable({
     data,
     columns,
