@@ -2,15 +2,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/Button";
 import { ArrowUpDown } from "lucide-react";
 import { format } from "date-fns";
-import { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/Dialog";
-import OrdersOfUserAction from "../OrdersOfUserAction";
 
 export const columns: ColumnDef<Header>[] = [
   {
@@ -22,7 +13,7 @@ export const columns: ColumnDef<Header>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Numero de pedido
-          <ArrowUpDown className="ml-1 h-4 w-4" />
+          <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -39,7 +30,7 @@ export const columns: ColumnDef<Header>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Fecha de emision
-          <ArrowUpDown className="ml-1 h-4 w-4" />
+          <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -86,26 +77,26 @@ export const columns: ColumnDef<Header>[] = [
       );
     },
   },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const [isOpen, setIsOpen] = useState(false);
-      const isAnulated = row.original.state_doc
-      return (
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogTrigger asChild>
-             <Button className={isAnulated !== null ? "visible" : "invisible"}>Acciones</Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-[20rem]">
-            <DialogHeader className="mb-2">
-              <DialogTitle>Acciones</DialogTitle>
-            </DialogHeader>
-            <OrdersOfUserAction setIsOpen={setIsOpen} header={row.original} />
-          </DialogContent>
-        </Dialog>
-      );
-    },
-  },
+  // {
+  //   id: "actions",
+  //   enableHiding: false,
+  //   cell: ({ row }) => {
+  //     // eslint-disable-next-line react-hooks/rules-of-hooks
+  //     const [isOpen, setIsOpen] = useState(false);
+  //     const isAnulated = row.original.state_doc
+  //     return (
+  //       <Dialog open={isOpen} onOpenChange={setIsOpen}>
+  //         <DialogTrigger asChild>
+  //            <Button className={isAnulated !== null ? "visible" : "invisible"}>Acciones</Button>
+  //         </DialogTrigger>
+  //         <DialogContent className="max-w-[20rem]">
+  //           <DialogHeader className="mb-2">
+  //             <DialogTitle>Acciones</DialogTitle>
+  //           </DialogHeader>
+  //           <OrdersOfUserAction setIsOpen={setIsOpen} header={row.original} />
+  //         </DialogContent>
+  //       </Dialog>
+  //     );
+  //   },
+  // },
 ];

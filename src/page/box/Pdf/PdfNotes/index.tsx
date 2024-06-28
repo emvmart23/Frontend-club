@@ -3,10 +3,8 @@ import {
   Text,
   View,
   Document,
-  StyleSheet,
-  PDFViewer,
+  StyleSheet
 } from "@react-pdf/renderer";
-import TableRow from "./NotesTableRow";
 import { format } from "date-fns";
 import NotesTableHeader from "./NotesTableHeader";
 import NotesTableRow from "./NotesTableRow";

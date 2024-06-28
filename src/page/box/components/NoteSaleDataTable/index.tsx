@@ -32,7 +32,14 @@ import { Combobox } from "@/components/ui/Combobox";
 import { Input } from "@/components/ui/Input";
 import { getUsers } from "@/helpers/users/getUsers";
 import { formatUsers } from "@/helpers/users/formatUsers";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/Select";
 
 interface Props {
   data: Header[];
@@ -41,18 +48,26 @@ interface Props {
 
 export default function NoteSaleDataTable({ data, isLoading }: Props) {
   const [users, setUsers] = React.useState<User[]>([]);
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
+  const [sorting, setSorting] = React.useState<SortingState>([
+    {
+      id: "id",
+      desc: true,
+    },
+  ]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([
+    {
+      id: "state",
+      value: "00",
+    },
+  ]);
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const [pagination, setPagination] = React.useState({
     pageIndex: 0,
     pageSize: 6,
-  })
-  
+  });
+
   const table = useReactTable({
     data,
     columns,

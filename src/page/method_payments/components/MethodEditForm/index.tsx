@@ -5,6 +5,7 @@ import { MethodPaymentsSchema } from "@/lib/validators/method_payments";
 import api from "@/service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useQueryClient } from "react-query";
 import { z } from "zod";
 
 interface Props {
@@ -13,23 +14,25 @@ interface Props {
   setIsOpen: (value:boolean) => void;
 }
 export default function MethodEditForm({ data, setIsPending, setIsOpen }:Props) {
+    const queryClient = useQueryClient()
     const form = useForm<z.infer<typeof MethodPaymentsSchema>>({
       resolver: zodResolver(MethodPaymentsSchema),
       defaultValues: {
         name: data?.name
       }
     })
-    
+
     const onSubmit = async (values: z.infer<typeof MethodPaymentsSchema>) => {
       setIsPending(true)
       try {
-        const response = await api.patch(`/payments/update/,${data.id}`, values)
+        const response = await api.patch(`/payments/update/${data.id}`, values)
         if(response.status === 200){
           toast({
             description: 'Metodo actualizado correctamente',
             variant:'success'
           })
         }
+        queryClient.invalidateQueries('methods')
         setIsPending(false)
         setIsOpen(false)
       }catch (error){

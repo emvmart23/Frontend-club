@@ -11,11 +11,23 @@ import {
 import { columns } from "../managment/columns";
 import React, { useState } from "react";
 import { Input } from "@/components/ui/Input";
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/DropdownMenu";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/DropdownMenu";
 import { Button } from "@/components/ui/Button";
 import { ChevronDown } from "lucide-react";
 import { Skeleton } from "@/components/ui/Skeleton";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/Table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/Table";
 
 interface Props {
   data: Header[];
@@ -54,17 +66,19 @@ export function OrdersOfUserDataTable({ data, isLoading }: Props) {
       pagination,
     },
   });
-
   return (
     <div className="w-full md:w-[90%] mx-auto">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter name..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+          type="date"
+          placeholder="Filtrar por fecha..."
+          value={
+            (table.getColumn("created_at")?.getFilterValue() as string) ?? ""
           }
-          className="max-w-sm"
+          onChange={(event) =>
+            table.getColumn("created_at")?.setFilterValue(event.target.value)
+          }
+          className="w-40"
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

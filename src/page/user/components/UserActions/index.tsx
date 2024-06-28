@@ -4,7 +4,6 @@ import { useState } from 'react';
 import UserForm from '../UserForm';
 import { Loader2 } from 'lucide-react';
 
-
 export default function UserActions () {
 
   const [isPending, setIsPending] = useState(false);

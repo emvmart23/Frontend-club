@@ -111,7 +111,7 @@ export default function NoteSaleForm({
   const fetchMethosPayments = async () => {
     try {
       const { data } = await getMethodPayments();
-      setMethodPayments(data); 
+      setMethodPayments(data);
     } catch (err) {
       console.log(err);
     }

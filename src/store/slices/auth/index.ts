@@ -57,6 +57,7 @@ export const authSlice = createSlice({
 
       removeLocalStorage("isAuthenticated");
       removeLocalStorage("user");
+      removeLocalStorage("vite-ui-theme")
     },
   },
 });

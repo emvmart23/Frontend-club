@@ -1,14 +1,19 @@
 import {
   AlarmClock,
   Boxes,
+  CirclePlus,
   Combine,
   Fingerprint,
   LayoutDashboard,
+  List,
   ListOrdered,
+  PackageOpen,
   Settings,
   ShoppingBasket,
   SlidersHorizontal,
+  SquareArrowOutUpRight,
   User,
+  Users,
   Wine,
 } from "lucide-react";
 
@@ -28,19 +33,19 @@ export const links = [
     title: "Pedidos",
     childrens: [
       {
-        icon: <ListOrdered />,
+        icon: <CirclePlus />,
         title: "Generar pedido",
         path: "/generar-pedido",
       },
       {
-        icon: <ListOrdered />,
+        icon: <List />,
         title: "Lista de pedidos",
         path: "/lista-de-pedidos",
       }
     ],
   },
   {
-    icon: <Boxes />,
+    icon: <Users />,
     title: "Clientes",
     path: "/clientes",
   },
@@ -85,13 +90,13 @@ export const links = [
     title: "Cajero",
     childrens: [
       {
-        icon: <Boxes />,
+        icon: <SquareArrowOutUpRight />,
         title: "Apertura de caja",
         path: "/apertura-caja",
       },
       {
-        icon: <Boxes />,
-        title: "Caja",
+        icon: <PackageOpen />,
+        title: "Cajas",
         path: "/caja",
       },
     ],

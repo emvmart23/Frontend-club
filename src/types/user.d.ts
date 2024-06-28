@@ -5,7 +5,8 @@ interface User {
   salary: string;
   profit_margin: number;
   role_id: number;
-  is_active: boolean;
+  role:string;
+  is_active: number;
 }
 
 interface Role {

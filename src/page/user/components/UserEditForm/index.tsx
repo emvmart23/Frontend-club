@@ -42,7 +42,7 @@ export default function UserEditForm({ setIsOpen, setIsPending, user }: Props) {
       salary: user?.salary,
       profit_margin: user?.profit_margin,
       role_id: user?.role_id,
-      is_active: user?.is_active,
+      is_active: Boolean(user?.is_active),
     },
   });
 

@@ -13,7 +13,7 @@ export default function Users() {
         <UserActions />
       </div>
       <div>
-        <UserDataTable data={data ? data.data : []} isLoading={isLoading} />
+        <UserDataTable data={data ? data.user : []} isLoading={isLoading} />
       </div>
     </section>
   );

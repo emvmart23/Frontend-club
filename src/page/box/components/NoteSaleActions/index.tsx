@@ -5,7 +5,7 @@ import { toast } from "@/hooks/useToast";
 import { useQueryClient } from "react-query";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { Loader2 } from "lucide-react";
-import PdfNotes from "../../Pdf/PdfNotes";
+// import PdfNotes from "../../Pdf/PdfNotes";
 import PDF from "../../Pdf/PdfNotes";
 
 interface Props {
@@ -41,7 +41,7 @@ export default function NoteSaleActions({ setIsOpen, header }: Props) {
     }
   };
   [];
-  console.log("header", header.state_doc);
+
   return (
     <>
       {/* <PDFViewer className="w-full h-screen absolute top-12">
@@ -57,15 +57,18 @@ export default function NoteSaleActions({ setIsOpen, header }: Props) {
           )}
         </PDFDownloadLink>
       </div>
-      {header.state_doc !== null &&
+      {/* //atendido y que desaparesca el boton añadir anfitriona a listado de pedidos y pedidos atendidos, hora de emision reportes 1: sueldo mas comisiones de las anfitrionas sueeldo cuandto han vendidoy con los productos con alcohol*/}
+      {header.state_doc !== null  &&
         (Boolean(header.state_doc) === true ? (
           <NoteSaleFinish setIsOpen={setIsOpen} header={header} />
         ) : (
-          <Button onClick={cancelNote} variant="destructive">
-            Anular nota de venta
-          </Button>
+          <>
+            <Button onClick={cancelNote} variant="destructive">
+              Anular nota de venta
+            </Button>
+            <Button className="bg-orange-500">PDF ticket</Button>
+          </>
         ))}
-      <Button className="bg-orange-500">PDF ticket</Button>
     </>
   );
 }

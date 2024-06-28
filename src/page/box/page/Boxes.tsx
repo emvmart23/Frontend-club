@@ -14,7 +14,7 @@ export default function Boxes() {
       hostess:order?.hostess
     };
   });
-  console.log(formatHeader)
+
   return (
     <section>
       <h1 className="mb-4">Cobranza</h1>
