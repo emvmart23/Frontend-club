@@ -15,14 +15,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/Select";
+import { getRoles } from "@/helpers/getRoles";
 import { toast } from "@/hooks/useToast";
 import { MainSchema } from "@/lib/validators/user";
 import api from "@/service";
-import { RootState } from "@/store/store";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
-import { useSelector } from "react-redux";
 import { z } from "zod";
 
 interface Props {
@@ -32,7 +32,7 @@ interface Props {
 }
 
 export default function UserEditForm({ setIsOpen, setIsPending, user }: Props) {
-  const roles = useSelector((state: RootState) => state.roles.role);
+  const [roles, setRoles] = useState<Role[]>([]);
   const queryClient = useQueryClient();
   const form = useForm<z.infer<typeof MainSchema>>({
     resolver: zodResolver(MainSchema),
@@ -67,7 +67,19 @@ export default function UserEditForm({ setIsOpen, setIsPending, user }: Props) {
       setIsPending(false);
     }
   };
-  
+
+  const fetchRoles = async () => {
+    try {
+      const response = await getRoles();
+      setRoles(response.role);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchRoles();
+  }, []);
+
   return (
     <Form {...form}>
       <form
@@ -152,7 +164,9 @@ export default function UserEditForm({ setIsOpen, setIsPending, user }: Props) {
                 </FormControl>
                 <SelectContent>
                   {roles.map((role) => (
-                    <SelectItem value={role.role_id.toString()}>{role.role_name}</SelectItem>
+                    <SelectItem value={role.role_id.toString()}>
+                      {role.role_name}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>

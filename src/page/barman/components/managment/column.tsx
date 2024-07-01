@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/Button";
 import { ArrowUpDown, Eye } from "lucide-react";
 import { Dialog, DialogTrigger } from "@/components/ui/Dialog";
 import { format } from "date-fns";
-import OrdersAtendeedDetails from "../OrdersAtendeedDetails";
+import { EyesDetailDialog } from "@/components";
 
 export const columns: ColumnDef<Header>[] = [
   {
@@ -93,7 +93,7 @@ export const columns: ColumnDef<Header>[] = [
               <Eye />
             </Button>
           </DialogTrigger>
-          <OrdersAtendeedDetails data={row.original.orders}/>
+          <EyesDetailDialog data={row.original}/>
         </Dialog>
       );
     },

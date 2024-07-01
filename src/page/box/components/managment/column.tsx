@@ -66,7 +66,7 @@ export const columns: ColumnDef<Header>[] = [
       const isAnulated =
         value !== null
           ? Boolean(value) === true
-            ? "Normal"
+            ? "En proceso"
             : "Finalizado"
           : "Anulado";
       return <div className="text-center">{isAnulated}</div>;

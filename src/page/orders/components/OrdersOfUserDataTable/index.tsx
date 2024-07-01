@@ -66,6 +66,7 @@ export function OrdersOfUserDataTable({ data, isLoading }: Props) {
       pagination,
     },
   });
+
   return (
     <div className="w-full md:w-[90%] mx-auto">
       <div className="flex items-center py-4">

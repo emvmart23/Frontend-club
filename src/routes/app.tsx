@@ -16,6 +16,7 @@ import Roles from "@/page/role/page/Roles";
 import Units from "@/page/unit_measure/page/Units";
 import Users from "@/page/user/page/Users";
 import OrdersOfUser from "@/page/orders/page/OrdersOfUser";
+import ReportHostess from "@/page/reports/hostess/page/ReportHostess";
 
 const appRouter = [
   {
@@ -85,6 +86,10 @@ const appRouter = [
       {
         path: "/pedidos-atendidos",
         element: <OrdersProcessed />,
+      },
+      {
+        path:"/reportes-anfitrionas",
+        element:<ReportHostess/>
       },
       {
         path: "*",

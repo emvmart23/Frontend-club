@@ -12,10 +12,10 @@ import {
   TableRow,
 } from "@/components/ui/Table";
 import { useEffect } from "react";
-import { getUsersWithOutRedux } from "@/store/slices/user/thunk";
 import { Button } from "@/components/ui/Button";
 import { useQueryClient } from "react-query";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { getUsers } from "@/helpers/users/getUsers";
 
 interface Props {
   setIsOpen: (value: boolean) => void;
@@ -33,8 +33,8 @@ export default function AttendanceForm({ setIsOpen }: Props) {
     setIsPending(true);
     const fetchData = async () => {
       try {
-        const allUsers = await getUsersWithOutRedux();
-        setTextShadow(allUsers.map((user: User) => user.name));
+        const { user } = await getUsers();
+        setTextShadow(user.map((user: User) => user.name));
 
         const { data } = await api.get("/attendances");
         setAllAttendances(data.attendances);
@@ -46,7 +46,7 @@ export default function AttendanceForm({ setIsOpen }: Props) {
           isPresent[index] ? isPresent[index].present : false;
 
         setUsers(
-          allUsers.map((u: Attendace, index: number) => {
+          user.map((u: Attendace, index: number) => {
             return {
               user_id: u.id,
               present: isAttendancePresent(index),

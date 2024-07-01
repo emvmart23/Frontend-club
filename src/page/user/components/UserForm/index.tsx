@@ -24,8 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/Select";
 import { useQueryClient } from "react-query";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import { useEffect, useState } from "react";
 
 interface Props {
   setIsPending: (value: boolean) => void;
@@ -33,7 +32,7 @@ interface Props {
 }
 
 export default function UserForm({ setIsPending, setIsOpen }: Props) {
-  const roles = useSelector((state: RootState) => state.roles.role);
+  const [roles, setRoles] = useState<Role[]>([])
   const queryClient = useQueryClient();
   const form = useForm<z.infer<typeof UserSchema>>({
     resolver: zodResolver(UserSchema),
@@ -68,6 +67,19 @@ export default function UserForm({ setIsPending, setIsOpen }: Props) {
       setIsPending(false);
     }
   };
+
+  const fetchRoles = async () => {
+    try {
+      const response = await api.get("/roles");
+      setRoles(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(()=>{
+    fetchRoles();
+  },[])
 
   return (
     <Form {...form}>

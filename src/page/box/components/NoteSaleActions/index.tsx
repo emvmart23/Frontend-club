@@ -3,7 +3,7 @@ import NoteSaleFinish from "../NoteSaleFinish";
 import api from "@/service";
 import { toast } from "@/hooks/useToast";
 import { useQueryClient } from "react-query";
-import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import { Loader2 } from "lucide-react";
 // import PdfNotes from "../../Pdf/PdfNotes";
 import PDF from "../../Pdf/PdfNotes";
@@ -57,7 +57,6 @@ export default function NoteSaleActions({ setIsOpen, header }: Props) {
           )}
         </PDFDownloadLink>
       </div>
-      {/* //atendido y que desaparesca el boton añadir anfitriona a listado de pedidos y pedidos atendidos, hora de emision reportes 1: sueldo mas comisiones de las anfitrionas sueeldo cuandto han vendidoy con los productos con alcohol*/}
       {header.state_doc !== null  &&
         (Boolean(header.state_doc) === true ? (
           <NoteSaleFinish setIsOpen={setIsOpen} header={header} />

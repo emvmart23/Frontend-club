@@ -1,11 +1,12 @@
 import {
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/Dialog";
 
 interface Props {
-  data: Orders[];
+  data: Header;
 }
 
 export default function OrdersAtendeedDetails({ data }: Props) {
@@ -13,13 +14,19 @@ export default function OrdersAtendeedDetails({ data }: Props) {
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
         <DialogTitle>Productos atendidos</DialogTitle>
+        <DialogDescription>
+          <span>
+            <strong>Anfitriona:</strong>
+            {data.hostess}
+          </span>
+        </DialogDescription>
       </DialogHeader>
       <ul className="grid gap-4 py-4 font-medium pl-6 list-disc">
-        {data.map((item, index) => (
+        {data.orders.map((order, index) => (
           <li key={index}>
             <span>
-              <strong>{item.count} </strong>
-              {item.name}
+              <strong>{order.count} </strong>
+              {order.name}
             </span>
           </li>
         ))}

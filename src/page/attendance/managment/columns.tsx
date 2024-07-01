@@ -18,7 +18,7 @@ export const columns: ColumnDef<Attendace>[] = [
     },
     cell: ({ row }) => {
       return <div>{row.getValue("user")}</div>;
-    }
+    },
   },
   {
     accessorKey: "date",
@@ -91,8 +91,7 @@ export const columns: ColumnDef<Attendace>[] = [
     },
     cell: ({ row }) => {
       const isActive = row.getValue("box_state") as number;
-      return <div className="hidden">{isActive}</div>
-    }
+      return <div className="hidden">{isActive}</div>;
+    },
   },
-  
 ];

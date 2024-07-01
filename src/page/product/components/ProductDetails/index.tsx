@@ -28,6 +28,7 @@ export default function ProductDetails({ product, setIsOpen }: Props) {
         });
       }
       setIsPending(false);
+      queryClient.invalidateQueries('products')
     } catch (error) {
       console.log(error);
       toast({

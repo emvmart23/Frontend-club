@@ -21,7 +21,9 @@ interface Attendace {
   box_id: number;
   box_date: string;
   present: boolean;
-  user: string; 
+  user: string;
+  salary:string;
+  profit_margin:number;
   box_state: number;
   role_user: number;
 }
