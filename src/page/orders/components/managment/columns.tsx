@@ -4,6 +4,8 @@ import { ArrowUpDown, Eye } from "lucide-react";
 import { format } from "date-fns";
 import { Dialog, DialogTrigger } from "@/components/ui/Dialog";
 import { EyesDetailDialog } from "@/components";
+import OrdersOfUserAction from "../OrdersOfUserAction";
+import { useState } from "react";
 
 export const columns: ColumnDef<Header>[] = [
   {
@@ -143,4 +145,18 @@ export const columns: ColumnDef<Header>[] = [
       return <div>{isActive}</div>;
     },
   },
+  {
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const header = row.original;
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const [open, setIsOpen] = useState(false);
+      return (
+        <Dialog open={open} onOpenChange={setIsOpen}>
+          <OrdersOfUserAction setIsOpen={setIsOpen} header={header} />
+        </Dialog>
+      );
+    },
+  }
 ];

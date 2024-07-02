@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/Select";
 import { getRoles } from "@/helpers/getRoles";
 import { toast } from "@/hooks/useToast";
-import { MainSchema } from "@/lib/validators/user";
+import { EditScheme, MainSchema } from "@/lib/validators/user";
 import api from "@/service";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
@@ -34,15 +34,15 @@ interface Props {
 export default function UserEditForm({ setIsOpen, setIsPending, user }: Props) {
   const [roles, setRoles] = useState<Role[]>([]);
   const queryClient = useQueryClient();
-  const form = useForm<z.infer<typeof MainSchema>>({
-    resolver: zodResolver(MainSchema),
+  const form = useForm<z.infer<typeof EditScheme>>({
+    resolver: zodResolver(EditScheme),
     defaultValues: {
       name: user?.name,
       user: user?.user,
       salary: user?.salary,
       profit_margin: user?.profit_margin,
       role_id: user?.role_id,
-      is_active: Boolean(user?.is_active),
+      is_active: Boolean(user?.is_active)
     },
   });
 

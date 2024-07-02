@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/Button";
 import { useQueryClient } from "react-query";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { getUsers } from "@/helpers/users/getUsers";
+import { getAttendance } from "@/helpers/getAttendance";
 
 interface Props {
   setIsOpen: (value: boolean) => void;
@@ -35,16 +36,14 @@ export default function AttendanceForm({ setIsOpen }: Props) {
       try {
         const { user } = await getUsers();
         setTextShadow(user.map((user: User) => user.name));
+        const { attendances } = await getAttendance();
+        setAllAttendances(attendances);
 
-        const { data } = await api.get("/attendances");
-        setAllAttendances(data.attendances);
-
-        const isPresent = data.attendances.filter(
+        const isPresent = attendances.filter(
           (attendance: Attendace) => attendance.date === currentDate
         );
         const isAttendancePresent = (index: number) =>
           isPresent[index] ? isPresent[index].present : false;
-
         setUsers(
           user.map((u: Attendace, index: number) => {
             return {
@@ -124,7 +123,7 @@ export default function AttendanceForm({ setIsOpen }: Props) {
       }
     }
   };
-
+  console.log("users", users);
   return (
     <form
       id="add-attendance-form"

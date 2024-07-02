@@ -119,8 +119,8 @@ export default function NoteSaleForm({
 
   const fetchCustomer = async () => {
     try {
-      const { data } = await getCustomer();
-      setCustomer(data.customer);
+      const { customer } = await getCustomer();
+      setCustomer(customer);
       return;
     } catch (err) {
       console.log(err);
@@ -138,7 +138,7 @@ export default function NoteSaleForm({
   useEffect(() => {
     setPaymentFields(fields);
   }, [fields, setPaymentFields]);
-
+  
   return (
     <Form {...form}>
       <form id="finish-sale-form" onSubmit={form.handleSubmit(onSubmit)}>
@@ -162,11 +162,17 @@ export default function NoteSaleForm({
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {customer.map((data) => (
-                      <SelectItem key={data.id} value={data.id.toString()}>
-                        {data.name}
-                      </SelectItem>
-                    ))}
+                    {customer.length <= 0 ? (
+                      <span className="font-medium ml-2 text-[0.9rem] text-foreground/60">
+                        No hay clientes registrados
+                      </span>
+                    ) : (
+                      customer.map((data) => (
+                        <SelectItem key={data.id} value={data.id.toString()}>
+                          {data.name}
+                        </SelectItem>
+                      ))
+                    )}
                   </SelectContent>
                 </Select>
                 <FormMessage />

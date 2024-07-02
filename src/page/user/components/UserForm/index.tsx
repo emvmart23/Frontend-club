@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/Select";
 import { useQueryClient } from "react-query";
 import { useEffect, useState } from "react";
+import { getRoles } from "@/helpers/getRoles";
 
 interface Props {
   setIsPending: (value: boolean) => void;
@@ -45,7 +46,7 @@ export default function UserForm({ setIsPending, setIsOpen }: Props) {
       role_id: 0,
     },
   });
-  
+  console.log(form.formState.errors)
   const onSubmit = async (values: z.infer<typeof UserSchema>) => {
     setIsPending(true);
     try {
@@ -59,6 +60,7 @@ export default function UserForm({ setIsPending, setIsOpen }: Props) {
       queryClient.invalidateQueries("users");
       setIsOpen(false);
     } catch (error) {
+      console.log(error)
       toast({
         description: "Error al crear cuenta",
         variant: "destructive",
@@ -70,8 +72,8 @@ export default function UserForm({ setIsPending, setIsOpen }: Props) {
 
   const fetchRoles = async () => {
     try {
-      const response = await api.get("/roles");
-      setRoles(response.data);
+      const response = await getRoles();
+      setRoles(response.role);
     } catch (error) {
       console.log(error);
     }

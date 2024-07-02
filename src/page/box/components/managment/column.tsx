@@ -132,7 +132,7 @@ export const columns: ColumnDef<Header>[] = [
     cell: ({ row }) => {
       const format =
         row.getValue("note_sale") == null ||
-        row.getValue("note_id") == undefined
+        row.getValue("note_sale") == undefined
           ? "-"
           : "NV1-" + row.getValue("note_sale");
       return <div className="text-center">{format}</div>;
