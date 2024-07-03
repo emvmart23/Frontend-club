@@ -27,7 +27,7 @@ export default function NoteSaleFinish({ setIsOpen, header }: Props) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="destructive">Terminar</Button>
+        <Button className="w-full" variant="destructive">Terminar</Button>
       </DialogTrigger>
       <DialogContent className="h-[34rem] max-w-[42rem]">
         <NoteSaleForm

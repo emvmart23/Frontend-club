@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/Button";
 import { DialogFooter } from "@/components/ui/Dialog";
 import { toast } from "@/hooks/useToast";
 import api from "@/service";
-import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useQueryClient } from "react-query";
 

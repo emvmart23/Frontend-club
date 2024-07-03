@@ -88,7 +88,7 @@ const appRouter = [
         element: <OrdersProcessed />,
       },
       {
-        path:"/reportes-anfitrionas",
+        path:"/reportes-de-anfitrionas",
         element:<ReportHostess/>
       },
       {

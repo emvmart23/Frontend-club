@@ -73,6 +73,15 @@ export default function AttendanceForm({ setIsOpen }: Props) {
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
+
+    if (!users || users.length === 0) {
+      toast({
+        description: "Debes marcar al menos una asistencia",
+        variant: "warning",
+      });
+      return;
+    }
+
     if (isDateExist) {
       try {
         const { status } = await api.patch("/attendances/update", users);
@@ -123,12 +132,12 @@ export default function AttendanceForm({ setIsOpen }: Props) {
       }
     }
   };
-  console.log("users", users);
+
   return (
     <form
       id="add-attendance-form"
       onSubmit={onSubmit}
-      className="space-y-5 flex-col flex w-full p-8 border border-foreground rounded-md shadow-2xl overflow-auto"
+      className="space-y-5 flex-col flex w-full p-8 border border-foreground rounded-md shadow-2xl overflow-auto relative"
     >
       {isPending ? (
         <Skeleton className="h-[326px] w-[34.5rem]" />
@@ -188,15 +197,13 @@ export default function AttendanceForm({ setIsOpen }: Props) {
           </Table>
         </>
       )}
-      {isDateExist ? (
-        <Button className="" type="submit">
-          Editar
-        </Button>
-      ) : (
-        <Button className="" type="submit">
-          Guardar
-        </Button>
-      )}
+      <div className="absolute bottom-3 w-[95%] left-4">
+        {isDateExist ? (
+          <Button className="w-full" type="submit">Editar</Button>
+        ) : (
+          <Button className="w-full" type="submit">Guardar</Button>
+        )}
+      </div>
     </form>
   );
 }

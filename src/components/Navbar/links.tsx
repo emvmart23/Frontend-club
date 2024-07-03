@@ -2,8 +2,10 @@ import {
   AlarmClock,
   Boxes,
   CirclePlus,
+  ClipboardMinus,
   Combine,
   Fingerprint,
+  HandCoins,
   LayoutDashboard,
   List,
   ListOrdered,
@@ -41,7 +43,7 @@ export const links = [
         icon: <List />,
         title: "Lista de pedidos",
         path: "/lista-de-pedidos",
-      }
+      },
     ],
   },
   {
@@ -74,7 +76,7 @@ export const links = [
         path: "/unidades",
       },
       {
-        icon: <Combine />,
+        icon: <HandCoins />,
         title: "Metodos de pago",
         path: "/metodos-de-pago",
       },
@@ -116,5 +118,22 @@ export const links = [
         path: "/pedidos-atendidos",
       },
     ],
+  },
+  {
+    icon: <ClipboardMinus />,
+    title: "Reportes",
+    childrens: [
+      {
+        icon: <ClipboardMinus />,
+        title: "",
+        path:"/-"
+
+      },
+      {
+        icon:<ClipboardMinus />,
+        title: "",
+        path:""
+      }
+    ]
   },
 ];

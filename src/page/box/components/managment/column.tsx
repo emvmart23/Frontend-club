@@ -144,13 +144,15 @@ export const columns: ColumnDef<Header>[] = [
     cell: ({ row }) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const [isOpen, setIsOpen] = useState(false);
-      const header = row.original
+      const header = row.original;
+      const state = !!header.state_doc;
+      const dsds = state !== false && state !== true;
       return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
             <Button>Acciones</Button>
           </DialogTrigger>
-          <DialogContent className={`max-w-[20rem] ${header.state_doc !== null && "h-[16rem]"}`}>
+          <DialogContent className={`max-w-[20rem] ${dsds && "h-[16rem]"}`}>
             <DialogHeader className="mb-2">
               <DialogTitle>Acciones</DialogTitle>
             </DialogHeader>

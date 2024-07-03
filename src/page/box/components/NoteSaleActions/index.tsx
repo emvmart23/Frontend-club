@@ -42,22 +42,22 @@ export default function NoteSaleActions({ setIsOpen, header }: Props) {
   };
   [];
 
+  {
+    /* <PDFViewer className="w-full h-screen absolute top-12">
+    <PDF data={header} />
+  </PDFViewer> */
+  }
   return (
     <>
-      {/* <PDFViewer className="w-full h-screen absolute top-12">
-        <PDF data={header} />
-      </PDFViewer> */}
-      <div>
-        <PDFDownloadLink document={<PDF />} fileName="notes.pdf">
-          {({ loading }) => (
-            <Button className="w-full">
-              {loading && <Loader2 className="animate-spin" />}
-              PDF Nota
-            </Button>
-          )}
-        </PDFDownloadLink>
-      </div>
-      {header.state_doc !== null  &&
+      <PDFDownloadLink document={<PDF />} fileName="notes.pdf">
+        {({ loading }) => (
+          <Button className="w-full">
+            {loading && <Loader2 className="animate-spin" />}
+            PDF Nota
+          </Button>
+        )}
+      </PDFDownloadLink>
+      {header.state_doc !== null &&
         (Boolean(header.state_doc) === true ? (
           <NoteSaleFinish setIsOpen={setIsOpen} header={header} />
         ) : (

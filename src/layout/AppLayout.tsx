@@ -56,7 +56,7 @@ export default function AppLayout() {
           >
             <X />
           </Button>
-          <div className="mt-20">
+          <div className="mt-12">
             <Sidebar isExpanded={isExpanded} setIsExpanded={setIsExpanded} open={open} setOpen={setOpen}/>
           </div>
         </div>

@@ -4,7 +4,7 @@ import { ArrowUpDown } from "lucide-react";
 
 export const columns: ColumnDef<Attendace>[] = [
   {
-    accessorKey: "name",
+    accessorKey: "user",
     header: ({ column }) => {
       return (
         <Button
@@ -16,7 +16,7 @@ export const columns: ColumnDef<Attendace>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("name")}</div>,
+    cell: ({ row }) => <div>{row.getValue("user")}</div>,
   },
   {
     accessorKey: "salary",
