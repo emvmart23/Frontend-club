@@ -31,7 +31,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 import { columns } from "../managment/columns";
 
 interface Props {
-  data: Attendace[];
+  data: Detail[];
   isLoading: boolean;
 }
 

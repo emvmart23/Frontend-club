@@ -23,8 +23,8 @@ interface Orders {
   total_price: number;
   count:number;
   hostess: string;
-  hostess_id: number;
   price: number;
+  hostess_id: number;
 }
 
 interface Header {
@@ -34,6 +34,7 @@ interface Header {
   total_price: number;
   note_sale:string;
   hostess:string;
+  hostess_id: number;
   orders: Orders[];
   state:number;
   state_doc: number;
@@ -52,7 +53,8 @@ interface Payments {
 
 interface Detail {
   id:number;
-  client_id:1;
+  client_id:number;
+  hostess:string;
   issue_date:string;
   total_price:number;
   payments:Payments[]

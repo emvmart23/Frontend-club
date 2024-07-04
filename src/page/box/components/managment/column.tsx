@@ -100,6 +100,23 @@ export const columns: ColumnDef<Header>[] = [
         </Button>
       );
     },
+    cell: ({ row }) => {
+      return <div>{row.getValue("mozo")}</div>;
+    },
+  },
+  {
+    accessorKey: "hostess",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Anfitriona
+          <ArrowUpDown className="ml-1 h-4 w-4" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "total_price",
@@ -147,6 +164,7 @@ export const columns: ColumnDef<Header>[] = [
       const header = row.original;
       const state = !!header.state_doc;
       const dsds = state !== false && state !== true;
+      console.log("actions",header)
       return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>

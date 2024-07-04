@@ -64,6 +64,7 @@ export default function NoteSaleForm({
   const form = useForm<z.infer<typeof NoteScheme>>({
     resolver: zodResolver(NoteScheme),
     defaultValues: {
+      hostess_id: header?.hostess_id,
       issue_date: currentDate,
       total_price: Number(ordersDetails?.total_price),
       payment: [
@@ -138,7 +139,7 @@ export default function NoteSaleForm({
   useEffect(() => {
     setPaymentFields(fields);
   }, [fields, setPaymentFields]);
-  
+
   return (
     <Form {...form}>
       <form id="finish-sale-form" onSubmit={form.handleSubmit(onSubmit)}>

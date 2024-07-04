@@ -2,9 +2,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/Button";
 import { ArrowUpDown } from "lucide-react";
 
-export const columns: ColumnDef<Attendace>[] = [
+export const columns: ColumnDef<Detail>[] = [
   {
-    accessorKey: "user",
+    accessorKey: "hostess",
     header: ({ column }) => {
       return (
         <Button
@@ -16,7 +16,7 @@ export const columns: ColumnDef<Attendace>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("user")}</div>,
+    cell: ({ row }) => <div>{row.getValue("hostess")}</div>,
   },
   {
     accessorKey: "salary",

@@ -18,6 +18,7 @@ export const payment = z.object({
 
 export const NoteScheme = z.object({
   client_id: z.number( {message: requiredErrorMsg }).min(1),
+  hostess_id:z.number({message: requiredErrorMsg}).min(1),
   issue_date: z.string({
     required_error: "Se requiere una fecha",
   }).date(),

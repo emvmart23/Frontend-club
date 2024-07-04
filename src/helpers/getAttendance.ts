@@ -1,7 +1,10 @@
 import api from "@/service";
 
 export const getAttendance = async () => {
-  const { data } = await api.get("/attendances");
-  console.log("get",data)
-  return data;
+  try {
+    const { data } = await api.get("/attendances");
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 };
