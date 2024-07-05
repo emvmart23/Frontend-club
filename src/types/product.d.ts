@@ -55,9 +55,11 @@ interface Detail {
   id:number;
   client_id:number;
   hostess:string;
+  hostess_id:number;
   issue_date:string;
   total_price:number;
-  payments:Payments[]
+  box_date:string;
+  payments:Payments[];
 }
 
 interface PaymentField {

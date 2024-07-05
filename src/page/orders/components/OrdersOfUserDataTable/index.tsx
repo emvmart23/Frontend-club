@@ -118,7 +118,7 @@ export function OrdersOfUserDataTable({ data, isLoading }: Props) {
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
                     return (
-                      <TableHead key={header.id} className="pl-0">
+                      <TableHead key={header.id} className="p-0">
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -139,7 +139,7 @@ export function OrdersOfUserDataTable({ data, isLoading }: Props) {
                     data-state={row.getIsSelected() && "selected"}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="px-8">
+                      <TableCell key={cell.id} className="px-4">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

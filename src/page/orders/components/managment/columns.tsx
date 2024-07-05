@@ -6,6 +6,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/Dialog";
 import { EyesDetailDialog } from "@/components";
 import OrdersOfUserAction from "../OrdersOfUserAction";
 import { useState } from "react";
+import { AlertDialog } from "@/components/ui/AlertDialog";
 
 export const columns: ColumnDef<Header>[] = [
   {
@@ -39,7 +40,7 @@ export const columns: ColumnDef<Header>[] = [
       );
     },
     cell: ({ row }) => {
-      return <div className="text-center">{row.getValue("mozo")}</div>;
+      return <div className="ml-1">{row.getValue("mozo")}</div>;
     },
   },
   {
@@ -56,7 +57,7 @@ export const columns: ColumnDef<Header>[] = [
       );
     },
     cell: ({ row }) => {
-      return <div className="text-center">{row.getValue("hostess")}</div>;
+      return <div className="ml-5">{row.getValue("hostess")}</div>;
     },
   },
   {
@@ -74,7 +75,7 @@ export const columns: ColumnDef<Header>[] = [
     },
     cell: ({ row }) => {
       const date = format(row.getValue("created_at"), "yyyy-MM-dd");
-      return <div className="text-center">{date}</div>;
+      return <div className="ml-7">{date}</div>;
     },
   },
   {
@@ -94,7 +95,7 @@ export const columns: ColumnDef<Header>[] = [
       return (
         <Dialog>
           <DialogTrigger>
-            <Button className="border-none p-0" variant={"outline"}>
+            <Button className="p-2" variant={"outline"}>
               <Eye />
             </Button>
           </DialogTrigger>
@@ -153,9 +154,9 @@ export const columns: ColumnDef<Header>[] = [
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const [open, setIsOpen] = useState(false);
       return (
-        <Dialog open={open} onOpenChange={setIsOpen}>
+        <AlertDialog open={open} onOpenChange={setIsOpen}>
           <OrdersOfUserAction setIsOpen={setIsOpen} header={header} />
-        </Dialog>
+        </AlertDialog>
       );
     },
   }

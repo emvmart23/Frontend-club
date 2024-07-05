@@ -11,7 +11,6 @@ export const columns: ColumnDef<Header>[] = [
     header: ({ column }) => {
       return (
         <Button
-          className=""
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
@@ -53,7 +52,7 @@ export const columns: ColumnDef<Header>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("mozo")}</div>,
+    cell: ({ row }) => <div className="ml-3">{row.getValue("mozo")}</div>,
   },
   {
     accessorKey: "hostess",
@@ -69,7 +68,7 @@ export const columns: ColumnDef<Header>[] = [
       );
     },
     cell: ({ row }) => {
-      return <div>{row.getValue('hostess')}</div>  
+      return <div className="ml-6">{row.getValue('hostess')}</div>  
     }
   },
   {
@@ -89,7 +88,7 @@ export const columns: ColumnDef<Header>[] = [
       return (
         <Dialog>
           <DialogTrigger>
-            <Button className="border-none" variant={"outline"}>
+            <Button variant={"outline"}>
               <Eye />
             </Button>
           </DialogTrigger>

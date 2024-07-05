@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/Dialog";
+import { Loader2 } from "lucide-react";
 
 interface Props {
   box: Box;
@@ -76,6 +77,9 @@ export default function OpeningBoxDetails({ box, setIsOpen }: Props) {
           onClick={closeBox}
           disabled={isPending}
         >
+          {isPending && (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+          )}
           Cerrar caja
         </Button>
       </div>

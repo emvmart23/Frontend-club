@@ -80,7 +80,7 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
   }, []);
 
   return (
-    <div className="w-full mx-auto">
+    <div className="w-[88%] mx-auto">
       <div className="flex items-center py-4">
         <div className="flex gap-4">
           <Combobox
@@ -156,7 +156,7 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
                     return (
-                      <TableHead key={header.id} className="pl-0">
+                      <TableHead key={header.id} className="p-0">
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -177,7 +177,7 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
                     data-state={row.getIsSelected() && "selected"}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
+                      <TableCell key={cell.id} className="px-3">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

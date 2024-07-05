@@ -1,5 +1,13 @@
+import {
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/AlertDialog";
 import { Button } from "@/components/ui/Button";
-import { DialogFooter } from "@/components/ui/Dialog";
 import { toast } from "@/hooks/useToast";
 import api from "@/service";
 import { useState } from "react";
@@ -12,7 +20,7 @@ interface Props {
 
 export default function OrdersOfUserAction({ setIsOpen, header }: Props) {
   const [isPending, setIsPending] = useState(false);
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const anulatedOrder = async () => {
     setIsPending(true);
     try {
@@ -24,7 +32,7 @@ export default function OrdersOfUserAction({ setIsOpen, header }: Props) {
         });
       }
       queryClient.invalidateQueries("headers");
-      setIsOpen(false)
+      setIsOpen(false);
       setIsPending(false);
     } catch (error) {
       console.log(error);
@@ -38,17 +46,27 @@ export default function OrdersOfUserAction({ setIsOpen, header }: Props) {
   };
 
   return (
-    <DialogFooter className="flex sm:justify-between gap-4">
-      {Boolean(header.state_doc) === !false && (
-        <Button
-          className="w-full"
-          variant="outline"
-          disabled={isPending}
-          onClick={anulatedOrder}
-        >
-          Anular
-        </Button>
-      )}
-    </DialogFooter>
+    <>
+      <AlertDialogTrigger className="flex sm:justify-between gap-4">
+        {Boolean(header.state_doc) === true && (
+          <Button className="w-full" variant="outline" disabled={isPending}>
+            Anular
+          </Button>
+        )}
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>
+            Estas seguro que deseas anular el pedido ?
+          </AlertDialogTitle>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancelar</AlertDialogCancel>
+          <AlertDialogAction onClick={anulatedOrder}>
+            Continuar
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </>
   );
 }

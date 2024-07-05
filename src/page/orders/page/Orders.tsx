@@ -88,7 +88,7 @@ export default function Orders() {
       }
       return response;
     } catch (err) {
-      console.log("header error",err);
+      console.log("header error", err);
     }
   };
 

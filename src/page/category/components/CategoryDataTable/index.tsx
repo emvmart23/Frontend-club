@@ -63,7 +63,7 @@ export default function CategoryDataTable({ data, isLoading }: Props) {
     },
   });
   return (
-    <div className="w-full md:w-[80%] mx-auto">
+    <div className="w-full md:w-[60%] mx-auto pr-12">
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter name..."
@@ -110,7 +110,7 @@ export default function CategoryDataTable({ data, isLoading }: Props) {
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
                     return (
-                      <TableHead key={header.id} className="pl-0">
+                      <TableHead key={header.id} className="p-0">
                         {header.isPlaceholder
                           ? null
                           : flexRender(
