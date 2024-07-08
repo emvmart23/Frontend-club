@@ -9,6 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/Dialog";
 import { Loader2 } from "lucide-react";
+import { getHeaders } from "@/helpers/getHeaders";
 
 interface Props {
   box: Box;
@@ -52,12 +53,13 @@ export default function OpeningBoxDetails({ box, setIsOpen }: Props) {
 
   const fetchHeaders = async () => {
     try {
-      const response = await api.get("/headers");
-      setHeaders(response.data);
+      const { data } = await getHeaders();
+      setHeaders(data.header);
     } catch (error) {
       console.log(error);
     }
   };
+  
   const isActive = headers.some((header) => Boolean(header.state_doc) === true);
 
   useEffect(() => {

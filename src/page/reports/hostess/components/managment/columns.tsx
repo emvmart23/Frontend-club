@@ -2,7 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/Button";
 import { ArrowUpDown } from "lucide-react";
 
-export const columns: ColumnDef<Detail>[] = [
+export const columns: ColumnDef<ReportHostess>[] = [
   {
     accessorKey: "hostess",
     header: ({ column }) => {
@@ -31,7 +31,10 @@ export const columns: ColumnDef<Detail>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("hostess_role")}</div>,
+    cell: ({ row }) => {
+      const format = row.getValue("hostess_role") === 4 ? "Anfitriona" : "Bailarina";
+      return <div>{format}</div>;
+    },
   },
   {
     accessorKey: "salary",
@@ -41,12 +44,12 @@ export const columns: ColumnDef<Detail>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Salario
+          Sueldo
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("salary")}</div>,
+    cell: ({ row }) => <div>S/. {row.getValue("salary")}</div>,
   },
   {
     accessorKey: "profit_margin",
@@ -56,39 +59,53 @@ export const columns: ColumnDef<Detail>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Fecha
+          % Comisión
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("profit_margin")}</div>,
+    cell: ({ row }) => <div className="ml-7">{row.getValue("profit_margin")}%</div>,
   },
-  // {
-  //   accessorKey: "",
-  //   header: ({ column }) => {
-  //     return (
-  //       <Button
-  //         variant="outline"
-  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-  //       >
-  //         Venta del dia
-  //       </Button>
-  //     );
-  //   },
-  //   cell: ({ row }) => <div>{row.getValue("profit_margin")}</div>,
-  // },
-  // {
-  //   accessorKey: "",
-  //   header: ({ column }) => {
-  //     return (
-  //       <Button
-  //         variant="outline"
-  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-  //       >
-  //         Comision
-  //       </Button>
-  //     );
-  //   },
-  //   cell: ({ row }) => <div>{row.getValue("profit_margin")}</div>,
-  // }
+  {
+    accessorKey: "currentSale",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Venta del dia
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div className="ml-7">S/. {row.getValue("currentSale")}</div>,
+  },
+  {
+    accessorKey: "comission",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Comision
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div className="ml-3">{row.getValue("comission")}</div>,
+  },
+  {
+    accessorKey: "total",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Total
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div>{row.getValue("total")}</div>,
+  },
 ];

@@ -7,7 +7,7 @@ export default function OrdersOfUser() {
   const { data, isLoading } = useQuery("headers", getHeaders);
   const { user } = useAuth();
 
-  const ordersOfCurrentUser = (data ? data : [])
+  const ordersOfCurrentUser = (data ? data.header : [])
     .filter((header: Header) => header.current_user === user?.id)
     .map((header: Header) => {
       const order = header.orders.find((order) => order);

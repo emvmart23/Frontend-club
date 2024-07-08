@@ -5,7 +5,6 @@ import { toast } from "@/hooks/useToast";
 import { useQueryClient } from "react-query";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { Loader2 } from "lucide-react";
-// import PdfNotes from "../../Pdf/PdfNotes";
 import PDF from "../../Pdf/PdfNotes";
 
 interface Props {

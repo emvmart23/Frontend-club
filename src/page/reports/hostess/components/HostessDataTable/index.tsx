@@ -18,7 +18,6 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
-import { Input } from "@/components/ui/Input";
 import {
   Table,
   TableBody,
@@ -29,9 +28,17 @@ import {
 } from "@/components/ui/Table";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { columns } from "../managment/columns";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/Select";
 
 interface Props {
-  data: Detail[];
+  data: ReportHostess[];
   isLoading: boolean;
 }
 
@@ -40,12 +47,13 @@ export default function CustomerDataTable({ data, isLoading }: Props) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const [pagination, setPagination] = React.useState({
     pageIndex: 0,
     pageSize: 6,
-  })
+  });
 
   const table = useReactTable({
     data,
@@ -64,21 +72,31 @@ export default function CustomerDataTable({ data, isLoading }: Props) {
       columnFilters,
       columnVisibility,
       rowSelection,
-      pagination
+      pagination,
     },
   });
 
   return (
     <div className="w-full md:w-[80%] mx-auto">
       <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter name..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+        <Select
+          onValueChange={(value) => {
+            if (value == "8")
+              table.getColumn("hostess_role")?.setFilterValue("8");
+            if (value == "4")
+              table.getColumn("hostess_role")?.setFilterValue("44");
+          }}
+        >
+          <SelectTrigger className="w-32">
+            <SelectValue placeholder="Filtrar por cargo..." />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="4">Anfitrionas</SelectItem>
+              <SelectItem value="8">Bailarinas</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -116,7 +134,7 @@ export default function CustomerDataTable({ data, isLoading }: Props) {
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
                     return (
-                      <TableHead key={header.id} className="pl-0">
+                      <TableHead key={header.id} className="p-0">
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -137,7 +155,7 @@ export default function CustomerDataTable({ data, isLoading }: Props) {
                     data-state={row.getIsSelected() && "selected"}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell className="pl-6" key={cell.id}>
+                      <TableCell className="pl-5" key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

@@ -4,7 +4,7 @@ import { getHeaders } from "@/helpers/getHeaders";
 
 export default function OrdersProcessed() {
   const { data, isLoading } = useQuery("orders", getHeaders);
-  const dataHeaders = (data ? data : []).filter((head:Header) => head.state_doc !== null)
+  const dataHeaders = (data ? data.header : []).filter((head:Header) => head.state_doc !== null)
 
   const format = dataHeaders.map((item: Header) => {
     const order = item.orders.find((order) =>order);

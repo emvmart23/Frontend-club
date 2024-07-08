@@ -33,7 +33,7 @@ export default function SearchHostess({ value, setValue } : Props) {
     ({ box_date, box_state, role_user, present }: Attendace) =>
       box_state === 1 &&
       box_date === currentDate &&
-      role_user === 4 &&
+      (role_user === 4  || role_user === 8) &&
       Number(present) === 1
   );
   

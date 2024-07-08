@@ -4,7 +4,7 @@ import { CardDetails } from "../components/index";
 
 export default function OrderHandling() {
   const { data } = useQuery("orders", getHeaders);
-  const orderActives = (data ? data : []).filter(
+  const orderActives = (data ? data.header : []).filter(
     (data: Header) => data.state === 1 && data.state_doc !== null
   );
 
