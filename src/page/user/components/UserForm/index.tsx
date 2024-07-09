@@ -46,7 +46,7 @@ export default function UserForm({ setIsPending, setIsOpen }: Props) {
       role_id: 0,
     },
   });
-  console.log(form.formState.errors)
+
   const onSubmit = async (values: z.infer<typeof UserSchema>) => {
     setIsPending(true);
     try {

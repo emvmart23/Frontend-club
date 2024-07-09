@@ -92,7 +92,6 @@ export default function NoteSaleDataTable({ data, isLoading }: Props) {
   const fetchUsers = async () => {
     try {
       const response = await getUsers();
-      console.log(response)
       setUsers(response.user);
     } catch (err) {
       console.log(err);
@@ -144,7 +143,7 @@ export default function NoteSaleDataTable({ data, isLoading }: Props) {
             onChange={(event) =>
               table.getColumn("created_at")?.setFilterValue(event.target.value)
             }
-            className="w-full"
+            className="min-w-[10rem]"
           />
         </div>
         <DropdownMenu>

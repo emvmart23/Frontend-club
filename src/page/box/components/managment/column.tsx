@@ -164,7 +164,6 @@ export const columns: ColumnDef<Header>[] = [
       const header = row.original;
       const state = !!header.state_doc;
       const dsds = state !== false && state !== true;
-      console.log("actions",header)
       return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>

@@ -4,20 +4,37 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    fontSize: 8,
-    width: "89%",
-    paddingLeft: 27,
+    fontSize: 12,
+    width: "100%",
+    paddingLeft: 14,
     paddingRight:14,
+    borderBottom: "1px solid black",
+    borderLeft: "1px solid black",
+    borderRight: "1px solid black",
+    marginTop: 3
 
   },
-  count: {
-    width: "44%",
-  },
   name: {
-    width: "53%",
+    width: "13%",
+  },
+  role: {
+    width: "15%",
+  },
+  salary: {
+    width: "20%",
+  },
+  profit: {
+    width: "15%",
+  },
+  todaySale:{
+    width: "18%",
+  },
+  commission: {
+    width: "20%",
   },
   total: {
-    width: "3%",
+    width: "8%",
+    marginRight: 6
   },
 });
 
@@ -32,13 +49,13 @@ export default function NotesTableRow({ data }: Props) {
         const formatRole =  item.hostess_role == 4 ? "Anfitriona" : "Bailarina";
         return (
           <View key={index} style={styles.container}>
-            <Text style={styles.count}>{item?.hostess}</Text>
-            <Text style={styles.name}>{formatRole}</Text>
-            <Text style={styles.total}>{item?.salary}</Text>
-            <Text style={styles.total}>{item?.profit_margin}</Text>
-            <Text style={styles.total}>{item?.todaySale}</Text>
-            <Text style={styles.total}>{item?.commission}</Text>
-            <Text style={styles.total}>300</Text>
+            <Text style={styles.name}>{item?.hostess}</Text>
+            <Text style={styles.role}>{formatRole}</Text>
+            <Text style={styles.salary}>S/.{item?.salary}</Text>
+            <Text style={styles.profit}>{item?.profit_margin}%</Text>
+            <Text style={styles.todaySale}>{item?.todaySale}</Text>
+            <Text style={styles.commission}>{item?.commission}</Text>
+            <Text style={styles.total}>S/.{item?.total}</Text>
           </View>
         );
       })}

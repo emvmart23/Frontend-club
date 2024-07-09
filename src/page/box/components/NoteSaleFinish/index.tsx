@@ -12,7 +12,7 @@ export default function NoteSaleFinish({ setIsOpen, header }: Props) {
   const [paymentFields, setPaymentFields] = useState<PaymentField[]>([]);
   const [pendingPayment, setPendingPayment] = useState<number>(0);
   const ordersDetails = header?.orders.find((order) => order);
-  // console.log(header.find((order)=> order))
+
   useEffect(() => {
     const totalPayment = paymentFields.reduce(
       (acc: number, curr) => acc + Number(curr.mountain),

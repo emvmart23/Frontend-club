@@ -8,10 +8,10 @@ interface Props {
 const styles = StyleSheet.create({
   page: {
     fontFamily: "Helvetica",
-    fontSize: 11,
-    paddingTop: 30,
-    paddingLeft: 60,
-    paddingRight: 60,
+    fontSize: 15,
+    paddingTop: 20,
+    paddingLeft: 40,
+    paddingRight: 40,
     lineHeight: 1.5,
     flexDirection: "column",
   },
@@ -28,9 +28,9 @@ export default function PdfHostess({ data }: Props) {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        <Text>Hostess Report</Text>
+        <Text>Reporte de anfitriones</Text>
         <View style={styles.tableContainer}>
-          <HostessTableHeader />x
+          <HostessTableHeader />
           <HostessTableRow data={data} />
         </View>
       </Page>

@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     height: 24,
     textAlign: "center",
     fontStyle: "bold",
-    fontSize: 9,
+    fontSize: 12,
     borderBottom: "1px solid black",
     marginVertical: 1,
     flexGrow: 1,
@@ -26,10 +26,39 @@ const styles = StyleSheet.create({
   },
   role: {
     width: "33%",
+    textAlign: "left",
+    borderRightColor: borderColor,
+    borderRightWidth: 1,
+    paddingLeft: 8,
   },
   salary: {
-    width: "33%",
+    width: "35%",
+    textAlign: "left",
+    borderRightColor: borderColor,
+    borderRightWidth: 1,
+    paddingLeft: 8
   },
+  profit: {
+    width: "40%",
+    textAlign: "left",
+    borderRightColor: borderColor,
+    borderRightWidth: 1,
+    paddingLeft: 8
+  },
+  todaySale: {
+    width: "40%",
+    textAlign: "left",
+    borderRightColor: borderColor,
+    borderRightWidth: 1,
+    paddingLeft: 8
+  },
+  commission: {
+    width: "35%",
+    textAlign: "left",
+    borderRightColor: borderColor,
+    borderRightWidth: 1,
+    paddingLeft: 8
+  }
 });
 
 export default function HostessTableHeader() {
@@ -38,9 +67,9 @@ export default function HostessTableHeader() {
       <Text style={styles.name}>Nombre</Text>
       <Text style={styles.role}>Cargo</Text>
       <Text style={styles.salary}>Sueldo</Text>
-      <Text style={styles.salary}>% Comision</Text>
-      <Text style={styles.salary}>Venta del dia</Text>
-      <Text style={styles.salary}>Comision</Text>
+      <Text style={styles.profit}>% Comision</Text>
+      <Text style={styles.todaySale}>Venta del dia</Text>
+      <Text style={styles.commission}>Comision</Text>
       <Text style={styles.salary}>Total</Text>
     </View>
   );

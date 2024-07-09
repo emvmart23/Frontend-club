@@ -1,12 +1,10 @@
-import { getAttendance } from "@/helpers/getAttendance";
-import { useQuery } from "react-query";
-import { HostessDataTable } from "../components";
-import { format } from "date-fns";
 import { useEffect, useState } from "react";
+import { getAttendance } from "@/helpers/getAttendance";
 import { getHeaders } from "@/helpers/getHeaders";
-import {
-  PDFViewer,
-} from "@react-pdf/renderer";
+import { HostessDataTable } from "../components";
+import { PDFViewer } from "@react-pdf/renderer";
+import { useQuery } from "react-query";
+import { format } from "date-fns";
 import PdfHostess from "../Pdf";
 
 export default function ReportHostess() {
@@ -80,11 +78,10 @@ export default function ReportHostess() {
       <div>
         <HostessDataTable data={presentUsers} isLoading={isLoading} />
       </div>
-      {
-        <PDFViewer className="w-full h-screen absolute top-12">
-          <PdfHostess data={presentUsers} />
-        </PDFViewer>
-      }
+
+      <PDFViewer className="w-full h-screen absolute top-12">
+        <PdfHostess data={presentUsers} />
+      </PDFViewer>
     </section>
   );
 }

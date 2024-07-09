@@ -47,6 +47,10 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const [pagination, setPagination] = React.useState({
+    pageIndex: 0,
+    pageSize: 6,
+  });
   const table = useReactTable({
     data,
     columns,
@@ -54,6 +58,7 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onPaginationChange: setPagination,
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
@@ -63,6 +68,7 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
       columnFilters,
       columnVisibility,
       rowSelection,
+      pagination,
     },
   });
 
@@ -81,12 +87,12 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
 
   return (
     <div className="w-[88%] mx-auto">
-      <div className="flex items-center py-4">
-        <div className="flex gap-4">
+      <div className="flex flex-col md:flex-row gap-3 justify-between mb-6">
+        <div className="flex flex-col md:flex-row md:space-y-0 gap-2 md:w-[75%] lg:w-[65%]">
           <Combobox
             heading={"Anfitriones"}
             selectItemMsg="Filtra por anfitriona"
-            data={formatUsers(users,4)}
+            data={formatUsers(users, 4)}
             onSelect={(value) =>
               table.getColumn("hostess")?.setFilterValue(value)
             }
@@ -100,7 +106,7 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
           <Combobox
             heading="Mozos"
             selectItemMsg="Filtra por mozo"
-            data={formatUsers(users,7)}
+            data={formatUsers(users, 7)}
             onSelect={(value) => table.getColumn("mozo")?.setFilterValue(value)}
             tabelValue={
               (table.getColumn("mozo")?.getFilterValue() as string) ?? ""
@@ -116,12 +122,12 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
             onChange={(event) =>
               table.getColumn("created_at")?.setFilterValue(event.target.value)
             }
-            className="min-w-[10rem]"
+            className="min-w-[9rem]"
           />
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
+            <Button variant="outline" className="w-full max-w-[7.5rem]">
               Columnas <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>

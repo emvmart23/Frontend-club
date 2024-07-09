@@ -58,7 +58,7 @@ export default function SidebarItems({ links, isExpanded }: Props) {
           return (
             <NavLink
               key={index}
-              className="flex w-[11.5rem] ml-4 h-[3.8rem] hover:scale-105"
+              className={`flex w-[11.5rem] ml-4 h-[3.8rem] hover:scale-105`}
               to={child.path || ""}
             >
               <div

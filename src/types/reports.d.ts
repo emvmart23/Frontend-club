@@ -5,5 +5,6 @@ interface ReportHostess {
     profit_margin: number;
     currentSale: number;
     commission: number;
-    todaySale: number; 
+    todaySale: number;
+    total: number;
   }

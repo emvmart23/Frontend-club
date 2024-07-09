@@ -4,25 +4,24 @@ import { getHeaders } from "@/helpers/getHeaders";
 
 export default function OrdersProcessed() {
   const { data, isLoading } = useQuery("orders", getHeaders);
-  const dataHeaders = (data ? data.header : []).filter((head:Header) => head.state_doc !== null)
+  const dataHeaders = (data ? data.header : []).filter(
+    (head: Header) => head.state_doc !== null
+  );
 
   const format = dataHeaders.map((item: Header) => {
-    const order = item.orders.find((order) =>order);
+    const order = item.orders.find((order) => order);
     return {
       ...item,
       hostess_id: order?.hostess_id,
-      hostess: order?.hostess
+      hostess: order?.hostess,
     };
   });
 
   return (
     <section>
-      <h1>Pedidos atendidos</h1>
+      <h1 className="text-3xl font-medium mb-7">Pedidos atendidos</h1>
       <div>
-        <OrdersProcessedDataTable
-          data={format}
-          isLoading={isLoading}
-        />
+        <OrdersProcessedDataTable data={format} isLoading={isLoading} />
       </div>
     </section>
   );

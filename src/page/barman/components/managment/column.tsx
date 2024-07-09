@@ -87,7 +87,7 @@ export const columns: ColumnDef<Header>[] = [
     cell: ({ row }) => {
       return (
         <Dialog>
-          <DialogTrigger>
+          <DialogTrigger asChild>
             <Button variant={"outline"}>
               <Eye />
             </Button>
