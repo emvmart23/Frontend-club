@@ -1,12 +1,18 @@
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/Dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/Dialog";
 import NoteSaleForm from "../NoteSaleForm";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
 
 interface Props {
-    setIsOpen: (value: boolean) => void;
-    header: Header;
-  }
+  setIsOpen: (value: boolean) => void;
+  header: Header;
+}
 
 export default function NoteSaleFinish({ setIsOpen, header }: Props) {
   const [paymentFields, setPaymentFields] = useState<PaymentField[]>([]);
@@ -23,13 +29,18 @@ export default function NoteSaleFinish({ setIsOpen, header }: Props) {
 
   const pendingValue = Number(ordersDetails?.total_price) - pendingPayment;
   console.log(pendingValue);
-  console.log("data", ordersDetails)
+  console.log("data", ordersDetails);
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="w-full" variant="destructive">Terminar</Button>
+        <Button className="w-full" variant="destructive">
+          Terminar
+        </Button>
       </DialogTrigger>
-      <DialogContent className="h-[34rem] max-w-[42rem]">
+      <DialogContent className="h-[36rem] max-w-[42rem] flex flex-col space-y-2">
+        <DialogHeader>
+          <DialogTitle className="text-xl">Terminar venta</DialogTitle>
+        </DialogHeader>
         <NoteSaleForm
           setIsOpen={setIsOpen}
           ordersDetails={ordersDetails}

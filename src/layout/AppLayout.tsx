@@ -45,7 +45,7 @@ export default function AppLayout() {
         <div
           className={`${
             isExpanded ? "w-[15rem]" : "w-[0rem]"
-          } lg:w-[15rem] bg-background h-screen fixed top-0 border-r z-50`}
+          } lg:w-[15rem] origin-left transition-all duration-75 bg-background h-screen fixed top-0 border-r z-50`}
         >
           <Button
             onClick={btnUpdateMenuVisibility}

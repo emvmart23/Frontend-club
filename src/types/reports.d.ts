@@ -4,7 +4,6 @@ interface ReportHostess {
     hostess_role: number;
     profit_margin: number;
     currentSale: number;
-    commission: number;
-    todaySale: number;
+    comission: number;
     total: number;
   }

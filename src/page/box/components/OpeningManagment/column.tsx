@@ -14,12 +14,14 @@ export const columns: ColumnDef<Box>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Aperturador 
+          Aperturador
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("user_opening")}</div>,
+    cell: ({ row }) => (
+      <div className="ml-4">{row.getValue("user_opening")}</div>
+    ),
   },
   {
     accessorKey: "user_closing",
@@ -35,9 +37,12 @@ export const columns: ColumnDef<Box>[] = [
       );
     },
     cell: ({ row }) => {
-      const isNull = row.getValue("user_closing") === null ? "-" : row.getValue("user_closing") as string;
-      return <div>{isNull}</div>
-    }
+      const isNull =
+        row.getValue("user_closing") === null
+          ? "-"
+          : (row.getValue("user_closing") as string);
+      return <div className="ml-3 w-min">{isNull}</div>;
+    },
   },
   {
     accessorKey: "opening",
@@ -68,8 +73,11 @@ export const columns: ColumnDef<Box>[] = [
       );
     },
     cell: ({ row }) => {
-      const isNull = row.getValue("closing") === null ? "-" : row.getValue("closing") as string;
-      return <div>{isNull}</div>
+      const isNull =
+        row.getValue("closing") === null
+          ? "-"
+          : (row.getValue("closing") as string);
+      return <div>{isNull}</div>;
     },
   },
   {
@@ -80,27 +88,31 @@ export const columns: ColumnDef<Box>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-            Saldo Inicial
+          Saldo Inicial
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("initial_balance")}</div>,
+    cell: ({ row }) => (
+      <div className="ml-5">{row.getValue("initial_balance")}</div>
+    ),
   },
   {
-    accessorKey:"final_balance",
+    accessorKey: "final_balance",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-            Saldo Final
+          Saldo Final
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("final_balance")}</div>,
+    cell: ({ row }) => (
+      <div className="ml-5">{row.getValue("final_balance")}</div>
+    ),
   },
   {
     accessorKey: "state",
@@ -110,14 +122,15 @@ export const columns: ColumnDef<Box>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-            Estado
+          Estado
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-        const isActive = Boolean(row.getValue("state")) === true ? "bg-green-500" : "bg-red-500" 
-        return <div className={`${isActive} rounded-full w-5 h-5`}></div>
+      const isActive =
+        Boolean(row.getValue("state")) === true ? "bg-green-500" : "bg-red-500";
+      return <div className={`${isActive} rounded-full w-5 h-5 ml-4`} />;
     },
   },
   {
@@ -126,16 +139,15 @@ export const columns: ColumnDef<Box>[] = [
     cell: ({ row }) => {
       const box = row.original;
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      const [open, setIsOpen] = useState(false)
+      const [open, setIsOpen] = useState(false);
       return (
         <Dialog open={open} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
             <Button variant="outline">Ver</Button>
           </DialogTrigger>
-          <BoxDetails box={box} open={open} setIsOpen={setIsOpen}  />
+          <BoxDetails box={box} open={open} setIsOpen={setIsOpen} />
         </Dialog>
       );
     },
   },
-
 ];

@@ -125,8 +125,8 @@ export const links = [
     childrens: [
       {
         icon: <ClipboardMinus />,
-        title: "",
-        path:"/-"
+        title: "Anfitrionas",
+        path:"/reportes-de-anfitrionas"
 
       },
       {

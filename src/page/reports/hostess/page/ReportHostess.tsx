@@ -1,25 +1,29 @@
 import { useEffect, useState } from "react";
 import { getAttendance } from "@/helpers/getAttendance";
 import { getHeaders } from "@/helpers/getHeaders";
-import { HostessDataTable } from "../components";
+import { ReportHostessDataTable } from "../components/index";
 import { PDFViewer } from "@react-pdf/renderer";
 import { useQuery } from "react-query";
 import { format } from "date-fns";
-import PdfHostess from "../Pdf";
+import PdfHostess from "../Pdf/index";
+import ReportHostessActions from "../components/ReportHostessActions";
+import { ColumnFiltersState } from "@tanstack/react-table";
+
+interface TotalNotSale {
+  hostess_id: number;
+  total_price: number;
+}
 
 export default function ReportHostess() {
   const { data, isLoading } = useQuery("hostess", getAttendance);
   const [noteDetails, setNoteDetails] = useState<Header[]>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
+    []
+  );
   const currentDate = format(new Date(), "yyyy-MM-dd");
 
   // gets salary of hostess
-  const currentSale = (
-    array: {
-      hostess_id: number | undefined;
-      total_price: number | undefined;
-    }[],
-    id: number
-  ) =>
+  const currentSale = (array: TotalNotSale[], id: number) =>
     array.reduce((acc, curr) => {
       if (curr.hostess_id === id) {
         acc = acc + Number(curr.total_price);
@@ -46,7 +50,7 @@ export default function ReportHostess() {
               hostess_id: orders?.hostess_id,
               total_price: orders?.total_price,
             };
-          }),
+          }) as TotalNotSale[],
         d.user_id
       );
 
@@ -73,15 +77,13 @@ export default function ReportHostess() {
   }, []);
 
   return (
-    <section>
-      <h1 className="text-3xl font-medium">Reporte de anfitrionas</h1>
-      <div>
-        <HostessDataTable data={presentUsers} isLoading={isLoading} />
-      </div>
-
-      <PDFViewer className="w-full h-screen absolute top-12">
+    <section className="flex flex-col gap-y-6 w-[80%] mx-auto">
+      <h1 className="text-2xl font-medium w-[19rem]">Reporte de anfitrionas</h1>
+      <ReportHostessDataTable data={presentUsers} isLoading={isLoading} setColumnFilters={setColumnFilters} columnFilters={columnFilters} />
+      <ReportHostessActions data={presentUsers} />
+      {/* <PDFViewer className="w-full h-screen absolute top-12">
         <PdfHostess data={presentUsers} />
-      </PDFViewer>
+      </PDFViewer> */}
     </section>
   );
 }

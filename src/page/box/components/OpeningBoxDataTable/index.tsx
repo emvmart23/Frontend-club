@@ -111,7 +111,7 @@ export default function OpeningBoxDataTable({ data, isLoading }: Props) {
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
                     return (
-                      <TableHead key={header.id} className="pl-0">
+                      <TableHead key={header.id} className="pl-1">
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -132,7 +132,7 @@ export default function OpeningBoxDataTable({ data, isLoading }: Props) {
                     data-state={row.getIsSelected() && "selected"}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="px-[0.9rem]">
+                      <TableCell key={cell.id} className="pl-5">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

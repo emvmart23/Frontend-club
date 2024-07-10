@@ -12,28 +12,27 @@ const styles = StyleSheet.create({
     borderLeft: "1px solid black",
     borderRight: "1px solid black",
     marginTop: 3
-
   },
   name: {
-    width: "13%",
+    width: "15%",
   },
   role: {
     width: "15%",
   },
   salary: {
-    width: "20%",
+    width: "22%",
   },
   profit: {
     width: "15%",
   },
   todaySale:{
-    width: "18%",
+    width: "15%",
   },
   commission: {
-    width: "20%",
+    width: "13%",
   },
   total: {
-    width: "8%",
+    width: "10%",
     marginRight: 6
   },
 });
@@ -53,8 +52,8 @@ export default function NotesTableRow({ data }: Props) {
             <Text style={styles.role}>{formatRole}</Text>
             <Text style={styles.salary}>S/.{item?.salary}</Text>
             <Text style={styles.profit}>{item?.profit_margin}%</Text>
-            <Text style={styles.todaySale}>{item?.todaySale}</Text>
-            <Text style={styles.commission}>{item?.commission}</Text>
+            <Text style={styles.todaySale}>S./{item?.currentSale}</Text>
+            <Text style={styles.commission}>{item?.comission}</Text>
             <Text style={styles.total}>S/.{item?.total}</Text>
           </View>
         );

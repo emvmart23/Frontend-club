@@ -77,9 +77,9 @@ export default function SearchHostess({ value, setValue } : Props) {
                 </CommandItem>
               ))
             ) : (
-              <CommandItem className="font-semibold">
+              <CommandItem className="text-[0.7rem] font-semibold">
                 <CircleAlert className="mr-2 h-4 w-4 shrink-0 opacity-50" />
-                No hay anfitrionas
+                No hay anfitrionas, primero toma asistencia 
               </CommandItem>
             )}
           </CommandGroup>

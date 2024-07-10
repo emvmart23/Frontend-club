@@ -77,13 +77,6 @@ const PDF = ({ data }: Props) => {
     return null;
   }
 
-  // const formatData = data.orders.map(order => {
-  //   return {
-  //     title: `${order.count} ${order.name}`,
-  //     description: order.price
-  //   }
-  // })
-
   return (
     <Document>
       <Page size={[mmToPt(80), mmToPt(150)]} style={styles.page}>

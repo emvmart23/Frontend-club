@@ -16,7 +16,7 @@ export const columns: ColumnDef<ReportHostess>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("hostess")}</div>,
+    cell: ({ row }) => <div className="ml-3">{row.getValue("hostess")}</div>,
   },
   {
     accessorKey: "hostess_role",
@@ -33,7 +33,7 @@ export const columns: ColumnDef<ReportHostess>[] = [
     },
     cell: ({ row }) => {
       const format = row.getValue("hostess_role") === 4 ? "Anfitriona" : "Bailarina";
-      return <div>{format}</div>;
+      return <div className="ml-1">{format}</div>;
     },
   },
   {
@@ -64,7 +64,7 @@ export const columns: ColumnDef<ReportHostess>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="ml-7">{row.getValue("profit_margin")}%</div>,
+    cell: ({ row }) => <div className="ml-12">{row.getValue("profit_margin")}%</div>,
   },
   {
     accessorKey: "currentSale",
@@ -78,7 +78,7 @@ export const columns: ColumnDef<ReportHostess>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="ml-7">S/. {row.getValue("currentSale")}</div>,
+    cell: ({ row }) => <div className="ml-8">S/. {row.getValue("currentSale")}</div>,
   },
   {
     accessorKey: "comission",
@@ -92,7 +92,7 @@ export const columns: ColumnDef<ReportHostess>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="ml-3">{row.getValue("comission")}</div>,
+    cell: ({ row }) => <div className="ml-7">{row.getValue("comission")}</div>,
   },
   {
     accessorKey: "total",
@@ -106,6 +106,6 @@ export const columns: ColumnDef<ReportHostess>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("total")}</div>,
+    cell: ({ row }) => <div>S/.{row.getValue("total")}</div>,
   },
 ];

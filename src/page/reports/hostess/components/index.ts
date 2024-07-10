@@ -1,1 +1,1 @@
-export { default as HostessDataTable } from "./HostessDataTable/index";
+export { default as ReportHostessDataTable } from "./ReportHostessDataTable/index";

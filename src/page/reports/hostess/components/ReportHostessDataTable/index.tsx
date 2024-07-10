@@ -1,6 +1,7 @@
 import * as React from "react";
 import {
   ColumnFiltersState,
+  OnChangeFn,
   SortingState,
   VisibilityState,
   flexRender,
@@ -40,13 +41,17 @@ import {
 interface Props {
   data: ReportHostess[];
   isLoading: boolean;
+  setColumnFilters: OnChangeFn<ColumnFiltersState>;
+  columnFilters: ColumnFiltersState;
 }
 
-export default function CustomerDataTable({ data, isLoading }: Props) {
+export default function ReportHostessDataTable({
+  data,
+  isLoading,
+  columnFilters,
+  setColumnFilters,
+}: Props) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
@@ -75,9 +80,9 @@ export default function CustomerDataTable({ data, isLoading }: Props) {
       pagination,
     },
   });
-
+  console.log("columnFilters", columnFilters);
   return (
-    <div className="w-full md:w-[80%] mx-auto">
+    <div className="w-full md:w-full mx-auto">
       <div className="flex items-center py-4">
         <Select
           onValueChange={(value) => {
@@ -87,7 +92,7 @@ export default function CustomerDataTable({ data, isLoading }: Props) {
               table.getColumn("hostess_role")?.setFilterValue("44");
           }}
         >
-          <SelectTrigger className="w-32">
+          <SelectTrigger className="w-40">
             <SelectValue placeholder="Filtrar por cargo..." />
           </SelectTrigger>
           <SelectContent>
@@ -134,7 +139,7 @@ export default function CustomerDataTable({ data, isLoading }: Props) {
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
                     return (
-                      <TableHead key={header.id} className="p-0">
+                      <TableHead key={header.id} className="p-1">
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -155,7 +160,7 @@ export default function CustomerDataTable({ data, isLoading }: Props) {
                     data-state={row.getIsSelected() && "selected"}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell className="pl-5" key={cell.id}>
+                      <TableCell className="pl-3" key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
@@ -180,8 +185,8 @@ export default function CustomerDataTable({ data, isLoading }: Props) {
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
+          {table.getFilteredSelectedRowModel().rows.length} de{" "}
+          {table.getFilteredRowModel().rows.length} columnas seleccionadas.
         </div>
         <div className="space-x-2">
           <Button

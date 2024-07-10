@@ -51,7 +51,7 @@ export default function SidebarItems({ links, isExpanded }: Props) {
       <div
         className={`${
           open ? "h-auto block text-[0.8rem] leading-loose" : "h-[0rem] hidden"
-        } transition-all duration-300 font-normal`}
+        } font-normal`}
       >
         {links?.childrens.map((child, index) => {
           const isActiveSubMenu = location.pathname === child.path;
@@ -64,7 +64,7 @@ export default function SidebarItems({ links, isExpanded }: Props) {
               <div
                 className={`${
                   isActiveSubMenu && "bg-foreground dark:text-black text-white"
-                } p-2 w-full group-hover:bg-primary group-hover:text-background text-foreground rounded transition-all duration-75 origin-left mt-5 flex gap-5`}
+                } p-2 w-full group-hover:bg-primary group-hover:text-background text-foreground rounded mt-5 flex gap-5`}
               >
                 {child.icon && <i>{child.icon}</i>}
                 {child.title}
