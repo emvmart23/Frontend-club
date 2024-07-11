@@ -23,5 +23,6 @@ export const ExcelExport = <T,>({
     saveAs(blob, `${fileName}.xlsx`);
   };
 
-  return <Button onClick={exportToExcel}>Exportar</Button>
+  return <Button onClick={exportToExcel}>Exportar
+  </Button>
 };

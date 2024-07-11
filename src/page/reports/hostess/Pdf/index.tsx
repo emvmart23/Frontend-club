@@ -1,6 +1,7 @@
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 import HostessTableHeader from "./HostessTableHeader";
 import HostessTableRow from "./HostessTableRow";
+import HostessTableTotals from "./HostessTableTotals";
 
 interface Props {
   data: ReportHostess[];
@@ -15,13 +16,13 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     lineHeight: 1.5,
     flexDirection: "column",
+    backgroundColor: "#f5f5f5"
   },
   tableContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
     marginTop: 24,
-    borderWidth: 1,
-    borderColor: "#bff0fd",
+    borderTop: "1px solid black"
   },
 });
 
@@ -33,6 +34,7 @@ export default function PdfHostess({ data }: Props) {
         <View style={styles.tableContainer}>
           <HostessTableHeader />
           <HostessTableRow data={data} />
+          <HostessTableTotals data={data}/>
         </View>
       </Page>
     </Document>

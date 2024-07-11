@@ -14,22 +14,20 @@ interface TotalNotSale {
   total_price: number;
 }
 
+// gets salary of hostess
+const currentSale = (array: TotalNotSale[], id: number) =>
+  array.reduce((acc, curr) => {
+    if (curr.hostess_id === id) {
+      acc = acc + Number(curr.total_price);
+    }
+    return acc;
+  }, 0);
+
 export default function ReportHostess() {
   const { data, isLoading } = useQuery("hostess", getAttendance);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [noteDetails, setNoteDetails] = useState<Header[]>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
-    []
-  );
   const currentDate = format(new Date(), "yyyy-MM-dd");
-
-  // gets salary of hostess
-  const currentSale = (array: TotalNotSale[], id: number) =>
-    array.reduce((acc, curr) => {
-      if (curr.hostess_id === id) {
-        acc = acc + Number(curr.total_price);
-      }
-      return acc;
-    }, 0);
 
   const presentUsers: ReportHostess[] = (data ? data.attendances : [])
     .filter(
@@ -67,6 +65,13 @@ export default function ReportHostess() {
       };
     });
 
+  const handleExportToBothDocuments = presentUsers.filter((pdf) => {
+    const getIdOfColumnsFilter = Number(
+      columnFilters.find((column) => column)?.value
+    );
+    return pdf.hostess_role === getIdOfColumnsFilter;
+  });
+
   const fetchDetailsOfNotes = async () => {
     const { header } = await getHeaders();
     setNoteDetails(header);
@@ -77,10 +82,23 @@ export default function ReportHostess() {
   }, []);
 
   return (
-    <section className="flex flex-col gap-y-6 w-[80%] mx-auto">
-      <h1 className="text-2xl font-medium w-[19rem]">Reporte de anfitrionas</h1>
-      <ReportHostessDataTable data={presentUsers} isLoading={isLoading} setColumnFilters={setColumnFilters} columnFilters={columnFilters} />
-      <ReportHostessActions data={presentUsers} />
+    <section className="flex flex-col gap-y-6 md:w-[80%] mx-auto">
+      <h1 className="text-[1.4rem] md:text-2xl font-medium">
+        Reporte de anfitrionas
+      </h1>
+      <ReportHostessDataTable
+        data={presentUsers}
+        isLoading={isLoading}
+        setColumnFilters={setColumnFilters}
+        columnFilters={columnFilters}
+      />
+      <ReportHostessActions
+        data={
+          handleExportToBothDocuments.length <= 0
+            ? presentUsers
+            : handleExportToBothDocuments
+        }
+      />
       {/* <PDFViewer className="w-full h-screen absolute top-12">
         <PdfHostess data={presentUsers} />
       </PDFViewer> */}

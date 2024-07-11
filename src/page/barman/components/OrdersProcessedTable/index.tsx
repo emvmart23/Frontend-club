@@ -73,12 +73,8 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
   });
 
   const fetchUsers = async () => {
-    try {
-      const response = await getUsers();
-      setUsers(response.user);
-    } catch (err) {
-      console.log(err);
-    }
+    const response = await getUsers();
+    setUsers(response.user);
   };
 
   React.useEffect(() => {

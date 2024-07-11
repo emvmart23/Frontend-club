@@ -2,12 +2,14 @@ import { Button } from "@/components/ui/Button";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import PdfHostess from "../../Pdf";
 import { Loader2 } from "lucide-react";
+import { ExcelExport } from "@/lib/utils/excelExport";
 
 interface Props {
   data: ReportHostess[];
 }
 
-export default function ReportHostessActions({ data }: Props) {
+export default function bReportHostessActions({ data }: Props) {
+  const excel = data.filter(item => item.hostess_role === 8);
   return (
     <div className="ml-auto w-min flex justify-between gap-4">
       <PDFDownloadLink
@@ -21,9 +23,7 @@ export default function ReportHostessActions({ data }: Props) {
           </Button>
         )}
       </PDFDownloadLink>
-      <Button className="w-32">
-        generar Excel
-      </Button>
+      <ExcelExport data={excel} fileName={"trabajadoras"}/>
     </div>
   );
 }

@@ -1,6 +1,10 @@
-import api from "@/service"
+import api from "@/service";
 
 export const getUsers = async () => {
-    const { data } = await api.get('/users')
-    return data
-}
+  try {
+    const { data } = await api.get("/users");
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};

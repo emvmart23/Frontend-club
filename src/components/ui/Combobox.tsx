@@ -18,21 +18,23 @@ interface Option {
 }
 
 interface Props {
-  onSelect: (value: string) => void;
-  selectItemMsg?: string;
   data: Option[];
-  tabelValue: string;
-  onChange: (value: string) => void;
   heading: string;
+  className?: string;
+  tabelValue: string;
+  selectItemMsg?: string;
+  onChange: (value: string) => void;
+  onSelect: (value: string) => void;
 }
 
 function Combobox({
-  data,
   selectItemMsg,
   tabelValue,
+  className,
   onChange,
   onSelect,
   heading,
+  data
 }: Props) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(tabelValue);
@@ -55,7 +57,7 @@ function Combobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between max-w-[]"
+          className={className}
         >
           {value
             ? data.find((item) => item.label === value)?.label

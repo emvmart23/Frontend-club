@@ -37,6 +37,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/Select";
+import { Input } from "@/components/ui/Input";
+import { Combobox } from "@/components/ui/Combobox";
+import { formatUsers } from "@/helpers/users/formatUsers";
+import { getUsers } from "@/helpers/users/getUsers";
 
 interface Props {
   data: ReportHostess[];
@@ -51,6 +55,7 @@ export default function ReportHostessDataTable({
   columnFilters,
   setColumnFilters,
 }: Props) {
+  const [users, setUsers] = React.useState<User[]>([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -80,31 +85,62 @@ export default function ReportHostessDataTable({
       pagination,
     },
   });
-  console.log("columnFilters", columnFilters);
+
+  const fetchUsers = async () => {
+    const response = await getUsers();
+    setUsers(response.user);
+  };
+
+  React.useEffect(() => {
+    fetchUsers();
+  }, []);
+
   return (
     <div className="w-full md:w-full mx-auto">
-      <div className="flex items-center py-4">
-        <Select
-          onValueChange={(value) => {
-            if (value == "8")
-              table.getColumn("hostess_role")?.setFilterValue("8");
-            if (value == "4")
-              table.getColumn("hostess_role")?.setFilterValue("44");
-          }}
-        >
-          <SelectTrigger className="w-40">
-            <SelectValue placeholder="Filtrar por cargo..." />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="4">Anfitrionas</SelectItem>
-              <SelectItem value="8">Bailarinas</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+      <div className="flex flex-col md:flex-row md:items-center py-4 gap-4">
+        <div className="flex flex-col md:flex-row gap-4">
+          <Select
+            defaultValue=" "
+            onValueChange={
+              (value) => {
+              if (value === "4")
+                table.getColumn("hostess_role")?.setFilterValue("04");
+              if (value === "8")
+                table.getColumn("hostess_role")?.setFilterValue("8");
+              if (value === " ")
+                table.getColumn("hostess_role")?.setFilterValue(" ");
+            }}
+          >
+            <SelectTrigger className="md:w-52">
+              <SelectValue placeholder="Filtrar por cargo..." />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value=" ">Todas</SelectItem>
+                <SelectItem value="4">Anfitrionas</SelectItem>
+                <SelectItem value="8">Bailarinas</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Combobox
+            className="md:w-52 flex justify-start"
+            heading={"Trabajadoras"}
+            selectItemMsg="Buscar trabajadora.."
+            data={formatUsers(users, 4, 8)}
+            onSelect={(value) =>
+              table.getColumn("hostess")?.setFilterValue(value)
+            }
+            tabelValue={
+              (table.getColumn("hostess")?.getFilterValue() as string) ?? ""
+            }
+            onChange={(value) =>
+              table.getColumn("hostess")?.setFilterValue(value)
+            }
+          />
+        </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
+            <Button variant="outline" className="w-52 md:w-min md:ml-auto">
               Columnas <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
@@ -184,10 +220,6 @@ export default function ReportHostessDataTable({
         )}
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} de{" "}
-          {table.getFilteredRowModel().rows.length} columnas seleccionadas.
-        </div>
         <div className="space-x-2">
           <Button
             variant="outline"

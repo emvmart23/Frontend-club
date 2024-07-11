@@ -105,7 +105,7 @@ export default function NoteSaleDataTable({ data, isLoading }: Props) {
   return (
     <div className="w-full md:w-[93%] lg:w-full">
       <div className="flex flex-col md:flex-row gap-3 justify-between mb-6">
-        <div className="flex flex-col md:flex-row md:space-y-0 gap-2 md:w-[75%] lg:w-[65%]">
+        <div className="flex flex-col md:flex-row md:space-y-0 gap-2 md:w-[75%] lg:w-[50%]">
           <Select
             onValueChange={(value) => {
               if (value === "1")
