@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { getAttendance } from "@/helpers/getAttendance";
 import { getHeaders } from "@/helpers/getHeaders";
 import { ReportHostessDataTable } from "../components/index";
-import { PDFViewer } from "@react-pdf/renderer";
+// import { PDFViewer } from "@react-pdf/renderer";
 import { useQuery } from "react-query";
 import { format } from "date-fns";
-import PdfHostess from "../Pdf/index";
+// import PdfHostess from "../Pdf/index";
 import ReportHostessActions from "../components/ReportHostessActions";
 import { ColumnFiltersState } from "@tanstack/react-table";
 
@@ -24,10 +24,13 @@ const currentSale = (array: TotalNotSale[], id: number) =>
   }, 0);
 
 export default function ReportHostess() {
-  const { data, isLoading } = useQuery("hostess", getAttendance);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [noteDetails, setNoteDetails] = useState<Header[]>([]);
   const currentDate = format(new Date(), "yyyy-MM-dd");
+  const { data, isLoading } = useQuery("hostess", getAttendance);
+  const [noteDetails, setNoteDetails] = useState<Header[]>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
+  const dateFiltered = columnFilters.find((item) => item)?.value
+  console.log(dateFiltered)
 
   const presentUsers: ReportHostess[] = (data ? data.attendances : [])
     .filter(
@@ -40,7 +43,9 @@ export default function ReportHostess() {
       const e = currentSale(
         noteDetails
           .filter(
-            (note) => note.box_date === currentDate && !!note.state_doc == false
+            (note) =>
+              note.box_date === currentDate &&
+              !!note.state_doc == false
           )
           .map((order) => {
             const orders = order.orders.find((or) => or);
@@ -62,6 +67,7 @@ export default function ReportHostess() {
         currentSale: e,
         comission: comission,
         total: Number(d.salary) + comission,
+        box_date: d.box_date,
       };
     });
 
@@ -82,7 +88,7 @@ export default function ReportHostess() {
   }, []);
 
   return (
-    <section className="flex flex-col gap-y-6 md:w-[80%] mx-auto">
+    <section className="flex flex-col gap-y-6 md:w-[95%] mx-auto">
       <h1 className="text-[1.4rem] md:text-2xl font-medium">
         Reporte de anfitrionas
       </h1>

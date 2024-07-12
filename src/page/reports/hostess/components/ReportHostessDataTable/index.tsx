@@ -37,10 +37,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/Select";
-import { Input } from "@/components/ui/Input";
 import { Combobox } from "@/components/ui/Combobox";
 import { formatUsers } from "@/helpers/users/formatUsers";
 import { getUsers } from "@/helpers/users/getUsers";
+import { Input } from "@/components/ui/Input";
 
 interface Props {
   data: ReportHostess[];
@@ -96,13 +96,12 @@ export default function ReportHostessDataTable({
   }, []);
 
   return (
-    <div className="w-full md:w-full mx-auto">
+    <div className="w-full mx-auto">
       <div className="flex flex-col md:flex-row md:items-center py-4 gap-4">
         <div className="flex flex-col md:flex-row gap-4">
           <Select
             defaultValue=" "
-            onValueChange={
-              (value) => {
+            onValueChange={(value) => {
               if (value === "4")
                 table.getColumn("hostess_role")?.setFilterValue("04");
               if (value === "8")
@@ -111,7 +110,7 @@ export default function ReportHostessDataTable({
                 table.getColumn("hostess_role")?.setFilterValue(" ");
             }}
           >
-            <SelectTrigger className="md:w-52">
+            <SelectTrigger className="md:w-28">
               <SelectValue placeholder="Filtrar por cargo..." />
             </SelectTrigger>
             <SelectContent>
@@ -123,7 +122,7 @@ export default function ReportHostessDataTable({
             </SelectContent>
           </Select>
           <Combobox
-            className="md:w-52 flex justify-start"
+            className="md:w-42"
             heading={"Trabajadoras"}
             selectItemMsg="Buscar trabajadora.."
             data={formatUsers(users, 4, 8)}
@@ -136,6 +135,16 @@ export default function ReportHostessDataTable({
             onChange={(value) =>
               table.getColumn("hostess")?.setFilterValue(value)
             }
+          />
+          <Input
+            type="date"
+            value={
+              (table.getColumn("box_date")?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) =>
+              table.getColumn("box_date")?.setFilterValue(event.target.value)
+            }
+            className="w-40"
           />
         </div>
         <DropdownMenu>

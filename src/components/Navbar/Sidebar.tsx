@@ -13,7 +13,7 @@ export default function Sidebar({ isExpanded, setIsExpanded, open, setOpen }: Pr
     <nav>
       <ul>
         {links.map((link, index) => (
-          <NavLinks key={index} links={link} isExpanded={isExpanded} setIsExpanded={setIsExpanded} isOpenSubmenu={open} setIsOpenSubmenu={setOpen} />
+          <NavLinks key={index} index={index} links={link} isExpanded={isExpanded} setIsExpanded={setIsExpanded} open={open} setOpen={setOpen} />
         ))}
       </ul>
     </nav>

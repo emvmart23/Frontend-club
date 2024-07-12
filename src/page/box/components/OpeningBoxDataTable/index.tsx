@@ -36,13 +36,22 @@ interface Props {
 }
 
 export default function OpeningBoxDataTable({ data, isLoading }: Props) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [sorting, setSorting] = React.useState<SortingState>([
+    {
+      id: "opening",
+      desc: true,
+    },
+  ]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const [pagination, setPagination] = React.useState({
+    pageIndex: 0,
+    pageSize: 5,
+  });
   const table = useReactTable({
     data,
     columns,
@@ -50,6 +59,7 @@ export default function OpeningBoxDataTable({ data, isLoading }: Props) {
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onPaginationChange: setPagination,
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
@@ -59,9 +69,10 @@ export default function OpeningBoxDataTable({ data, isLoading }: Props) {
       columnFilters,
       columnVisibility,
       rowSelection,
+      pagination
     },
   });
-  
+
   return (
     <div className="w-full md:w-[93%] lg:w-ful">
       <div className="flex items-center py-4">

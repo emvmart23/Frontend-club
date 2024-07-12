@@ -3,10 +3,11 @@ import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 interface Props {
-  setIsOpenSubmenu: (value: boolean) => void;
+  setOpen: (value: boolean) => void;
   setIsExpanded: (value: boolean) => void;
   isExpanded?: boolean;
-  isOpenSubmenu: boolean;
+  open: boolean;
+  index: number;
   links: {
     icon: React.ReactNode;
     title: string;
@@ -19,15 +20,16 @@ interface Props {
   };
 }
 
-export default function SidebarItems({ links, isExpanded }: Props) {
-  const [open, setOpen] = useState(false);
+export default function SidebarItems({ links, isExpanded,setOpen, open, index }: Props) {
+
   const location = useLocation();
   const isActive = location.pathname === links.path;
+
+  const d = links.childrens?.map(child => child)
 
   const handleClick = () => {
     setOpen(!open)
   };
-
   return links.childrens ? (
     <div
       className={`${open ? "h-auto" : "h-[3.8rem]"} ${

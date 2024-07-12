@@ -92,7 +92,7 @@ export default function NoteSaleDataTable({ data, isLoading }: Props) {
   const fetchUsers = async () => {
     try {
       const response = await getUsers();
-      setUsers(response.user);
+      setUsers(response?.user);
     } catch (err) {
       console.log(err);
     }
@@ -179,7 +179,7 @@ export default function NoteSaleDataTable({ data, isLoading }: Props) {
         ) : (
           <Table>
             <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
+              {table?.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
                     return (

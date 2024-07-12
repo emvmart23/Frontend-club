@@ -1,9 +1,10 @@
 interface ReportHostess {
-    hostess: string;
-    salary: number;
-    hostess_role: number;
-    profit_margin: number;
-    currentSale: number;
-    comission: number;
-    total: number;
-  }
+  hostess: string;
+  salary: number;
+  hostess_role: number;
+  profit_margin: number;
+  currentSale: number;
+  comission: number;
+  total: number;
+  box_date: string;
+}

@@ -163,12 +163,12 @@ export default function NoteSaleForm({
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {customer.length <= 0 ? (
+                    {customer?.length <= 0 ? (
                       <span className="font-medium ml-2 text-[0.9rem] text-foreground/60">
                         No hay clientes registrados
                       </span>
                     ) : (
-                      customer.map((data) => (
+                      customer?.map((data) => (
                         <SelectItem key={data.id} value={data.id.toString()}>
                           {data.name}
                         </SelectItem>
@@ -261,7 +261,7 @@ export default function NoteSaleForm({
               </TableRow>
             </TableHeader>
             <TableBody>
-              {fields.map((field, index) => (
+              {fields?.map((field, index) => (
                 <TableRow key={field.id}>
                   <TableCell className="pl-[0.3rem]">
                     <FormField

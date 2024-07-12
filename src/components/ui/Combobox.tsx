@@ -62,7 +62,7 @@ function Combobox({
           {value
             ? data.find((item) => item.label === value)?.label
             : selectItemMsg}
-          <CheckIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <CheckIcon className="ml-2 h-4 w-4 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">

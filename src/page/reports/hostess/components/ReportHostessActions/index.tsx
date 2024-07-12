@@ -8,8 +8,7 @@ interface Props {
   data: ReportHostess[];
 }
 
-export default function bReportHostessActions({ data }: Props) {
-  const excel = data.filter(item => item.hostess_role === 8);
+export default function ReportHostessActions({ data }: Props) {
   return (
     <div className="ml-auto w-min flex justify-between gap-4">
       <PDFDownloadLink
@@ -23,7 +22,7 @@ export default function bReportHostessActions({ data }: Props) {
           </Button>
         )}
       </PDFDownloadLink>
-      <ExcelExport data={excel} fileName={"trabajadoras"}/>
+      <ExcelExport data={data} fileName={"trabajadoras"}/>
     </div>
   );
 }

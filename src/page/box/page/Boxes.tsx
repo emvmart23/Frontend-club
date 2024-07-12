@@ -6,7 +6,7 @@ export default function Boxes() {
   const { data, isLoading } = useQuery("headers", getHeaders);
 
   const formatHeader = (data ? data.header : []).map((header: Header) => {
-    const order = header.orders.find((order) => order);
+    const order = header?.orders.find((order) => order);
     return {
       ...header,
       hostess_id:order?.hostess_id,

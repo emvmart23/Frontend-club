@@ -35,7 +35,12 @@ interface Props {
 }
 
 export function OrdersOfUserDataTable({ data, isLoading }: Props) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [sorting, setSorting] = React.useState<SortingState>([
+    {
+      id: "id",
+      desc: true,
+    },
+  ]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );

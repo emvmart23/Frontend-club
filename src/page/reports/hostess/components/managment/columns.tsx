@@ -37,6 +37,21 @@ export const columns: ColumnDef<ReportHostess>[] = [
     },
   },
   {
+    accessorKey: "box_date",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Fecha caja
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div className="w-24 ml-3">{row.getValue("box_date")}</div>
+  },
+  {
     accessorKey: "salary",
     header: ({ column }) => {
       return (
@@ -49,7 +64,7 @@ export const columns: ColumnDef<ReportHostess>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>S/. {row.getValue("salary")}</div>,
+    cell: ({ row }) => <div className="ml-2">S/. {row.getValue("salary")}</div>,
   },
   {
     accessorKey: "profit_margin",
