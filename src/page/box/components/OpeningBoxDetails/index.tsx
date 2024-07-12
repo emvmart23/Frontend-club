@@ -22,7 +22,7 @@ export default function OpeningBoxDetails({ box, setIsOpen }: Props) {
   const [headers, setHeaders] = useState<Header[]>([]);
   const queryClient = useQueryClient();
 
-  const isActive = headers.some((header) => !!header.state_doc === true);
+  const isActive : boolean = headers?.some((header) => !!header.state_doc === true);
 
   const closeBox = async () => {
     if (isActive) {

@@ -47,7 +47,7 @@ export default function SearchHostess({ value, setValue } : Props) {
           className="w-full justify-between h-8 md:h-10"
         >
           {value
-            ? hostess.find(({ user_id }: Attendace) => user_id == value)?.user
+            ? hostess?.find(({ user_id }: Attendace) => user_id == value)?.user
             : "Seleccionar anfitriona..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -57,7 +57,7 @@ export default function SearchHostess({ value, setValue } : Props) {
           <CommandInput placeholder="Buscar anfitrionas..." />
           <CommandEmpty>Anfitriona no encontrada</CommandEmpty>
           <CommandGroup>
-            {hostess.length > 0 ? (
+            {hostess?.length > 0 ? (
               hostess.map(({ id, user_id, user }: Attendace) => (
                 <CommandItem
                   key={id}

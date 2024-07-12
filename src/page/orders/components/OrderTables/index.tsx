@@ -66,7 +66,7 @@ export default function OrderTables({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {formatOrder.length == 0 ? (
+          {formatOrder?.length == 0 ? (
             <TableRow>
               <TableCell className="p-16 text-center font-semibold" colSpan={5}>
                 No hay pedidos

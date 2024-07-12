@@ -8,8 +8,8 @@ export default function OrdersProcessed() {
     (head: Header) => head.state_doc !== null
   );
 
-  const format = dataHeaders.map((item: Header) => {
-    const order = item.orders.find((order) => order);
+  const format = dataHeaders?.map((item: Header) => {
+    const order = item.orders?.find((order) => order);
     return {
       ...item,
       hostess_id: order?.hostess_id,

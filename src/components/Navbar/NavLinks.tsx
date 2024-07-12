@@ -18,7 +18,7 @@ interface Props {
   };
 }
 //  
-export default function SidebarItems({ links, isExpanded, index }: Props) {
+export default function SidebarItems({ links, isExpanded }: Props) {
   const [open, setOpen] = useState(false)
   const location = useLocation();
   const isActive = location.pathname === links.path;

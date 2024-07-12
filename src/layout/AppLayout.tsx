@@ -16,7 +16,6 @@ export default function AppLayout() {
 
   const btnUpdateMenuVisibility = () => {
     setIsExpanded(!isExpanded);
-    setOpen(false);
   };
 
   useEffect(() => {
