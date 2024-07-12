@@ -12,7 +12,6 @@ import useBreakpointer from "@/hooks/useBreackpointer";
 export default function AppLayout() {
   const { user } = useAuth();
   const [isExpanded, setIsExpanded] = useState(false);
-  const [open, setOpen] = useState(false)
   const width = useBreakpointer();
 
   const btnUpdateMenuVisibility = () => {
@@ -57,7 +56,7 @@ export default function AppLayout() {
             <X />
           </Button>
           <div className="mt-12">
-            <Sidebar isExpanded={isExpanded} setIsExpanded={setIsExpanded} open={open} setOpen={setOpen}/>
+            <Sidebar isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
           </div>
         </div>
       </div>

@@ -155,7 +155,7 @@ export default function OrdersProcessedDataTable({ data, isLoading }: Props) {
       </div>
       <div className="rounded-md border">
         {isLoading ? (
-          <Skeleton className="w-full h-[25rem]" />
+          <Skeleton className="w-full h-[17rem]" />
         ) : (
           <Table>
             <TableHeader>
