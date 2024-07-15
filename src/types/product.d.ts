@@ -41,6 +41,7 @@ interface Header {
   box_date: string;
   current_user: number;
   created_at:string;
+  box_date:string
 }
 
 interface Payments {

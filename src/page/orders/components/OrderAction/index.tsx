@@ -114,6 +114,13 @@ export default function OrderAction({
                           : "text-black"
                         : ""
                     } transition-all duration-500 relative text-center`}
+                    pattern="^\d{1,9}$"
+                    onInput={(e) =>
+                      (e.currentTarget.value = e.currentTarget.value.replace(
+                        /[^\d]/g,
+                        ""
+                      ))
+                    }
                   />
                 </CardContent>
                 <CardTitle className="cursor-pointer">{product.name}</CardTitle>

@@ -1,5 +1,6 @@
 import {
   ColumnFiltersState,
+  OnChangeFn,
   SortingState,
   VisibilityState,
   flexRender,
@@ -32,18 +33,17 @@ import {
 interface Props {
   data: Header[];
   isLoading: boolean;
+  columnFilters: ColumnFiltersState;
+  setColumnFilters: OnChangeFn<ColumnFiltersState>;
 }
 
-export function OrdersOfUserDataTable({ data, isLoading }: Props) {
+export function OrdersOfUserDataTable({ data, isLoading, columnFilters, setColumnFilters }: Props) {
   const [sorting, setSorting] = React.useState<SortingState>([
     {
       id: "id",
       desc: true,
     },
   ]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
@@ -79,10 +79,10 @@ export function OrdersOfUserDataTable({ data, isLoading }: Props) {
           type="date"
           placeholder="Filtrar por fecha..."
           value={
-            (table.getColumn("created_at")?.getFilterValue() as string) ?? ""
+            (table.getColumn("box_date")?.getFilterValue() as string) ?? ""
           }
           onChange={(event) =>
-            table.getColumn("created_at")?.setFilterValue(event.target.value)
+            table.getColumn("box_date")?.setFilterValue(event.target.value)
           }
           className="w-40"
         />

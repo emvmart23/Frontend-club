@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "@react-pdf/renderer";
 
 interface Props {
-  data: Header;
+  items: Header;
 }
 
 const styles = StyleSheet.create({
@@ -15,25 +15,29 @@ const styles = StyleSheet.create({
 
   },
   count: {
-    width: "44%",
+    width: "12%",
   },
   name: {
-    width: "53%",
+    width: "40%",
+  },
+  unit: {
+    width: "20%",
   },
   total: {
     width: "3%",
   },
 });
 
-export default function NotesTableRow({ data }: Props) {
+export default function TicketsTableRow({ items }: Props) {
   return (
     <>
-      {data?.orders.map((item, index) => {
+      {items?.orders.map((item, index) => {
         return (
-          <View key={index} style={styles.container}>
+          <View key={index}>
             <Text style={styles.count}>{item?.count}</Text>
             <Text style={styles.name}>{item?.name}</Text>
-            <Text style={styles.total}>{item?.price}</Text>
+            <Text style={styles.unit}>{item?.name}</Text>
+            <Text style={styles.total} >{item?.total_price}</Text>
           </View>
         );
       })}

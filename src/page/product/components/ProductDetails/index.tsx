@@ -1,4 +1,4 @@
-import { SheetContent, SheetFooter, SheetTitle } from "@/components/ui/Sheet";
+import { SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "@/components/ui/Sheet";
 import { useState } from "react";
 import ProductEditForm from "../ProductEditForm";
 import { Button } from "@/components/ui/Button";
@@ -42,7 +42,10 @@ export default function ProductDetails({ product, setIsOpen }: Props) {
 
   return (
     <SheetContent>
+      <SheetHeader>
       <SheetTitle>Informacion del producto</SheetTitle>
+      <SheetDescription/>
+      </SheetHeader>
       <ProductEditForm
         product={product}
         setIsPending={setIsPending}

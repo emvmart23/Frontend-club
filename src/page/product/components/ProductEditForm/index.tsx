@@ -22,8 +22,9 @@ import {
 import { useQueryClient } from "react-query";
 import { ProductSchema } from "@/lib/validators/product";
 import { Checkbox } from "@/components/ui/Checkbox";
-import { RootState } from "@/store/store";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { getCategories } from "@/helpers/getCategories";
+import { getUnits } from "@/helpers/getUnits";
 
 interface Props {
   product: Product;
@@ -32,8 +33,8 @@ interface Props {
 }
 
 export default function ProductEditForm({ product, setIsOpen }: Props) {
-  const category = useSelector((state: RootState) => state.categories.category);
-  const units = useSelector((state: RootState) => state.units.unit);
+  const [units, setUnits] = useState<UnitMeasure[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
   const queryClient = useQueryClient();
 
   const form = useForm<z.infer<typeof ProductSchema>>({
@@ -70,6 +71,21 @@ export default function ProductEditForm({ product, setIsOpen }: Props) {
       setIsOpen(false);
     }
   }
+
+  const fetchUnits = async () => {
+    const { unit } = await getUnits();
+    setUnits(unit);
+  }
+
+  const fetchCategories = async () => {
+    const { category } = await getCategories();
+    setCategories(category);
+  }
+  
+  useEffect(() => {
+    fetchUnits();
+    fetchCategories();
+  }, []);
 
   return (
     <Form {...form}>
@@ -126,7 +142,7 @@ export default function ProductEditForm({ product, setIsOpen }: Props) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {category.map((category) => (
+                  {categories?.map((category) => (
                     <SelectItem
                       key={category.category_id}
                       value={category.category_id.toString()}
@@ -160,7 +176,7 @@ export default function ProductEditForm({ product, setIsOpen }: Props) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {units.map((unit) => (
+                  {units?.map((unit) => (
                     <SelectItem
                       key={unit.unit_id}
                       value={unit.unit_id.toString()}

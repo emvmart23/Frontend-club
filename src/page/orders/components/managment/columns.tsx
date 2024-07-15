@@ -1,7 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/Button";
 import { ArrowUpDown, Eye } from "lucide-react";
-import { format } from "date-fns";
 import { Dialog, DialogTrigger } from "@/components/ui/Dialog";
 import { EyesDetailDialog } from "@/components";
 import OrdersOfUserAction from "../OrdersOfUserAction";
@@ -61,7 +60,7 @@ export const columns: ColumnDef<Header>[] = [
     },
   },
   {
-    accessorKey: "created_at",
+    accessorKey: "box_date",
     header: ({ column }) => {
       return (
         <Button
@@ -73,10 +72,7 @@ export const columns: ColumnDef<Header>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => {
-      const date = format(row.getValue("created_at"), "yyyy-MM-dd");
-      return <div className="ml-7">{date}</div>;
-    },
+    cell: ({ row }) => <div className="ml-7">{row.getValue("box_date")}</div>,
   },
   {
     accessorKey: "product",
@@ -99,7 +95,7 @@ export const columns: ColumnDef<Header>[] = [
               <Eye />
             </Button>
           </DialogTrigger>
-          <EyesDetailDialog data={row.original}/>
+          <EyesDetailDialog data={row.original} />
         </Dialog>
       );
     },
@@ -142,7 +138,8 @@ export const columns: ColumnDef<Header>[] = [
       );
     },
     cell: ({ row }) => {
-      const isActive = Boolean(row.getValue("state")) === true ? "No atendido" : "Atendido";
+      const isActive =
+        Boolean(row.getValue("state")) === true ? "No atendido" : "Atendido";
       return <div>{isActive}</div>;
     },
   },
@@ -159,5 +156,5 @@ export const columns: ColumnDef<Header>[] = [
         </AlertDialog>
       );
     },
-  }
+  },
 ];

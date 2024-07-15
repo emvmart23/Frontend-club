@@ -20,7 +20,7 @@ export default function OpeningBoxActions() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Abrir caja</Button>
+        <Button className="w-28">Abrir caja</Button>
       </DialogTrigger>
       <DialogContent className="gap-8">
         <DialogHeader>

@@ -19,7 +19,7 @@ export default function ProductActions() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Crear Producto</Button>
+        <Button className="w-32">Crear Producto</Button>
       </DialogTrigger>
       <DialogContent className="gap-8">
         <DialogHeader>

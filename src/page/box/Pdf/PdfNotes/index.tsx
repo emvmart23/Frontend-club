@@ -106,7 +106,7 @@ const PDF = ({ data }: Props) => {
         </View>
         <View style={styles.table}>
           <NotesTableHeader />
-          <NotesTableRow items={data} />
+          <NotesTableRow data={data} />
           <Text style={styles.total}>TOTAL A PAGAR: S/.{data.total_price}</Text>
         </View>
       </Page>

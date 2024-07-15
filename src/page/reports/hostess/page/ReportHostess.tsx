@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { getAttendance } from "@/helpers/getAttendance";
 import { getHeaders } from "@/helpers/getHeaders";
 import { ReportHostessDataTable } from "../components/index";
-// import { PDFViewer } from "@react-pdf/renderer";
 import { useQuery } from "react-query";
 import { format } from "date-fns";
-// import PdfHostess from "../Pdf/index";
 import ReportHostessActions from "../components/ReportHostessActions";
 import { ColumnFiltersState } from "@tanstack/react-table";
+import { getValueOfColumnsFilter } from "@/lib/utils/getValueOfColumnFilters";
+// import PdfHostess from "../Pdf/index";
+// import { PDFViewer } from "@react-pdf/renderer";
 
 interface TotalNotSale {
   hostess_id: number;
@@ -29,14 +30,12 @@ export default function ReportHostess() {
   const [noteDetails, setNoteDetails] = useState<Header[]>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const dateFiltered = columnFilters.find((item) => item)?.value
-  console.log(dateFiltered)
-
   const presentUsers: ReportHostess[] = (data ? data.attendances : [])
     .filter(
       (hostess: Attendace) =>
         !!hostess.present === true &&
-        hostess.box_date === currentDate &&
+        hostess.box_date ===
+          (getValueOfColumnsFilter(columnFilters, "box_date") ?? currentDate) &&
         (hostess.role_user === 4 || hostess.role_user === 8)
     )
     .map((d: Attendace) => {
@@ -44,8 +43,9 @@ export default function ReportHostess() {
         noteDetails
           .filter(
             (note) =>
-              note.box_date === currentDate &&
-              !!note.state_doc == false
+              note.box_date ===
+                (getValueOfColumnsFilter(columnFilters, "box_date") ??
+                  currentDate) && !!note.state_doc == false
           )
           .map((order) => {
             const orders = order.orders.find((or) => or);
@@ -71,12 +71,11 @@ export default function ReportHostess() {
       };
     });
 
-  const handleExportToBothDocuments = presentUsers.filter((pdf) => {
-    const getIdOfColumnsFilter = Number(
-      columnFilters.find((column) => column)?.value
-    );
-    return pdf.hostess_role === getIdOfColumnsFilter;
-  });
+  const handleExportToBothDocuments = presentUsers.filter(
+    (pdf) =>
+      pdf.hostess_role ===
+      Number(getValueOfColumnsFilter(columnFilters, "hostess_role"))
+  );
 
   const fetchDetailsOfNotes = async () => {
     const { header } = await getHeaders();

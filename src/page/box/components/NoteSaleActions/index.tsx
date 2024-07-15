@@ -6,6 +6,7 @@ import { useQueryClient } from "react-query";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { Loader2 } from "lucide-react";
 import PDF from "../../Pdf/PdfNotes";
+import PdfTickets from "../../Pdf/PdfTickets";
 
 interface Props {
   setIsOpen: (value: boolean) => void;
@@ -41,18 +42,13 @@ export default function NoteSaleActions({ setIsOpen, header }: Props) {
   };
   [];
 
-  {
-    /* <PDFViewer className="w-full h-screen absolute top-12">
-    <PDF data={header} />
-  </PDFViewer> */
-  }
   return (
     <>
-      <PDFDownloadLink document={<PDF />} fileName="notes.pdf">
+      <PDFDownloadLink document={<PDF data={header} />} fileName="notes.pdf">
         {({ loading }) => (
           <Button className="w-full">
             {loading && <Loader2 className="animate-spin" />}
-            PDF Nota
+            PDF ticket
           </Button>
         )}
       </PDFDownloadLink>
@@ -65,6 +61,17 @@ export default function NoteSaleActions({ setIsOpen, header }: Props) {
               Anular nota de venta
             </Button>
             <Button className="bg-orange-500">PDF ticket</Button>
+            <PDFDownloadLink
+              document={<PdfTickets data={header} />}
+              fileName="anfitrionas.pdf"
+            >
+              {({ loading }) => (
+                <Button className="w-full">
+                  {loading && <Loader2 className="animate-spin" />}
+                  Generar nota
+                </Button>
+              )}
+            </PDFDownloadLink>
           </>
         ))}
     </>

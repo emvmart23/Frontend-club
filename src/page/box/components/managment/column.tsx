@@ -6,6 +6,7 @@ import { useState } from "react";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -172,6 +173,7 @@ export const columns: ColumnDef<Header>[] = [
           <DialogContent className={`max-w-[20rem] ${dsds && "h-[16rem]"}`}>
             <DialogHeader className="mb-2">
               <DialogTitle>Acciones</DialogTitle>
+              <DialogDescription/>
             </DialogHeader>
             <NoteSaleActions setIsOpen={setIsOpen} header={header} />
           </DialogContent>

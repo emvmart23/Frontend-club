@@ -3,6 +3,7 @@ import {
   Boxes,
   CirclePlus,
   ClipboardMinus,
+  ClipboardPlus,
   Combine,
   Fingerprint,
   HandCoins,
@@ -124,16 +125,10 @@ export const links = [
     title: "Reportes",
     childrens: [
       {
-        icon: <ClipboardMinus />,
+        icon: <ClipboardPlus />,
         title: "Anfitrionas",
-        path:"/reportes-de-anfitrionas"
-
+        path: "/reportes-de-anfitrionas",
       },
-      {
-        icon:<ClipboardMinus />,
-        title: "",
-        path:""
-      }
-    ]
+    ],
   },
 ];

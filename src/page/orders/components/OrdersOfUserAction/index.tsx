@@ -2,6 +2,7 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -47,7 +48,7 @@ export default function OrdersOfUserAction({ setIsOpen, header }: Props) {
 
   return (
     <>
-      <AlertDialogTrigger className="flex sm:justify-between gap-4">
+      <AlertDialogTrigger asChild className="flex sm:justify-between gap-4">
         {Boolean(header.state_doc) === true && (
           <Button className="w-full" variant="outline" disabled={isPending}>
             Anular
@@ -59,6 +60,7 @@ export default function OrdersOfUserAction({ setIsOpen, header }: Props) {
           <AlertDialogTitle>
             Estas seguro que deseas anular el pedido ?
           </AlertDialogTitle>
+          <AlertDialogDescription/>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
