@@ -36,7 +36,9 @@ export default function AppLayout() {
             <Menu />
           </Button>
           <div className="flex justify-between items-center gap-2 md:gap-4">
-            <span className="font-semibold text-[0.9rem] md:text-[1rem]">Bienvenido {user?.name}</span>
+            <span className="font-semibold text-[0.9rem] md:text-[1rem]">
+              Bienvenido {user?.name}
+            </span>
             <UserDropDown />
           </div>
         </div>
@@ -54,9 +56,7 @@ export default function AppLayout() {
           >
             <X />
           </Button>
-          <div className="mt-12">
-            <Sidebar isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
-          </div>
+          <Sidebar isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
         </div>
       </div>
       <div className="transition-all duration-200 mx-auto w-[80%] md:w-full lg:w-[77%] lg:ml-[14rem] md:pl-20 max-w-320 pt-10">

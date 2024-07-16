@@ -7,6 +7,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import { Loader2 } from "lucide-react";
 import PDF from "../../Pdf/PdfNotes";
 import PdfTickets from "../../Pdf/PdfTickets";
+import { useAuth } from "@/hooks/useAuth";
 
 interface Props {
   setIsOpen: (value: boolean) => void;
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export default function NoteSaleActions({ setIsOpen, header }: Props) {
+  const { user } = useAuth();
   const queryClient = useQueryClient();
 
   const cancelNote = async () => {
@@ -45,9 +47,8 @@ export default function NoteSaleActions({ setIsOpen, header }: Props) {
   return (
     <>
       <PDFDownloadLink document={<PDF data={header} />} fileName="notes.pdf">
-        {({ loading }) => (
+        {() => (
           <Button className="w-full">
-            {loading && <Loader2 className="animate-spin" />}
             PDF ticket
           </Button>
         )}
@@ -62,12 +63,11 @@ export default function NoteSaleActions({ setIsOpen, header }: Props) {
             </Button>
             <Button className="bg-orange-500">PDF ticket</Button>
             <PDFDownloadLink
-              document={<PdfTickets data={header} />}
+              document={<PdfTickets data={header} user={user} />}
               fileName="anfitrionas.pdf"
             >
-              {({ loading }) => (
+              {() => (
                 <Button className="w-full">
-                  {loading && <Loader2 className="animate-spin" />}
                   Generar nota
                 </Button>
               )}

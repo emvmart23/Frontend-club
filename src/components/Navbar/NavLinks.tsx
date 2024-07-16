@@ -5,8 +5,7 @@ import { NavLink, useLocation } from "react-router-dom";
 interface Props {
   setIsExpanded: (value: boolean) => void;
   isExpanded?: boolean;
-  index: number;
-  links: {
+  links?: {
     icon: React.ReactNode;
     title: string;
     path?: string;
@@ -21,13 +20,13 @@ interface Props {
 export default function SidebarItems({ links, isExpanded }: Props) {
   const [open, setOpen] = useState(false)
   const location = useLocation();
-  const isActive = location.pathname === links.path;
+  const isActive = location.pathname === links?.path;
 
   const handleClick = () => {
     setOpen(!open)
   };
 
-  return links.childrens ? (
+  return links?.childrens ? (
     <div
       className={`${open ? "h-auto" : "h-[3.8rem]"} ${
         isExpanded ? "visible" : "invisible"
@@ -39,12 +38,13 @@ export default function SidebarItems({ links, isExpanded }: Props) {
       >
         <span className="flex justify-start gap-5">
           {links.icon && <i>{links.icon}</i>}
-          <span>{links.title}</span>
+          <span className="text-[0.9rem]">{links.title}</span>
         </span>
         <ArrowRight
-          className={`h-4 w-4 ${
+          size={15}
+          className={`${
             open && "rotate-90"
-          } transition-all duration-300`}
+          } transition-all `}
         />
       </div>
       <div
@@ -57,13 +57,13 @@ export default function SidebarItems({ links, isExpanded }: Props) {
           return (
             <NavLink
               key={index}
-              className={`flex w-[11.5rem] ml-4 h-[3.8rem] hover:scale-105`}
+              className={`flex w-[11.4rem] ml-4 h-[3.4rem] hover:scale-105`}
               to={child.path || ""}
             >
               <div
                 className={`${
                   isActiveSubMenu && "bg-foreground dark:text-black text-white"
-                } p-2 w-full group-hover:bg-primary group-hover:text-background text-foreground rounded mt-5 flex gap-5`}
+                } p-2 w-full text-[0.7rem] group-hover:bg-primary group-hover:text-background text-foreground text-start rounded mt-5 flex items-center gap-5`}
               >
                 {child.icon && <i>{child.icon}</i>}
                 {child.title}
@@ -77,16 +77,16 @@ export default function SidebarItems({ links, isExpanded }: Props) {
     <NavLink
       className={` ${
         isExpanded ? "visible" : "invisible"
-      } lg:visible flex w-[11.5rem] ml-4 h-[3.8rem] hover:scale-105`}
-      to={links.path || ""}
+      } lg:visible flex w-[11.4rem] ml-4 h-[3.8rem] hover:scale-105`}
+      to={links?.path || ""}
     >
       <div
         className={`${
           isActive && "bg-foreground dark:text-black text-white"
-        } p-2 w-full group-hover:bg-primary group-hover:text-background text-foreground rounded transition-all duration-75 origin-left mt-5 flex gap-5`}
+        } p-2 w-full group-hover:bg-primary group-hover:text-background text-foreground text-sm rounded transition-all duration-75 origin-left mt-4 flex items-center gap-5`}
       >
-        {links.icon && <i>{links.icon}</i>}
-        {links.title}
+        {links?.icon && <i>{links.icon}</i>}
+        {links?.title}
       </div>
     </NavLink>
   );

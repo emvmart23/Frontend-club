@@ -80,7 +80,7 @@ const PDF = ({ data }: Props) => {
   return (
     <Document>
       <Page size={[mmToPt(80), mmToPt(150)]} style={styles.page}>
-        <Text style={styles.order}>PD-312319</Text>
+        <Text style={styles.order}>PD-{data.id}</Text>
         <View style={styles.line} />
         <View style={styles.container}>
           <View style={styles.container_data}>

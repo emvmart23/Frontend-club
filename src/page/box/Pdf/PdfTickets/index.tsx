@@ -1,12 +1,10 @@
 import { Document, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
-import NotesTableHeader from "../PdfNotes/NotesTableHeader";
-import NotesTableRow from "../PdfNotes/NotesTableRow";
-import { title } from "process";
 import TicketsTableHeader from "./TicketsTableHeader";
-import { useAuth } from "@/hooks/useAuth";
+import TicketsTableRow from "./TicketsTableRow";
 
 interface Props {
-  data: Header
+  data: Header;
+  user: User | null;
 }
 
 const styles = StyleSheet.create({
@@ -51,22 +49,23 @@ const styles = StyleSheet.create({
   },
   tableContainer: {
     width: "95%",
-    marginBottom: 20,
+    fontSize: 8,
+    marginBottom: 16,
+    borderBottom: "1px solid black"
   },
 });
 
-export default function PdfTickets({ data }: Props ) {
-
+export default function PdfTickets({ data, user }: Props) {
   const mmToPt = (mm: number) => mm * 2.83465;
-  
+
   const contentBody = [
     {
       title: "F.Emision",
-      description: data.box_date,
+      description: data?.box_date,
     },
     {
       title: "Cliente",
-      description: "Clientes - Varios",
+      description: data?.client,
     },
     {
       title: "Doc.trib.dom.sin.ruc",
@@ -78,26 +77,24 @@ export default function PdfTickets({ data }: Props ) {
     },
     {
       title: "Vendedor",
-      description: "",
+      description: user?.name,
     },
   ];
-  console.log("header as object", data)
-  
+
   return (
     <Document>
       <Page size={[mmToPt(80), mmToPt(150)]} style={styles.page}>
         <View style={styles.titleContainer}>
-          <Text>Paraiso</Text>
-          <Text>RUC 000000</Text>
+          <Text>Paraiso Club</Text>
           <Text>, LIMA, LIMA - LIMA</Text>
           <Text>demo@paraiso.com</Text>
         </View>
         <View style={styles.descriptionContainer}>
           <Text>Nota de venta</Text>
-          <Text>NV01-00003123</Text>
+          <Text>NV01-000{data?.note_sale}</Text>
         </View>
         <View style={styles.bodyContainer}>
-          {contentBody.map((item, index) => (
+          {contentBody?.map((item, index) => (
             <View key={index} style={styles.itemsContainer}>
               <Text>{item.title}:</Text>
               <Text>{item.description}</Text>
@@ -106,13 +103,18 @@ export default function PdfTickets({ data }: Props ) {
         </View>
         <View style={styles.tableContainer}>
           <TicketsTableHeader />
-          <NotesTableRow data={data}/>
+          <TicketsTableRow data={data} />
+          <Text style={{ marginLeft: "auto", marginTop: 5 }}>
+            TOTAL A PAGAR: S/.{data?.total_price}{" "}
+          </Text>
         </View>
         <View style={styles.paymentsContainer}>
           <Text style={{ marginBottom: 3 }}>PAGOS:</Text>
-          <Text>- 10/06/2024 - Efectivo - S/50</Text>
-          <Text>- 10/06/2024 - Yape - S/20</Text>
-          <Text style={{ marginTop:4 }}>SALDO: S/0.00</Text>
+            {/* map function for payments */}
+          <Text>
+            {/* {data?.box_date} - {payment.payment_method} - S/.{payment.mountain} */}
+          </Text>
+          <Text style={{ marginTop: 4 }}>SALDO: S/0.00</Text>
         </View>
       </Page>
     </Document>

@@ -1,24 +1,21 @@
 import { StyleSheet, Text, View } from "@react-pdf/renderer";
 
 interface Props {
-  items: Header;
+  data: Header;
 }
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-start",
     fontSize: 8,
-    width: "89%",
-    paddingLeft: 27,
-    paddingRight:14,
-
   },
   count: {
     width: "12%",
   },
   name: {
     width: "40%",
+    fontSize: 7,
   },
   unit: {
     width: "20%",
@@ -28,16 +25,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function TicketsTableRow({ items }: Props) {
+export default function TicketsTableRow({ data }: Props) {
   return (
     <>
-      {items?.orders.map((item, index) => {
+      {data?.orders.map((item, index) => {
         return (
-          <View key={index}>
+          <View key={index} style={styles.container}>
             <Text style={styles.count}>{item?.count}</Text>
-            <Text style={styles.name}>{item?.name}</Text>
-            <Text style={styles.unit}>{item?.name}</Text>
-            <Text style={styles.total} >{item?.total_price}</Text>
+            <Text style={styles.name}>{item?.name} + compañia</Text>
+            <Text style={styles.unit}>{item?.price}</Text>
+            <Text style={styles.total}>{item?.price}</Text>
           </View>
         );
       })}

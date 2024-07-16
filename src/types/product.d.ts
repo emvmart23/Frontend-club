@@ -42,6 +42,8 @@ interface Header {
   current_user: number;
   created_at:string;
   box_date:string
+  client:string;
+  payments: Payments[]
 }
 
 interface Payments {
@@ -52,9 +54,9 @@ interface Payments {
   reference: string;
 }
 
-interface Detail {
+interface Notes {
   id:number;
-  client_id:number;
+  client:string;
   hostess:string;
   hostess_id:number;
   issue_date:string;

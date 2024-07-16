@@ -13,7 +13,6 @@ export default function Sidebar({ isExpanded, setIsExpanded }: Props) {
         {links.map((link, index) => (
           <NavLinks
             key={index}
-            index={index}
             links={link}
             isExpanded={isExpanded}
             setIsExpanded={setIsExpanded}

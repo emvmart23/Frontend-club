@@ -130,9 +130,6 @@ export default function NoteSaleForm({
 
   useEffect(() => {
     fetchCustomer();
-  }, []);
-
-  useEffect(() => {
     fetchMethosPayments();
   }, []);
 
