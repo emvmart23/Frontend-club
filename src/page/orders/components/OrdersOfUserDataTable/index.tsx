@@ -1,6 +1,5 @@
 import {
   ColumnFiltersState,
-  OnChangeFn,
   SortingState,
   VisibilityState,
   flexRender,
@@ -29,15 +28,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/Table";
+import { format } from "date-fns";
 
 interface Props {
   data: Header[];
   isLoading: boolean;
-  columnFilters: ColumnFiltersState;
-  setColumnFilters: OnChangeFn<ColumnFiltersState>;
+  user: User | null;
 }
 
-export function OrdersOfUserDataTable({ data, isLoading, columnFilters, setColumnFilters }: Props) {
+export function OrdersOfUserDataTable({ data, isLoading, user }: Props) {
   const [sorting, setSorting] = React.useState<SortingState>([
     {
       id: "id",
@@ -51,7 +50,17 @@ export function OrdersOfUserDataTable({ data, isLoading, columnFilters, setColum
     pageIndex: 0,
     pageSize: 6,
   });
-
+  const currentDate = format(new Date(), "yyyy-MM-dd");
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([
+    {
+      id: "box_date",
+      value: currentDate,
+    },
+    {
+      id: "current_user",
+      value: user?.id,
+    },
+  ]);
   const table = useReactTable({
     data,
     columns,

@@ -22,7 +22,7 @@ export default function OrdersAtendeedDetails({ data }: Props) {
         </DialogDescription>
       </DialogHeader>
       <ul className="grid gap-4 py-4 font-medium pl-6 list-disc">
-        {data.orders.map((order, index) => (
+        {data?.orders.map((order, index) => (
           <li key={index}>
             <span>
               <strong>{order.count} </strong>

@@ -144,6 +144,11 @@ export const columns: ColumnDef<Header>[] = [
     },
   },
   {
+    accessorKey: "current_user",
+    header: () => { },
+    cell: ({ row }) =>  <div className="hidden">{row.getValue("current_user")}</div>
+  },
+  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {

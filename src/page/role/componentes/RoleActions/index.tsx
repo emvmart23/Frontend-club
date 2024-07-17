@@ -20,7 +20,7 @@ export default function RoleActions() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Crear Rol</Button>
+        <Button className="w-32">Crear Rol</Button>
       </DialogTrigger>
       <DialogContent className="gap-8">
         <DialogHeader>

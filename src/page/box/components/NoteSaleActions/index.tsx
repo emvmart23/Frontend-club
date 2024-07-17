@@ -4,7 +4,6 @@ import api from "@/service";
 import { toast } from "@/hooks/useToast";
 import { useQueryClient } from "react-query";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import { Loader2 } from "lucide-react";
 import PDF from "../../Pdf/PdfNotes";
 import PdfTickets from "../../Pdf/PdfTickets";
 import { useAuth } from "@/hooks/useAuth";

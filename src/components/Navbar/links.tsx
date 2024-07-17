@@ -20,115 +20,117 @@ import {
   Wine,
 } from "lucide-react";
 
-const sizeIconOfSubmenu = 17;
-const sizeIconOfMenu = 22;
+const sizes = {
+  menu:22,
+  subMenu:17, 
+}
 
 export const links = [
   {
-    icon: <LayoutDashboard size={sizeIconOfMenu} />,
+    icon: <LayoutDashboard size={sizes.menu} />,
     title: "Dashboard",
     path: "/",
   },
   {
-    icon: <ShoppingBasket size={sizeIconOfMenu} />,
+    icon: <ShoppingBasket size={sizes.menu} />,
     title: "Productos",
     path: "/productos",
   },
   {
-    icon: <ListOrdered size={sizeIconOfMenu} />,
+    icon: <ListOrdered size={sizes.menu} />,
     title: "Pedidos",
     childrens: [
       {
-        icon: <CirclePlus size={sizeIconOfSubmenu} />,
+        icon: <CirclePlus size={sizes.subMenu} />,
         title: "Generar pedido",
         path: "/generar-pedido",
       },
       {
-        icon: <List size={sizeIconOfSubmenu} />,
+        icon: <List size={sizes.subMenu} />,
         title: "Lista de pedidos",
         path: "/lista-de-pedidos",
       },
     ],
   },
   {
-    icon: <Users size={sizeIconOfMenu} />,
+    icon: <Users size={sizes.menu} />,
     title: "Clientes",
     path: "/clientes",
   },
   {
-    icon: <SlidersHorizontal size={sizeIconOfMenu} />,
+    icon: <SlidersHorizontal size={sizes.menu} />,
     title: "Categorias",
     path: "/categorias",
   },
   {
-    icon: <Settings size={sizeIconOfMenu} />,
+    icon: <Settings size={sizes.menu} />,
     title: "Configuracion",
     childrens: [
       {
-        icon: <User size={sizeIconOfSubmenu} />,
+        icon: <User size={sizes.subMenu} />,
         title: "Usuarios",
         path: "/usuarios",
       },
       {
-        icon: <Fingerprint size={sizeIconOfSubmenu} />,
+        icon: <Fingerprint size={sizes.subMenu} />,
         title: "Roles",
         path: "/roles",
       },
       {
-        icon: <Combine size={sizeIconOfSubmenu} />,
+        icon: <Combine size={sizes.subMenu} />,
         title: "Unidad",
         path: "/unidades",
       },
       {
-        icon: <HandCoins size={sizeIconOfSubmenu} />,
+        icon: <HandCoins size={sizes.subMenu} />,
         title: "Metodos de pago",
         path: "/metodos-de-pago",
       },
     ],
   },
   {
-    icon: <AlarmClock size={sizeIconOfMenu} />,
+    icon: <AlarmClock size={sizes.menu} />,
     title: "Asistencia",
     path: "/asistencia",
   },
   {
-    icon: <Boxes size={sizeIconOfMenu} />,
+    icon: <Boxes size={sizes.menu} />,
     title: "Cajero",
     childrens: [
       {
-        icon: <SquareArrowOutUpRight size={sizeIconOfSubmenu} />,
+        icon: <SquareArrowOutUpRight size={sizes.subMenu} />,
         title: "Apertura de caja",
         path: "/apertura-caja",
       },
       {
-        icon: <PackageOpen size={sizeIconOfSubmenu} />,
+        icon: <PackageOpen size={sizes.subMenu} />,
         title: "Cajas",
         path: "/caja",
       },
     ],
   },
   {
-    icon: <Wine size={sizeIconOfMenu} />,
+    icon: <Wine size={sizes.menu} />,
     title: "Barman",
     childrens: [
       {
-        icon: <Fingerprint size={sizeIconOfSubmenu} />,
+        icon: <Fingerprint size={sizes.subMenu} />,
         title: "Atencion de pedidos",
         path: "/atencion-de-pedidos",
       },
       {
-        icon: <Combine size={sizeIconOfSubmenu} />,
+        icon: <Combine size={sizes.subMenu} />,
         title: "Pedidos atendidos",
         path: "/pedidos-atendidos",
       },
     ],
   },
   {
-    icon: <ClipboardMinus size={sizeIconOfMenu} />,
+    icon: <ClipboardMinus size={sizes.menu} />,
     title: "Reportes",
     childrens: [
       {
-        icon: <ClipboardPlus size={sizeIconOfSubmenu} />,
+        icon: <ClipboardPlus size={sizes.subMenu} />,
         title: "Anfitrionas",
         path: "/reportes-de-anfitrionas",
       },

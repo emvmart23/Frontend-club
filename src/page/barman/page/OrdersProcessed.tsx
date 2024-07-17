@@ -1,9 +1,11 @@
 import { useQuery } from "react-query";
 import OrdersProcessedDataTable from "../components/OrdersProcessedTable";
 import { getHeaders } from "@/helpers/getHeaders";
+import useTitle from "@/hooks/useTitle";
 
 export default function OrdersProcessed() {
   const { data, isLoading } = useQuery("orders", getHeaders);
+  useTitle("Pedidos atendidos")
   const dataHeaders = (data ? data.header : []).filter(
     (head: Header) => head.state_doc !== null
   );
@@ -20,9 +22,7 @@ export default function OrdersProcessed() {
   return (
     <section>
       <h1 className="text-3xl font-medium mb-7">Pedidos atendidos</h1>
-      <div>
-        <OrdersProcessedDataTable data={format} isLoading={isLoading} />
-      </div>
+      <OrdersProcessedDataTable data={format} isLoading={isLoading} />
     </section>
   );
 }

@@ -8,7 +8,7 @@ interface Props {
 
 export default function Sidebar({ isExpanded, setIsExpanded }: Props) {
   return (
-    <nav>
+    <nav className="mt-6">
       <ul>
         {links.map((link, index) => (
           <NavLinks

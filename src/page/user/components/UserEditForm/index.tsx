@@ -164,7 +164,7 @@ export default function UserEditForm({ setIsOpen, setIsPending, user }: Props) {
                 </FormControl>
                 <SelectContent>
                   {roles.map((role) => (
-                    <SelectItem value={role.role_id.toString()}>
+                    <SelectItem key={role.role_id} value={role.role_id.toString()}>
                       {role.role_name}
                     </SelectItem>
                   ))}

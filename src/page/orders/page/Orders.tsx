@@ -22,6 +22,7 @@ import api from "@/service";
 import { toast } from "@/hooks/useToast";
 import { Loader2 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import useTitle from "@/hooks/useTitle";
 
 export default function Orders() {
   const { user } = useAuth();
@@ -33,6 +34,7 @@ export default function Orders() {
   const [orders, setOrders] = useState<Product[]>([]);
   const [isPending, setIsPending] = useState(false);
   const [value, setValue] = useState(0);
+  useTitle("Generar pedido")
 
   const formatOrders = (array: Product[]) => {
     const formattedOrders = array.reduce((acc, product) => {

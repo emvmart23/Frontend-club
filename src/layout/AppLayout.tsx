@@ -44,14 +44,14 @@ export default function AppLayout() {
         </div>
         <div
           className={`${
-            isExpanded ? "w-[15rem]" : "w-[0rem]"
+            isExpanded ? "w-[16rem]" : "w-[0rem]"
           } lg:w-[15rem] origin-left transition-all duration-75 bg-background h-screen fixed top-0 border-r z-50`}
         >
           <Button
             onClick={btnUpdateMenuVisibility}
             className={`${
               isExpanded ? "block" : "hidden"
-            } lg:hidden absolute top-4 right-4 p-2 w-8 h-8 flex justify-center`}
+            } lg:hidden absolute top-1 right-2 p-2 w-7 h-7 flex justify-center`}
             variant={"outline"}
           >
             <X />
