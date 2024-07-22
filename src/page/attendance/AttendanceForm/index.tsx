@@ -17,6 +17,7 @@ import { useQueryClient } from "react-query";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { getUsers } from "@/helpers/users/getUsers";
 import { getAttendance } from "@/helpers/getAttendance";
+import { Loader2 } from "lucide-react";
 
 interface Props {
   setIsOpen: (value: boolean) => void;
@@ -101,6 +102,7 @@ export default function AttendanceForm({ setIsOpen }: Props) {
         });
       }
     } else {
+      setIsPending(true);
       try {
         const { status } = await api.post("/attendances/create", users);
         if (status == 201) {
@@ -129,6 +131,8 @@ export default function AttendanceForm({ setIsOpen }: Props) {
             variant: "destructive",
           });
         }
+      } finally {
+        setIsPending(false);
       }
     }
   };
@@ -199,9 +203,19 @@ export default function AttendanceForm({ setIsOpen }: Props) {
       )}
       <div className="absolute bottom-3 w-[95%] left-4">
         {isDateExist ? (
-          <Button className="w-full" type="submit">Editar</Button>
+          <Button className="w-full" type="submit">
+            Editar
+          </Button>
         ) : (
-          <Button className="w-full" type="submit">Guardar</Button>
+          <Button className="w-full" type="submit">
+            {isPending && (
+              <Loader2
+                className="mr-2 h-4 w-4 animate-spin"
+                aria-hidden="true"
+              />
+            )}
+            Guardar
+          </Button>
         )}
       </div>
     </form>

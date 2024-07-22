@@ -10,7 +10,7 @@ export default function MethodActions() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Crear Metodo</Button>
+        <Button className="w-32">Crear Metodo</Button>
       </DialogTrigger>
       <DialogContent className="gap-8">
         <DialogHeader>

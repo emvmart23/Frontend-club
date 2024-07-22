@@ -15,28 +15,44 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/Popover";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getAttendance } from "@/helpers/getAttendance";
-import { format } from "date-fns";
+import { getBoxes } from "@/helpers/getBoxes";
 
-interface Props { 
-  value:number
-  setValue: (value:number) => void
+interface Props {
+  value: number;
+  setValue: (value: number) => void;
 }
 
-export default function SearchHostess({ value, setValue } : Props) {
+export default function SearchHostess({ value, setValue }: Props) {
+  const [allBoxes, setBoxes] = useState<Box[]>([]);
   const { data } = useQuery("Attendance", getAttendance);
   const [open, setOpen] = useState(false);
-  const currentDate = format(new Date(), "yyyy-MM-dd");
 
-  const hostess = (data ? data.attendances : []).filter(
-    ({ box_date, box_state, role_user, present }: Attendace) =>
-      box_state === 1 &&
-      box_date === currentDate &&
-      (role_user === 4  || role_user === 8) &&
-      Number(present) === 1
+  const lastId = allBoxes.reduceRight(
+    (maxId, box) => Math.max(maxId, box.id),
+    0
   );
   
+  const lastBox = allBoxes.find((box) => box.id === lastId);
+  
+  const hostess = (data ? data.attendances : [])?.filter(
+    ({ box_date, box_state, role_user, present }: Attendace) =>
+      box_state === 1 &&
+      box_date === lastBox?.opening &&
+      (role_user === 4 || role_user === 8) &&
+      Number(present) === 1
+  );
+
+  const fetchBox = async () => {
+    const { boxes } = await getBoxes();
+    setBoxes(boxes);
+  };
+
+  useEffect(() => {
+    fetchBox();
+  }, []);
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -58,7 +74,7 @@ export default function SearchHostess({ value, setValue } : Props) {
           <CommandEmpty>Anfitriona no encontrada</CommandEmpty>
           <CommandGroup>
             {hostess?.length > 0 ? (
-              hostess.map(({ id, user_id, user }: Attendace) => (
+              hostess?.map(({ id, user_id, user }: Attendace) => (
                 <CommandItem
                   key={id}
                   value={id.toString()}
@@ -79,7 +95,7 @@ export default function SearchHostess({ value, setValue } : Props) {
             ) : (
               <CommandItem className="text-[0.7rem] font-semibold">
                 <CircleAlert className="mr-2 h-4 w-4 shrink-0 opacity-50" />
-                No hay anfitrionas, primero toma asistencia 
+                No hay anfitrionas, primero toma asistencia
               </CommandItem>
             )}
           </CommandGroup>

@@ -123,7 +123,7 @@ export default function OrderAction({
                     }
                   />
                 </CardContent>
-                <CardTitle className="cursor-pointer">{product.name}</CardTitle>
+                <CardTitle className="cursor-pointer text-center text-[1.2rem]">{product.name}</CardTitle>
                 <Button
                   disabled={edit}
                   className="rounded-full p-2 absolute -right-4 w-8 h-8"

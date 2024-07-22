@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/Button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/Dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/Dialog";
 import { useEffect, useState } from "react";
 import AttendanceForm from "../AttendanceForm";
 import { getBoxes } from "@/helpers/getBoxes";
+import { DialogDescription } from "@radix-ui/react-dialog";
 
 export default function AttendanceActions() {
   const [allBoxes, setBoxes] = useState<Box[]>([]);
@@ -31,7 +32,7 @@ export default function AttendanceActions() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button disabled={boxIsClose === true ? false : true}>
+        <Button className="w-32" disabled={boxIsClose === true ? false : true}>
           Asistencia
         </Button>
       </DialogTrigger>

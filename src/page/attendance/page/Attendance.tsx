@@ -6,13 +6,11 @@ import useTitle from "@/hooks/useTitle";
 
 export default function Attendance() {
   const { data, isLoading } = useQuery("Attendance", getAttendance);
-  useTitle("Asistencia")
+  useTitle("Asistencia");
   return (
     <section className="flex flex-col gap-8 w-full">
       <h3 className="text-3xl">Asistencias</h3>
-      <div>
-        <AttendanceActions />
-      </div>
+      <AttendanceActions />
       <div className="flex gap-4">
         <AttendanceDataTable
           data={data ? data.attendances : []}

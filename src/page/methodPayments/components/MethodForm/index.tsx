@@ -17,17 +17,21 @@ import { z } from "zod";
 
 interface Props {
   setIsPending: (value: boolean) => void;
-  setIsOpen: (value: boolean) => void;  
+  setIsOpen: (value: boolean) => void;
 }
 
-export default function MethodForm({setIsPending, setIsOpen}:Props) {
-  const queryClient = useQueryClient()
+export default function MethodForm({ setIsPending, setIsOpen }: Props) {
+  const queryClient = useQueryClient();
   const form = useForm<z.infer<typeof MethodPaymentsSchema>>({
     resolver: zodResolver(MethodPaymentsSchema),
+    defaultValues: {
+      name: "",
+    },
   });
 
   const onSubmit = async (values: z.infer<typeof MethodPaymentsSchema>) => {
     setIsPending(true);
+    console.log("data", values)
     try {
       const response = await api.post("/payments/create", values);
       if (response.status === 200) {
@@ -48,14 +52,15 @@ export default function MethodForm({setIsPending, setIsOpen}:Props) {
         description: "Error al crear el método de pago",
         variant: "destructive",
       });
-    }finally{
+    } finally {
       setIsOpen(false);
+      setIsPending(false)
     }
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form id="add-customers-form" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="name"

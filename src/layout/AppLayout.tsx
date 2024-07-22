@@ -37,7 +37,7 @@ export default function AppLayout() {
           </Button>
           <div className="flex justify-between items-center gap-2 md:gap-4">
             <span className="font-semibold text-[0.9rem] md:text-[1rem]">
-              Bienvenido {user?.name}
+              Bienvenido {user?.user}
             </span>
             <UserDropDown />
           </div>

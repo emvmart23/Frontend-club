@@ -18,7 +18,7 @@ export default function MethodsDetails({ data, setIsOpen }: Props) {
 
   const deleteMethod = async () => {
     try {
-      const response = await api.delete(`/payments/delet/${data.id}`);
+      const response = await api.delete(`/payments/delete/${data.id}`);
       if (response.status === 200) {
         toast({
           description: "Metodo eliminado correctamente",

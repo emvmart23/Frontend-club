@@ -19,10 +19,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/Select";
-import { useQueryClient } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { ProductSchema } from "@/lib/validators/product";
 import { Checkbox } from "@/components/ui/Checkbox";
-import { useEffect, useState } from "react";
 import { getUnits } from "@/helpers/getUnits";
 import { getCategories } from "@/helpers/getCategories";
 
@@ -32,8 +31,8 @@ interface Props {
 }
 
 export default function ProductForm({ setIsOpen, setIsPending }: Props) {
-  const [units, setUnits] = useState<UnitMeasure[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
+  const category = useQuery("catefories", getCategories);
+  const unit = useQuery("unit", getUnits);
   const queryClient = useQueryClient();
 
   const form = useForm<z.infer<typeof ProductSchema>>({
@@ -68,21 +67,6 @@ export default function ProductForm({ setIsOpen, setIsPending }: Props) {
       setIsPending(false);
     }
   };
-
-  const fetchUnits = async () => {
-    const { unit } = await getUnits();
-    setUnits(unit);
-  };
-
-  const fetchCategories = async () => {
-    const { category } = await getCategories();
-    setCategories(category);
-  };
-
-  useEffect(() => {
-    fetchUnits();
-    fetchCategories();
-  }, []);
 
   return (
     <Form {...form}>
@@ -139,14 +123,16 @@ export default function ProductForm({ setIsOpen, setIsPending }: Props) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {categories?.map((category) => (
-                    <SelectItem
-                      key={category.category_id}
-                      value={category.category_id.toString()}
-                    >
-                      {category.name}
-                    </SelectItem>
-                  ))}
+                  {(category?.data ? category?.data?.category : [])?.map(
+                    (category: Category) => (
+                      <SelectItem
+                        key={category.category_id}
+                        value={category.category_id.toString()}
+                      >
+                        {category.name}
+                      </SelectItem>
+                    )
+                  )}
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -173,7 +159,7 @@ export default function ProductForm({ setIsOpen, setIsPending }: Props) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {units?.map((unit) => (
+                  {(unit ? unit?.data?.unit : [])?.map((unit: UnitMeasure) => (
                     <SelectItem
                       key={unit.unit_id}
                       value={unit.unit_id.toString()}

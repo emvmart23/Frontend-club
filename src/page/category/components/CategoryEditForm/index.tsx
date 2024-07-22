@@ -40,7 +40,7 @@ import {
             variant:"success",
           });
         }
-        queryClient.invalidateQueries("Categories");
+        queryClient.invalidateQueries("categories");
         setIsOpen(false);
       } catch (error) {
         toast({

@@ -10,7 +10,7 @@ const getCategories = async () => {
 };
 
 export default function Categories() {
-  const { data, isLoading } = useQuery("Categories", getCategories);
+  const { data, isLoading } = useQuery("categories", getCategories);
   useTitle("Categorias")
 
   return (

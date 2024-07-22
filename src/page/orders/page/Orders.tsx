@@ -167,7 +167,7 @@ export default function Orders() {
 
   return (
     <section className="flex justify-center items-center flex-col gap-8 w-full relative md:pr-16 lg:pr-2">
-      <div className="fixed space-y-3 md:space-y-5 w-[90%] lg:w-[61%] h-[30rem] md:h-[27rem] top-[4.7rem] p-5 bg-background z-30 shadow-2xl min-w-[300px]">
+      <div className="relative md:fixed space-y-3 md:space-y-5 w-[90%] lg:w-[61%] h-[30rem] md:h-[27rem] top-[0.4rem] md:top-[6rem] p-5 bg-background z-30 shadow-2xl min-w-[300px]">
         <h3 className="text-3xl font-medium">Generar pedido</h3>
         <div className="relative">
           <div className="flex flex-col md:flex-row gap-6 md:gap-8 lg:gap-24">
@@ -219,7 +219,7 @@ export default function Orders() {
           </div>
         </div>
       </div>
-      <div className="flex gap-4 relative top-[30rem] md:top-[28rem]">
+      <div className="flex gap-4 relative top-[2rem] md:top-[30rem]">
         <OrderAction
           isLoading={isLoading}
           setPendingOrders={setPendingOrders}
